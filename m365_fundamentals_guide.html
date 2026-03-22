@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>M365 Fundamentals — How Everything Works</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#07090f;--s1:#0c1018;--s2:#101520;--s3:#161e2e;--bd:#1c2a42;--ac:#3b82f6;--ac2:#8b5cf6;--ac3:#06b6d4;--ok:#10b981;--warn:#f59e0b;--err:#ef4444;--pur:#a855f7;--pink:#ec4899;--txt:#e2e8f0;--txt2:#94a3b8;--txt3:#475569;--mono:'JetBrains Mono',monospace;--head:'Syne',sans-serif;--body:'DM Sans',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--body);display:flex;height:100vh;overflow:hidden;font-size:14px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+/* SIDEBAR */
+#sb{width:268px;min-width:268px;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow-y:auto}
+.sb-hdr{padding:16px 14px 12px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--s1);z-index:5}
+.logo{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.logo-txt{font-family:var(--head);font-size:13px;font-weight:800;line-height:1.2}
+.logo-sub{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em}
+.srch{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:6px 10px;font-family:var(--body);font-size:12px;color:var(--txt);outline:none;transition:border-color .2s}
+.srch:focus{border-color:var(--ac)}.srch::placeholder{color:var(--txt3)}
+.ns{padding:8px 8px 2px}.nl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);padding:0 6px;margin-bottom:3px}
+.ni{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:5px;cursor:pointer;transition:all .15s;font-size:12px;color:var(--txt2);font-weight:400;position:relative;user-select:none}
+.ni:hover{background:var(--s2);color:var(--txt)}.ni.act{background:var(--s3);color:var(--ac);font-weight:500}
+.ni.act::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;border-radius:0 2px 2px 0;background:var(--ac)}
+.nd{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.ni-arrow{margin-left:auto;font-size:9px;color:var(--txt3)}
+
+/* MAIN */
+#main{flex:1;overflow-y:auto;background:var(--bg)}
+.pg{display:none;animation:fi .25s ease}.pg.act{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* HERO */
+.hero{padding:40px 40px 32px;border-bottom:1px solid var(--bd);background:linear-gradient(135deg,var(--s1) 0%,var(--bg) 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.05),transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:30%;width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.04),transparent 70%);pointer-events:none}
+.htag{display:inline-flex;align-items:center;gap:5px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--ac);border-radius:20px;font-size:10px;font-weight:600;padding:3px 11px;letter-spacing:.04em;margin-bottom:14px}
+.htitle{font-family:var(--head);font-size:30px;font-weight:800;line-height:1.15;margin-bottom:14px}
+.htitle span{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdesc{color:var(--txt2);font-size:13px;line-height:1.75;max-width:680px;margin-bottom:24px}
+.stats{display:flex;gap:14px;flex-wrap:wrap}
+.stat{background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:13px 18px;min-width:100px}
+.sn{font-family:var(--head);font-size:24px;font-weight:800;line-height:1}
+.sl{font-size:10px;color:var(--txt3);margin-top:2px}
+
+/* SERVICE CARDS GRID */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;padding:28px 40px}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.sc:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.07)}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cc,var(--ac));opacity:.6}
+.sc-ic{font-size:24px;margin-bottom:10px}.sc-t{font-family:var(--head);font-size:14px;font-weight:700;margin-bottom:6px}
+.sc-d{font-size:11.5px;color:var(--txt2);line-height:1.6;margin-bottom:12px}
+.sc-meta{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:9px;padding:2px 7px;border-radius:8px;background:var(--s3);color:var(--txt3);font-family:var(--mono)}
+
+/* CONTENT PAGES */
+.pg-hdr{padding:28px 40px 22px;border-bottom:1px solid var(--bd);background:var(--s1)}
+.bc{font-size:10px;color:var(--txt3);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.bc span{cursor:pointer}.bc span:hover{color:var(--ac)}
+.pg-title-row{display:flex;align-items:center;gap:14px}
+.pg-ic{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.pg-title{font-family:var(--head);font-size:22px;font-weight:800}
+.pg-sub{font-size:12px;color:var(--txt2);margin-top:3px}
+.content{padding:28px 40px;max-width:900px}
+
+/* CONCEPT SECTIONS */
+.csec{margin-bottom:32px}
+.csec-title{font-family:var(--head);font-size:16px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px;color:var(--txt)}
+.csec-title::after{content:'';flex:1;height:1px;background:var(--bd)}
+.csec-num{width:26px;height:26px;background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:6px;font-size:11px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* BODY TEXT */
+.prose{font-size:13px;line-height:1.85;color:var(--txt2);margin-bottom:16px}
+.prose strong{color:var(--txt);font-weight:600}
+.prose em{color:var(--ac3);font-style:normal;font-weight:500}
+
+/* ANALOGY BOX */
+.analogy{background:linear-gradient(135deg,rgba(59,130,246,.07),rgba(139,92,246,.07));border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:16px 18px;margin:14px 0}
+.analogy-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.analogy-txt{font-size:13px;color:var(--txt2);line-height:1.7}
+.analogy-txt strong{color:var(--txt)}
+
+/* EXAMPLE BOX */
+.example{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-left:3px solid var(--ok);border-radius:0 8px 8px 0;padding:14px 16px;margin:12px 0}
+.example-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);margin-bottom:6px}
+.example-txt{font-size:13px;color:var(--txt2);line-height:1.7}
+.example-txt strong{color:var(--txt)}
+
+/* FLOW DIAGRAM */
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:16px 0;background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:16px;overflow-x:auto}
+.fbox{background:var(--s3);border:1px solid var(--bd);border-radius:7px;padding:8px 12px;font-size:11px;text-align:center;white-space:nowrap;min-width:80px}
+.fbox .fi{font-size:18px;display:block;margin-bottom:3px}
+.fbox .fl{color:var(--txt2);font-size:10px}
+.farr{color:var(--txt3);font-size:16px;padding:0 6px;flex-shrink:0}
+.farr.ok{color:var(--ok)}.farr.ac{color:var(--ac)}
+
+/* KEY TERM */
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:14px 0}
+.term{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px 14px}
+.term-w{font-family:var(--mono);font-size:11px;color:var(--ac3);font-weight:600;margin-bottom:4px}
+.term-d{font-size:11.5px;color:var(--txt2);line-height:1.5}
+
+/* CODE */
+.cb{background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:10px 13px;font-family:var(--mono);font-size:11px;color:#a5f3fc;margin:10px 0;overflow-x:auto;line-height:1.8;white-space:pre}
+.cb .g{color:#86efac}.cb .c{color:var(--txt3);font-style:italic}.cb .y{color:#fcd34d}
+
+/* WARN/NOTE */
+.note{background:rgba(6,182,212,.07);border-left:3px solid var(--ac3);border-radius:0 7px 7px 0;padding:10px 14px;font-size:12.5px;color:var(--txt2);line-height:1.65;margin:12px 0}
+.warn{background:rgba(245,158,11,.07);border-left:3px solid var(--warn);border-radius:0 7px 7px 0;padding:10px 14px;font-size:12.5px;color:var(--txt2);line-height:1.65;margin:12px 0}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:14px 0}
+.tbl th{background:var(--s2);color:var(--txt3);font-weight:600;text-align:left;padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--bd)}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--s3);color:var(--txt2);vertical-align:top}
+.tbl tr:hover td{background:var(--s2)}
+
+/* TOGETHER SECTION */
+.together-card{background:linear-gradient(135deg,var(--s1),var(--s2));border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:16px}
+.tc-title{font-family:var(--head);font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.tc-body{font-size:13px;color:var(--txt2);line-height:1.7}
+.services-together{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.st{padding:5px 10px;border-radius:20px;font-size:10px;font-weight:600;font-family:var(--mono)}
+</style>
+</head>
+<body>
+<nav id="sb">
+  <div class="sb-hdr">
+    <div class="logo"><div class="logo-icon">📘</div><div><div class="logo-txt">M365 Fundamentals</div><div class="logo-sub">How Everything Works</div></div></div>
+    <input class="srch" id="srch" type="text" placeholder="Search concepts..." oninput="doSearch(this.value)"/>
+  </div>
+  <div class="ns"><div class="nl">Start Here</div>
+    <div class="ni act" onclick="go('home')"><div class="nd" style="background:rgba(59,130,246,.12)">🏠</div>Overview — The Big Picture</div>
+  </div>
+  <div class="ns"><div class="nl">Core Services</div>
+    <div class="ni" onclick="go('identity')"><div class="nd" style="background:rgba(139,92,246,.12)">🔐</div>Identity &amp; Sign-In (Entra ID)</div>
+    <div class="ni" onclick="go('email')"><div class="nd" style="background:rgba(6,182,212,.12)">📧</div>Email (Exchange Online)</div>
+    <div class="ni" onclick="go('teams')"><div class="nd" style="background:rgba(99,102,241,.12)">💬</div>Teams — Chat, Meet, Call</div>
+    <div class="ni" onclick="go('sharepoint')"><div class="nd" style="background:rgba(16,185,129,.12)">📁</div>SharePoint Online</div>
+    <div class="ni" onclick="go('onedrive')"><div class="nd" style="background:rgba(59,130,246,.12)">☁️</div>OneDrive for Business</div>
+  </div>
+  <div class="ns"><div class="nl">Management & Apps</div>
+    <div class="ni" onclick="go('intune')"><div class="nd" style="background:rgba(245,158,11,.12)">📱</div>Intune — Device Management</div>
+    <div class="ni" onclick="go('apps')"><div class="nd" style="background:rgba(239,68,68,.12)">🖥️</div>M365 Apps — Office Suite</div>
+    <div class="ni" onclick="go('power')"><div class="nd" style="background:rgba(234,179,8,.12)">⚡</div>Power Platform — Automate</div>
+    <div class="ni" onclick="go('security')"><div class="nd" style="background:rgba(20,184,166,.12)">🛡️</div>Security &amp; Compliance</div>
+  </div>
+  <div class="ns"><div class="nl">The Full Picture</div>
+    <div class="ni" onclick="go('together')"><div class="nd" style="background:rgba(168,85,247,.12)">🔗</div>How All Services Connect</div>
+    <div class="ni" onclick="go('licensing')"><div class="nd" style="background:rgba(236,72,153,.12)">💳</div>Licensing Explained Simply</div>
+    <div class="ni" onclick="go('github')"><div class="nd" style="background:rgba(100,116,139,.12)">🐙</div>Host on GitHub Pages (Free)</div>
+  </div>
+</nav>
+<main id="main">
+
+<!-- HOME -->
+<div id="pg-home" class="pg act">
+  <div class="hero">
+    <div class="htag">📘 Beginner to Confident — Zero Jargon, Maximum Clarity</div>
+    <h1 class="htitle">Microsoft 365<br><span>Fundamentals</span> Guide</h1>
+    <p class="hdesc">This guide teaches you exactly <strong>how Microsoft 365 works</strong> — each service alone, and how they all work together. Every concept comes with a plain-English explanation, a real-world analogy you can picture, and a concrete example so it sticks in your memory. No prior experience needed.</p>
+    <div class="stats">
+      <div class="stat"><div class="sn" style="color:var(--ac)">10</div><div class="sl">Services Explained</div></div>
+      <div class="stat"><div class="sn" style="color:var(--ac2)">50+</div><div class="sl">Key Concepts</div></div>
+      <div class="stat"><div class="sn" style="color:var(--ok)">30+</div><div class="sl">Real Examples</div></div>
+      <div class="stat"><div class="sn" style="color:var(--warn)">Free</div><div class="sl">GitHub Hosting</div></div>
+    </div>
+  </div>
+  <div style="padding:28px 40px 0"><p style="font-size:13px;color:var(--txt2);margin-bottom:20px">👇 <strong style="color:var(--txt)">Start with Identity</strong> — it's the foundation everything else depends on. Then work your way down the list.</p></div>
+  <div class="sgrid">
+    <div class="sc" style="--cc:#8b5cf6" onclick="go('identity')"><div class="sc-ic">🔐</div><div class="sc-t">Identity &amp; Sign-In (Entra ID)</div><div class="sc-d">The foundation of ALL M365 services. Learn how sign-in works, what MFA is, and why a single account unlocks everything.</div><div class="sc-meta"><span class="pill">Authentication</span><span class="pill">MFA</span><span class="pill">SSO</span></div></div>
+    <div class="sc" style="--cc:#06b6d4" onclick="go('email')"><div class="sc-ic">📧</div><div class="sc-t">Email (Exchange Online)</div><div class="sc-d">How email travels from sender to inbox. What DNS records like MX, SPF, DKIM do and why they matter for deliverability.</div><div class="sc-meta"><span class="pill">SMTP</span><span class="pill">MX Records</span><span class="pill">Mailboxes</span></div></div>
+    <div class="sc" style="--cc:#6366f1" onclick="go('teams')"><div class="sc-ic">💬</div><div class="sc-t">Microsoft Teams</div><div class="sc-d">Chat, video meetings, calls, channels, and tabs explained. How Teams connects to SharePoint, Exchange, and OneDrive behind the scenes.</div><div class="sc-meta"><span class="pill">Channels</span><span class="pill">Meetings</span><span class="pill">Voice</span></div></div>
+    <div class="sc" style="--cc:#10b981" onclick="go('sharepoint')"><div class="sc-ic">📁</div><div class="sc-t">SharePoint Online</div><div class="sc-d">The file storage backbone of M365. What sites, libraries, and pages are. How permissions work — the inheritance model explained visually.</div><div class="sc-meta"><span class="pill">Sites</span><span class="pill">Permissions</span><span class="pill">Search</span></div></div>
+    <div class="sc" style="--cc:#3b82f6" onclick="go('onedrive')"><div class="sc-ic">☁️</div><div class="sc-t">OneDrive for Business</div><div class="sc-d">Personal cloud storage for each employee. How sync works, what Files On-Demand is, and the difference between personal and business OneDrive.</div><div class="sc-meta"><span class="pill">Sync</span><span class="pill">Sharing</span><span class="pill">Versions</span></div></div>
+    <div class="sc" style="--cc:#f59e0b" onclick="go('intune')"><div class="sc-ic">📱</div><div class="sc-t">Intune — Device Management</div><div class="sc-d">How IT controls laptops and phones without touching them. MDM vs MAM, what policies and compliance mean in real terms.</div><div class="sc-meta"><span class="pill">MDM</span><span class="pill">Autopilot</span><span class="pill">Policies</span></div></div>
+    <div class="sc" style="--cc:#ef4444" onclick="go('apps')"><div class="sc-ic">🖥️</div><div class="sc-t">M365 Apps / Office Suite</div><div class="sc-d">Why Office needs a license, how Click-to-Run works, what activation means, and the difference between Office 2019 and M365 Apps.</div><div class="sc-meta"><span class="pill">Licensing</span><span class="pill">C2R</span><span class="pill">Activation</span></div></div>
+    <div class="sc" style="--cc:#ca8a04" onclick="go('power')"><div class="sc-ic">⚡</div><div class="sc-t">Power Platform</div><div class="sc-d">Automate repetitive tasks and build apps without code. What Power Automate, Power Apps, and Power BI are and how they work together.</div><div class="sc-meta"><span class="pill">Automate</span><span class="pill">Apps</span><span class="pill">Connectors</span></div></div>
+    <div class="sc" style="--cc:#0d9488" onclick="go('security')"><div class="sc-ic">🛡️</div><div class="sc-t">Security &amp; Compliance</div><div class="sc-d">How M365 protects email, devices, and data. What DLP, sensitivity labels, and audit logs do in plain English.</div><div class="sc-meta"><span class="pill">DLP</span><span class="pill">Defender</span><span class="pill">Audit</span></div></div>
+    <div class="sc" style="--cc:#a855f7" onclick="go('together')"><div class="sc-ic">🔗</div><div class="sc-t">How All Services Connect</div><div class="sc-d">See the full picture — how every M365 service depends on the others, with a real example of one employee's workday.</div><div class="sc-meta"><span class="pill">Architecture</span><span class="pill">Integration</span></div></div>
+    <div class="sc" style="--cc:#ec4899" onclick="go('licensing')"><div class="sc-ic">💳</div><div class="sc-t">M365 Licensing Simplified</div><div class="sc-d">What E1, E3, F3, Business Basic, and Business Premium mean. Which features are included in each plan — explained without marketing speak.</div><div class="sc-meta"><span class="pill">E1/E3/E5</span><span class="pill">Plans</span><span class="pill">SKUs</span></div></div>
+    <div class="sc" style="--cc:#64748b" onclick="go('github')"><div class="sc-ic">🐙</div><div class="sc-t">Host Both Files on GitHub (Free)</div><div class="sc-d">Step-by-step guide to putting both HTML guides on GitHub Pages so you can access them from any device, online or offline.</div><div class="sc-meta"><span class="pill">Free Hosting</span><span class="pill">Offline</span><span class="pill">GitHub Pages</span></div></div>
+  </div>
+</div>
+<!-- IDENTITY -->
+<div id="pg-identity" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Identity &amp; Sign-In</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(139,92,246,.12)">🔐</div><div><div class="pg-title">Identity &amp; Sign-In — Entra ID (Azure AD)</div><div class="pg-sub">The foundation of all M365 services — Authentication, MFA, SSO, Conditional Access</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is Entra ID and why does it exist?</div>
+      <p class="prose">Every time you sign in to Microsoft 365 — whether it's Outlook, Teams, SharePoint, or OneDrive — you are NOT signing in to each app separately. You sign in to <strong>one central place called Entra ID</strong> (previously called Azure Active Directory). Entra ID is Microsoft's cloud-based identity service. Think of it as the <em>"master key system"</em> for your entire organization.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🏢 Real World Analogy</div>
+        <div class="analogy-txt">Imagine a large office building with 50 rooms (50 apps). Instead of giving each employee a different key for every room, the building has ONE smart security badge system. The employee scans their badge once at the entrance → the building verifies their identity → that single verified identity gives access to every room they're allowed in. <strong>Entra ID is that smart badge system for Microsoft 365.</strong></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">Priya signs in to <strong>portal.office.com</strong> with her company email and password. After she's verified, she can open <strong>Outlook, Teams, SharePoint, Power BI</strong> — all without signing in again. That seamless access is called <strong>Single Sign-On (SSO)</strong>, powered by Entra ID.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>How Authentication Works — Step by Step</div>
+      <p class="prose">Authentication answers the question: <strong>"Are you really who you claim to be?"</strong> Here's exactly what happens when you sign in:</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">👤</span><span class="fl">You enter<br>username+password</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🌐</span><span class="fl">Browser sends<br>to Entra ID</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🔍</span><span class="fl">Entra verifies<br>password hash</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📱</span><span class="fl">MFA prompt<br>sent to phone</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">✅</span><span class="fl">Token issued<br>(Access granted)</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🖥️</span><span class="fl">App receives<br>token, opens</span></div>
+      </div>
+      <p class="prose">The <strong>token</strong> is like a temporary wristband at a concert — it proves you paid to get in, and you can move between areas without showing your ticket at every door. Tokens typically last 1 hour; a refresh token can renew them for up to 90 days without requiring re-login.</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">Authentication</div><div class="term-d">Proving who you are (username + password + MFA)</div></div>
+        <div class="term"><div class="term-w">Authorization</div><div class="term-d">What you're ALLOWED to do once authenticated</div></div>
+        <div class="term"><div class="term-w">Token</div><div class="term-d">A temporary digital proof of identity passed between apps</div></div>
+        <div class="term"><div class="term-w">SSO</div><div class="term-d">Sign in once, access all connected apps automatically</div></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>What is MFA and Why is it Critical?</div>
+      <p class="prose">MFA stands for <strong>Multi-Factor Authentication</strong>. A password alone can be stolen through phishing or data breaches. MFA adds a second verification — something only YOU physically have.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🏧 Real World Analogy</div>
+        <div class="analogy-txt">An ATM needs TWO things: your <strong>card</strong> (something you have) AND your <strong>PIN</strong> (something you know). If someone steals your PIN but doesn't have your card, they get nothing. MFA applies the same principle to your Microsoft account. Even if a hacker steals your password, they cannot sign in without your phone.</div>
+      </div>
+      <p class="prose">The three MFA factors are: <strong>Something you know</strong> (password, PIN), <strong>Something you have</strong> (phone, hardware token, smart card), <strong>Something you are</strong> (fingerprint, face recognition).</p>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">Rahul's password gets phished. The attacker tries to sign in from Russia. Entra ID sends an MFA push to <strong>Rahul's phone in Pune</strong>. The attacker can't approve it — they don't have the phone. Entra blocks the sign-in. Rahul gets a notification about the suspicious attempt. Account is safe. <strong>MFA stopped the breach.</strong></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Conditional Access — Smart Rules for Sign-In</div>
+      <p class="prose">Conditional Access (CA) lets admins set <strong>rules that control when and how users can sign in</strong>. Instead of a simple password check, CA evaluates multiple signals before granting access.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🚦 Real World Analogy</div>
+        <div class="analogy-txt">Think of CA like an intelligent traffic light system at a border crossing. The system checks: <strong>Is this vehicle registered? Is the driver licensed? Is there a travel ban? Is it a suspicious time?</strong> Based on all these signals, it decides: let through freely, ask for inspection, or block completely. CA evaluates: <strong>Who is signing in + From where + On what device + To which app + At what risk level</strong> → then decides the action.</div>
+      </div>
+      <div class="terms">
+        <div class="term"><div class="term-w">CA Signal: User/Group</div><div class="term-d">Is this user in the Finance team? Guest? Admin?</div></div>
+        <div class="term"><div class="term-w">CA Signal: Location</div><div class="term-d">Is sign-in from trusted IP or corporate office?</div></div>
+        <div class="term"><div class="term-w">CA Signal: Device</div><div class="term-d">Is device enrolled in Intune and compliant?</div></div>
+        <div class="term"><div class="term-w">CA Action: Grant</div><div class="term-d">Allow access, require MFA, or require compliant device</div></div>
+        <div class="term"><div class="term-w">CA Action: Block</div><div class="term-d">Deny access entirely based on risk signals</div></div>
+        <div class="term"><div class="term-w">Report-Only Mode</div><div class="term-d">Test policy without enforcing — see who would be affected</div></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">Company policy: <strong>"All users accessing SharePoint from outside the office must use MFA."</strong> In office (trusted IP) → sign in with just password. From home or coffee shop → MFA required. From an unmanaged personal PC → blocked entirely. <strong>One CA policy handles all three scenarios automatically.</strong></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">5</div>Entra ID in Hybrid Environments</div>
+      <p class="prose">Many organizations have an <strong>on-premises Active Directory</strong> (the old Windows Server AD used for decades) AND <strong>Entra ID in the cloud</strong>. <em>AAD Connect</em> (now called Microsoft Entra Connect) is the bridge that synchronizes user accounts between the two.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">🏢</span><span class="fl">On-Prem AD<br>user objects</span></div>
+        <div class="farr ac">→ sync every 30min →</div>
+        <div class="fbox"><span class="fi">🔗</span><span class="fl">Entra Connect<br>(AAD Connect)</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">☁️</span><span class="fl">Entra ID<br>(Azure AD)</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📱</span><span class="fl">All M365<br>Services</span></div>
+      </div>
+      <div class="note">💡 Key insight: In most enterprises, you <strong>NEVER create users directly in Entra ID</strong>. You create them in on-prem AD, and they sync to the cloud. This is why password changes must happen in on-prem AD — if you change it in the cloud, AAD Connect overwrites it back on the next sync.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EMAIL -->
+<div id="pg-email" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Email — Exchange Online</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(6,182,212,.12)">📧</div><div><div class="pg-title">Email — Exchange Online</div><div class="pg-sub">How email works end-to-end — DNS, SMTP, mailboxes, connectors, security records</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is Exchange Online?</div>
+      <p class="prose">Exchange Online is Microsoft's <strong>cloud-based email service</strong>. It replaced the traditional on-premises Exchange Server — instead of running email servers in your data center, Microsoft runs them for you in the cloud. Every M365 license that includes email provisions an <strong>Exchange Online mailbox</strong> — typically 50GB or 100GB of storage per user.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">📮 Real World Analogy</div>
+        <div class="analogy-txt">Traditional email servers are like owning your own post office building — you buy the building, hire staff, maintain sorting machines, and pay for everything yourself. <strong>Exchange Online is like using the national postal service</strong> — you pay a fee per employee, and Microsoft runs all the infrastructure. You just focus on sending and receiving mail.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>How an Email Travels — The Complete Journey</div>
+      <p class="prose">When you click "Send" in Outlook, your email goes through a specific technical journey. Understanding this journey helps you diagnose why emails fail to deliver.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">📝</span><span class="fl">You click<br>Send in Outlook</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📤</span><span class="fl">EXO SMTP<br>submits email</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🔍</span><span class="fl">DNS lookup:<br>find MX record</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📨</span><span class="fl">Recipient's<br>mail server</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📥</span><span class="fl">Delivered to<br>recipient's inbox</span></div>
+      </div>
+      <p class="prose">The <strong>MX record</strong> (Mail eXchange record) in DNS tells the internet: <em>"To deliver email to @contoso.com, send it to THIS server."</em> This is why updating MX records is the critical step during email migrations — it redirects where the world sends your mail.</p>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">Ananya at TCS (tcs.com) emails Rohan at Infosys (infosys.com). TCS's mail server looks up the MX record for <strong>infosys.com</strong> in DNS. DNS responds: "send to <strong>infosys-com.mail.protection.outlook.com</strong>" (Infosys uses EXO). TCS server connects to that address and delivers the email. Rohan sees it in Outlook seconds later.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>The Three Critical DNS Records — SPF, DKIM, DMARC</div>
+      <p class="prose">These three DNS records work together to fight email spoofing and spam. Without them, your emails land in junk folders or get rejected. Every support engineer must know what these do.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">📦 Real World Analogy</div>
+        <div class="analogy-txt">Imagine someone sends you a package claiming to be from Amazon. How do you verify it's real?<br><br><strong>SPF</strong> = Checking if the delivery truck is on Amazon's approved carrier list.<br><strong>DKIM</strong> = The package has a tamper-proof seal only Amazon can create — proves it wasn't opened or faked in transit.<br><strong>DMARC</strong> = Amazon's official policy: "If our SPF or DKIM check fails, here's what to do with the package — deliver it, quarantine it, or return to sender (reject)."</div>
+      </div>
+      <table class="tbl">
+        <tr><th>Record</th><th>Full Name</th><th>What It Does</th><th>Example Value</th></tr>
+        <tr><td><strong style="color:var(--ac)">SPF</strong></td><td>Sender Policy Framework</td><td>Lists which servers are allowed to send email for your domain</td><td>v=spf1 include:spf.protection.outlook.com -all</td></tr>
+        <tr><td><strong style="color:var(--ok)">DKIM</strong></td><td>DomainKeys Identified Mail</td><td>Adds a cryptographic signature to every outbound email — proves it wasn't tampered with</td><td>Two CNAME records added in Exchange Admin Center</td></tr>
+        <tr><td><strong style="color:var(--warn)">DMARC</strong></td><td>Domain-based Message Authentication</td><td>Tells receiving servers what to do when SPF or DKIM fails (none/quarantine/reject)</td><td>v=DMARC1; p=quarantine; rua=mailto:dmarc@contoso.com</td></tr>
+      </table>
+      <div class="note">💡 Always start DMARC with <strong>p=none</strong> (monitoring only). Monitor for 2–4 weeks, fix legitimate sending sources, then graduate to p=quarantine, then p=reject. Jumping straight to p=reject breaks legitimate email flows.</div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Types of Mailboxes in Exchange Online</div>
+      <div class="terms">
+        <div class="term"><div class="term-w">User Mailbox</div><div class="term-d">Standard mailbox for individual employees. Requires a license. Priya@contoso.com</div></div>
+        <div class="term"><div class="term-w">Shared Mailbox</div><div class="term-d">Accessible by multiple people. No license needed (up to 50GB). helpdesk@contoso.com — the whole team reads it</div></div>
+        <div class="term"><div class="term-w">Distribution Group</div><div class="term-d">Email address that fans out to a list of members. team-sales@contoso.com → reaches 20 people. Not a mailbox — no storage</div></div>
+        <div class="term"><div class="term-w">Room Mailbox</div><div class="term-d">Represents a meeting room. Conference rooms auto-accept/decline meeting invites based on availability</div></div>
+        <div class="term"><div class="term-w">Microsoft 365 Group</div><div class="term-d">Modern group with shared mailbox + SharePoint site + Teams channel. Created when you create a Team</div></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A company has: <strong>500 user mailboxes</strong> (one per employee), <strong>10 shared mailboxes</strong> (support@, hr@, info@), <strong>30 distribution lists</strong> (department email groups), <strong>15 room mailboxes</strong> (conference rooms), and <strong>25 M365 Groups</strong> (project teams with Teams + SharePoint). All managed from the <strong>Exchange Admin Center</strong> at admin.exchange.microsoft.com.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">5</div>Mail Flow — Connectors and Transport Rules</div>
+      <p class="prose"><strong>Connectors</strong> are configured paths for email. An <em>inbound connector</em> tells EXO how to receive email from specific sources (like a third-party security gateway). An <em>outbound connector</em> tells EXO where to route outgoing email (like through an on-premises server in hybrid setup).</p>
+      <p class="prose"><strong>Transport Rules</strong> (also called Mail Flow Rules) are <em>if-this-then-that</em> rules that apply to all email in transit. Examples: "If email is sent to external recipients, add a disclaimer." "If email contains 'confidential', apply encryption." "If sender is in HR, allow all external sharing." These rules apply before email lands in any mailbox.</p>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A bank creates a transport rule: <strong>"If outbound email contains a credit card number pattern (16 digits), block delivery and notify the compliance team."</strong> This is implemented in Exchange Online as a transport rule using a sensitive information type regex — it runs on EVERY outgoing email automatically, protecting against accidental data leaks.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">6</div>Hybrid Exchange — Cloud + On-Premises Together</div>
+      <p class="prose">Many large organizations are in a <strong>hybrid state</strong> — some mailboxes are still on on-premises Exchange servers, and some are already in Exchange Online (the cloud). This is normal during a migration that takes months or years.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">🏢</span><span class="fl">On-Prem Exchange<br>(some users)</span></div>
+        <div class="farr">↔ Hybrid Config ↔</div>
+        <div class="fbox"><span class="fi">☁️</span><span class="fl">Exchange Online<br>(other users)</span></div>
+      </div>
+      <p class="prose">The <strong>Hybrid Configuration Wizard (HCW)</strong> sets up all the plumbing between on-prem and cloud: OAuth trust, send/receive connectors, and organization relationships for free/busy calendar sharing. After HCW runs, on-prem users and cloud users can see each other's calendar availability seamlessly.</p>
+    </div>
+
+  </div>
+</div>
+<!-- TEAMS -->
+<div id="pg-teams" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Microsoft Teams</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(99,102,241,.12)">💬</div><div><div class="pg-title">Microsoft Teams</div><div class="pg-sub">Chat, Meetings, Calling, Channels — and what actually powers it all behind the scenes</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is Microsoft Teams? The Big Picture</div>
+      <p class="prose">Teams is Microsoft's <strong>collaboration hub</strong> — it combines chat, video meetings, voice calling, file sharing, and apps into one interface. But here's what most beginners don't know: <em>Teams is not a standalone product</em>. It is an interface built on top of other M365 services. Understanding what powers Teams underneath helps you troubleshoot it effectively.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🏨 Real World Analogy</div>
+        <div class="analogy-txt">Think of Teams like a hotel. You see the lobby, the rooms, the restaurants, the gym. But behind the scenes, there's a <strong>plumbing system (SharePoint)</strong>, an <strong>electrical system (Exchange Online)</strong>, a <strong>phone system (Microsoft Calling)</strong>, and a <strong>security system (Entra ID)</strong>. If any of those backend systems breaks, the hotel experience breaks even though the hotel building itself looks fine. This is why Teams issues often have to be fixed in SharePoint, Exchange, or Entra — not in Teams itself.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>What Powers Teams Behind the Scenes</div>
+      <div class="terms">
+        <div class="term"><div class="term-w">Teams Chat Messages</div><div class="term-d">Stored in a hidden Exchange Online mailbox folder (for compliance/eDiscovery access)</div></div>
+        <div class="term"><div class="term-w">Channel Files Tab</div><div class="term-d">Files stored in a SharePoint document library — the team's site collection</div></div>
+        <div class="term"><div class="term-w">Team Identity/Membership</div><div class="term-d">Managed by a Microsoft 365 Group in Entra ID</div></div>
+        <div class="term"><div class="term-w">Audio &amp; Video</div><div class="term-d">Transmitted over UDP using Microsoft's global media relay network</div></div>
+        <div class="term"><div class="term-w">Meetings Calendar</div><div class="term-d">Meeting invites stored in Exchange Online calendar, join link generated by Teams</div></div>
+        <div class="term"><div class="term-w">Apps &amp; Tabs</div><div class="term-d">Third-party or Microsoft apps embedded via Teams app framework (mini iframes)</div></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Troubleshooting Example</div>
+        <div class="example-txt">The Files tab in a Teams channel is blank for all members. <strong>This is NOT a Teams bug.</strong> The Files tab is a SharePoint document library. The SharePoint admin accidentally changed the permissions on the backing site, breaking inheritance. Fix: Go to SharePoint → restore permissions → Files tab comes back automatically. <strong>You never had to touch Teams at all.</strong></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>Teams Structure — Organizations, Teams, Channels</div>
+      <p class="prose">Teams has a three-level hierarchy:</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">🏢</span><span class="fl">Tenant<br>(Your Organization)</span></div>
+        <div class="farr ac">contains →</div>
+        <div class="fbox"><span class="fi">👥</span><span class="fl">Teams<br>(Groups of people)</span></div>
+        <div class="farr ac">contains →</div>
+        <div class="fbox"><span class="fi">📢</span><span class="fl">Channels<br>(Topics/Projects)</span></div>
+        <div class="farr ac">contains →</div>
+        <div class="fbox"><span class="fi">💬</span><span class="fl">Chats, Files<br>Meetings, Apps</span></div>
+      </div>
+      <div class="terms">
+        <div class="term"><div class="term-w">Team</div><div class="term-d">A group of people working together. Example: "HR Team" or "Project Alpha Team"</div></div>
+        <div class="term"><div class="term-w">Standard Channel</div><div class="term-d">Visible to all team members. "General" is created by default. Best for open discussions</div></div>
+        <div class="term"><div class="term-w">Private Channel</div><div class="term-d">Only visible to invited members within the team. Creates its own separate SharePoint site</div></div>
+        <div class="term"><div class="term-w">Shared Channel</div><div class="term-d">Can include people from OUTSIDE the organization without full guest access</div></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A company creates a Team called <strong>"Sales Department."</strong> Inside it: channels for <strong>General, APAC Region, EMEA Region, CRM Discussions, and a Private channel for "Sales Leadership"</strong> (only managers can see salary discussions there). Each channel has its own file storage, conversation history, and can have tabs pinned (like a Power BI dashboard or a SharePoint page).</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Teams Meetings — How Audio and Video Work</div>
+      <p class="prose">Teams meetings use <strong>WebRTC technology over UDP ports</strong> to transmit audio and video. UDP is preferred because it's fast — a few dropped packets cause brief glitches, which is better than TCP's guaranteed delivery causing pauses and freezes in real-time media.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">🎤</span><span class="fl">Your mic<br>captures audio</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📦</span><span class="fl">Encoded into<br>UDP packets</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">☁️</span><span class="fl">Microsoft<br>Media Relay</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📡</span><span class="fl">Decoded at<br>each participant</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🔊</span><span class="fl">Plays from<br>their speakers</span></div>
+      </div>
+      <p class="prose">Corporate firewalls often block UDP traffic (they prefer TCP which is easier to inspect). When UDP is blocked, Teams falls back to TCP relay — this works but with much higher latency. <strong>This is the #1 cause of "Teams audio is choppy at the office but works perfectly at home."</strong> The home router allows UDP; the corporate firewall doesn't.</p>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">5</div>Teams Calling — PSTN and Direct Routing</div>
+      <p class="prose">Teams can replace your phone system entirely. <strong>PSTN</strong> (Public Switched Telephone Network) is the traditional telephone network — the one that reaches any phone number in the world. Teams connects to PSTN in two ways:</p>
+      <table class="tbl">
+        <tr><th>Method</th><th>How it Works</th><th>Best For</th></tr>
+        <tr><td><strong>Microsoft Calling Plans</strong></td><td>Microsoft provides phone numbers and handles all PSTN connectivity. Simple, all-Microsoft.</td><td>Small-medium organizations with no existing phone system</td></tr>
+        <tr><td><strong>Direct Routing</strong></td><td>You connect your own Session Border Controller (SBC — the device that bridges Teams to PSTN) to Teams. You keep existing telecom contracts.</td><td>Large enterprises with existing telecom contracts and PBX infrastructure</td></tr>
+        <tr><td><strong>Operator Connect</strong></td><td>Microsoft-certified telecom operators connect directly to Teams — middle ground between Calling Plans and Direct Routing.</td><td>Medium organizations wanting operator relationship without SBC hardware</td></tr>
+      </table>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">6</div>Teams Policies — How Admins Control Features</div>
+      <p class="prose">Admins control what features users can access through <strong>Teams policies</strong>. There are separate policies for meetings, messaging, calling, app access, and more. The key insight about policies:</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🎯 Policy Priority Explained</div>
+        <div class="analogy-txt">Imagine a game with three sets of rules: <strong>Personal rules (given to you specifically)</strong>, <strong>Group rules (given to your club)</strong>, and <strong>Worldwide rules (the default everyone follows)</strong>. Your personal rules ALWAYS win. If you don't have personal rules, your group rules apply. If no group rules, worldwide rules apply. <strong>In Teams: Direct assignment &gt; Group assignment &gt; Global (org-wide default).</strong> This is why "I applied the policy to the group but the user still has the old behavior" — the user has a direct assignment overriding the group policy.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SHAREPOINT -->
+<div id="pg-sharepoint" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › SharePoint Online</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(16,185,129,.12)">📁</div><div><div class="pg-title">SharePoint Online</div><div class="pg-sub">Sites, Libraries, Permissions, Search — the file storage backbone of Microsoft 365</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is SharePoint Online?</div>
+      <p class="prose">SharePoint Online is <strong>Microsoft's web-based file management and collaboration platform</strong>. It provides websites (sites) where teams store files, create pages, manage lists, and collaborate. It's also the <em>behind-the-scenes storage for Teams channels, OneDrive, and M365 Groups</em>.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🏗️ Real World Analogy</div>
+        <div class="analogy-txt">Think of SharePoint as a <strong>building complex</strong>. Each building is a "Site" (like a department's building). Inside each building are floors (Libraries) where files are organized. Each floor has rooms (Folders). The building has a security desk (Permissions) that decides who can enter which floor. There's also a building directory (Search) that can find any document across all buildings instantly.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>SharePoint Structure — Sites, Libraries, Lists, Pages</div>
+      <div class="terms">
+        <div class="term"><div class="term-w">Site Collection</div><div class="term-d">The top-level container. Each department or project gets a site. URL: contoso.sharepoint.com/sites/HR</div></div>
+        <div class="term"><div class="term-w">Document Library</div><div class="term-d">A folder system within a site for storing files. Has versioning, metadata columns, and check-out. Like a smart filing cabinet.</div></div>
+        <div class="term"><div class="term-w">List</div><div class="term-d">A table of data in SharePoint. Like Excel but collaborative. Used for tasks, contacts, issues, approvals. Each row = one item.</div></div>
+        <div class="term"><div class="term-w">Page</div><div class="term-d">A web page you design and publish in SharePoint — like an intranet homepage, a department news feed, or a company wiki.</div></div>
+        <div class="term"><div class="term-w">Hub Site</div><div class="term-d">A parent site that connects multiple department sites together — provides unified navigation and search across all associated sites.</div></div>
+        <div class="term"><div class="term-w">App Catalog</div><div class="term-d">Where custom solutions and third-party apps are deployed to SharePoint sites by administrators.</div></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">Infosys has a <strong>Hub Site</strong> for all internal sites. Connected to it: <strong>HR Site</strong> (with Policies Library, Training Videos Library, Job Openings List), <strong>Finance Site</strong> (Reports Library, Budget Tracker List), <strong>IT Site</strong> (Procedures Library, Incidents List). All have unified search and navigation through the hub. An employee searching "travel policy" from the hub instantly finds the document in the HR site — even without going there directly.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>SharePoint Permissions — The Inheritance Model</div>
+      <p class="prose">This is the <strong>most important concept in SharePoint</strong> — the permissions inheritance model. Every child object inherits its permissions from its parent — unless you explicitly break inheritance.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">🏢</span><span class="fl">Site<br>(Top Level)</span></div>
+        <div class="farr ac">inherits ↓</div>
+        <div class="fbox"><span class="fi">📚</span><span class="fl">Document<br>Library</span></div>
+        <div class="farr ac">inherits ↓</div>
+        <div class="fbox"><span class="fi">📁</span><span class="fl">Folder<br></span></div>
+        <div class="farr ac">inherits ↓</div>
+        <div class="fbox"><span class="fi">📄</span><span class="fl">Individual<br>File</span></div>
+      </div>
+      <div class="analogy">
+        <div class="analogy-lbl">🏠 Real World Analogy</div>
+        <div class="analogy-txt">Imagine a house with an unlocked front door. Because the front door is unlocked, all rooms are accessible — they "inherit" the open access. Now you lock one bedroom specifically (break inheritance). That bedroom is now independently secured. <strong>The rest of the house is still open, but that bedroom has its own rules.</strong> In SharePoint, "breaking inheritance" at any level means that object stops inheriting from its parent and gets its own unique permission set. This is powerful but creates maintenance complexity — too many unique permissions makes troubleshooting access issues a nightmare.</div>
+      </div>
+      <table class="tbl">
+        <tr><th>Default Permission Group</th><th>Permission Level</th><th>Can Do</th></tr>
+        <tr><td>Site Owners</td><td>Full Control</td><td>Everything — change permissions, design, delete</td></tr>
+        <tr><td>Site Members</td><td>Edit</td><td>Upload, edit, delete files. Add list items</td></tr>
+        <tr><td>Site Visitors</td><td>Read</td><td>View and download only — cannot change anything</td></tr>
+      </table>
+      <div class="warn">⚠️ Never give individual users permissions directly to files or folders — always use permission groups. Managing 100 individual permissions across 50 documents becomes unmanageable. Groups let you add/remove access by changing one group membership.</div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>SharePoint Versioning — Never Lose a File</div>
+      <p class="prose">Every time someone saves a document in SharePoint, a <strong>version</strong> is created. You can restore any previous version at any time. This is what makes SharePoint-stored files resilient against accidental overwrites and ransomware.</p>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A finance analyst accidentally deletes 3,000 characters of data from a financial model and saves it. She realizes the mistake 2 days later. In SharePoint: Click file → Version history → Find the version from 2 days ago → Restore. <strong>The file is back exactly as it was, in 10 seconds, with zero data loss.</strong> Without versioning (like a network file share), this data would be permanently gone.</div>
+      </div>
+      <div class="warn">⚠️ Versioning has a hidden cost: every version stores the full file. A 10MB Excel file with 100 versions uses 1GB of SharePoint storage. Set version limits (50 major versions is usually sufficient) to prevent storage quota issues.</div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">5</div>SharePoint External Sharing</div>
+      <p class="prose">SharePoint can share content with people outside your organization. There are four levels of sharing, controlled at both the tenant level (maximum allowed) and site level (can be more restrictive):</p>
+      <table class="tbl">
+        <tr><th>Sharing Level</th><th>What It Means</th><th>Link Type</th></tr>
+        <tr><td>Anyone</td><td>No sign-in required. Anyone with the link gets access</td><td>"Anyone" link — most permissive</td></tr>
+        <tr><td>New &amp; Existing Guests</td><td>External users must sign in. Can invite new external users</td><td>Specific people link</td></tr>
+        <tr><td>Existing Guests Only</td><td>Only external users already in your directory (already invited once)</td><td>Specific people link</td></tr>
+        <tr><td>Only People in Your Org</td><td>No external sharing at all. Internal only.</td><td>People in your org link</td></tr>
+      </table>
+      <div class="note">💡 The tenant setting acts as a <strong>ceiling</strong>. If tenant is "Existing Guests Only," no site can enable "Anyone" links, no matter what the site-level setting says. Site-level can only be <em>more restrictive</em>, never more permissive than tenant.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONEDRIVE -->
+<div id="pg-onedrive" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › OneDrive for Business</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(59,130,246,.12)">☁️</div><div><div class="pg-title">OneDrive for Business</div><div class="pg-sub">Personal cloud storage — sync, sharing, versioning, KFM — explained simply</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is OneDrive for Business?</div>
+      <p class="prose">OneDrive for Business is <strong>personal cloud storage for each employee</strong>. When your company assigns you an M365 license, you automatically get a OneDrive — typically 1TB of personal storage. It lives at <em>contoso-my.sharepoint.com/personal/yourname_contoso_com</em> (it's actually built on SharePoint technology underneath).</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🗄️ Real World Analogy</div>
+        <div class="analogy-txt">OneDrive is like a <strong>personal desk drawer at work</strong>. It's yours — you decide what goes in it and who (if anyone) can see specific items. Compare to SharePoint, which is like <strong>the shared filing room</strong> for the whole department — everyone with access can see everything stored there. <br><br><strong>Practical rule:</strong> Put YOUR personal work files in OneDrive. Put files the TEAM needs to access in SharePoint (or Teams channel Files).</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>How OneDrive Sync Works</div>
+      <p class="prose">The OneDrive sync client is a program that runs in the Windows/Mac system tray. It creates a folder on your local computer that mirrors what's in your cloud OneDrive. When you save a file to the OneDrive folder, it automatically uploads to the cloud. When someone shares a file with you, it syncs down.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">💾</span><span class="fl">Save file to<br>OneDrive folder</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🔄</span><span class="fl">Sync client<br>detects change</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📤</span><span class="fl">Uploads to<br>cloud over HTTPS</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">☁️</span><span class="fl">Stored in<br>Microsoft datacenter</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📱</span><span class="fl">Available on<br>all your devices</span></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">Vikram saves a PowerPoint to his OneDrive folder on his laptop. He walks to a meeting room, opens his tablet, and the presentation is already there. He makes edits during the meeting. When he gets back to his desk, his laptop already has the updated version. <strong>Zero manual file transfer. Zero email attachments. All automated by the sync client.</strong></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>Files On-Demand — Smart Storage</div>
+      <p class="prose"><strong>Files On-Demand</strong> is OneDrive's smart storage feature. Instead of downloading ALL your OneDrive files to your computer (which could be terabytes), Files On-Demand shows all files as placeholders. They only download when you actually open them.</p>
+      <table class="tbl">
+        <tr><th>File Status Icon</th><th>What It Means</th></tr>
+        <tr><td>☁️ Cloud icon (blue)</td><td>File exists only in the cloud. Opening it will download it first. Does NOT work offline.</td></tr>
+        <tr><td>✅ Green checkmark</td><td>File was recently downloaded and cached locally. Available offline.</td></tr>
+        <tr><td>🔒 Always available (green circle)</td><td>File is permanently stored on device. Right-click → "Always keep on this device"</td></tr>
+      </table>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Known Folder Move (KFM) — Backing Up Desktop and Documents</div>
+      <p class="prose"><strong>Known Folder Move (KFM)</strong> is a feature that automatically redirects a user's <strong>Desktop, Documents, and Pictures</strong> folders to sync with OneDrive. This means all work files saved to the Desktop are automatically backed up — even if the laptop dies, all data is safe in the cloud.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🌧️ Real World Analogy</div>
+        <div class="analogy-txt">Without KFM, when an employee's laptop is lost or stolen, <strong>everything on their Desktop and Documents is gone forever</strong>. With KFM enabled, it's like having a <strong>real-time automatic backup running silently in the background</strong>. The employee gets a new laptop, signs in to OneDrive, and their Desktop looks exactly the same as before. <strong>Zero data loss.</strong></div>
+      </div>
+      <div class="note">💡 IT deploys KFM via Intune or Group Policy. Users often don't even notice KFM running — they just see the OneDrive icon in their Desktop/Documents folder properties. This is one of the highest-value, lowest-cost IT wins available in M365.</div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">5</div>OneDrive vs SharePoint — When to Use Which</div>
+      <table class="tbl">
+        <tr><th>Scenario</th><th>Use OneDrive</th><th>Use SharePoint</th></tr>
+        <tr><td>Working on a personal draft</td><td>✅ Yes — it's yours until ready to share</td><td>—</td></tr>
+        <tr><td>Team project files</td><td>—</td><td>✅ Yes — all team members can access</td></tr>
+        <tr><td>Company policies and procedures</td><td>—</td><td>✅ Yes — publish to all employees</td></tr>
+        <tr><td>My personal HR documents</td><td>✅ Yes — private to you</td><td>—</td></tr>
+        <tr><td>Shared with an external partner</td><td>✅ Good for ad-hoc sharing</td><td>✅ Better for long-term collaboration</td></tr>
+        <tr><td>Teams channel files</td><td>—</td><td>✅ Stored automatically in SPO</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+<!-- INTUNE -->
+<div id="pg-intune" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Intune — Device Management</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(245,158,11,.12)">📱</div><div><div class="pg-title">Microsoft Intune — Device Management</div><div class="pg-sub">MDM vs MAM, Autopilot, Compliance Policies — how IT manages devices without touching them</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is Microsoft Intune?</div>
+      <p class="prose">Intune is Microsoft's <strong>cloud-based device management solution</strong>. It allows IT administrators to manage laptops, phones, and tablets — configuring settings, pushing apps, enforcing security policies, and wiping devices remotely — <em>all without physically touching the device</em>. It's part of the Microsoft Endpoint Manager suite.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🎮 Real World Analogy</div>
+        <div class="analogy-txt">Without Intune, IT is like a driving instructor who has to get in every single car manually to check mirrors, adjust settings, and verify the driver has a license. <strong>With Intune, IT is like a fleet management control center</strong> — you see all vehicles on one dashboard, push configuration changes to all of them simultaneously, get alerts when any vehicle breaks a rule, and can remotely disable a vehicle if it's stolen. All from one screen, without leaving the office.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>MDM vs MAM — The Two Ways Intune Works</div>
+      <p class="prose">Intune manages devices in two fundamentally different ways, depending on whether IT owns the device or the employee does:</p>
+      <table class="tbl">
+        <tr><th></th><th>MDM — Mobile Device Management</th><th>MAM — Mobile App Management</th></tr>
+        <tr><td><strong>Who owns device?</strong></td><td>Company (corporate-owned)</td><td>Employee (personal/BYOD)</td></tr>
+        <tr><td><strong>What does IT manage?</strong></td><td>The ENTIRE device — OS settings, WiFi, VPN, certificates, all apps</td><td>Only the work APPS (Outlook, Teams, Edge) — not the personal device</td></tr>
+        <tr><td><strong>Example</strong></td><td>IT can see device encryption status, push Office, enforce screen lock</td><td>IT can force a PIN to open Outlook, prevent copy-paste from Outlook to personal apps, wipe ONLY corporate data</td></tr>
+        <tr><td><strong>Best for</strong></td><td>Company laptops, company-issued iPhones</td><td>BYOD — employees using personal phones for work email</td></tr>
+      </table>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A company has 500 corporate laptops (MDM-enrolled — IT manages everything) and 300 employees using personal iPhones for Outlook (MAM-only — IT only manages the Outlook app). An employee's personal iPhone is lost: IT uses Intune to <strong>selective wipe</strong> — removes only the corporate Outlook data and removes the device's access to company email. The employee's personal photos, WhatsApp, and other apps are completely untouched.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>Compliance Policies — What They Are</div>
+      <p class="prose">A <strong>Compliance Policy</strong> in Intune defines the minimum security requirements a device must meet. If a device doesn't meet these requirements, it's marked <em>Non-Compliant</em> — and Conditional Access can then block that device from accessing M365 resources.</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">BitLocker Required</div><div class="term-d">Device's hard drive must be encrypted with BitLocker</div></div>
+        <div class="term"><div class="term-w">Minimum OS Version</div><div class="term-d">Device must run at least Windows 11 22H2 (or iOS 16, etc.)</div></div>
+        <div class="term"><div class="term-w">Antivirus Required</div><div class="term-d">Microsoft Defender (or another AV) must be running and updated</div></div>
+        <div class="term"><div class="term-w">Password Required</div><div class="term-d">Device must have a PIN or password set to unlock</div></div>
+        <div class="term"><div class="term-w">Compliant Device</div><div class="term-d">ALL compliance requirements are met → CA grants access</div></div>
+        <div class="term"><div class="term-w">Non-Compliant</div><div class="term-d">One or more requirements failed → CA blocks access to M365</div></div>
+      </div>
+      <div class="flow">
+        <div class="fbox"><span class="fi">💻</span><span class="fl">Device checks<br>in to Intune</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📋</span><span class="fl">Compliance<br>policy evaluated</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">✅</span><span class="fl">Compliant<br>Status</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🔐</span><span class="fl">CA sees compliant<br>→ grants M365</span></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Windows Autopilot — Zero Touch Device Deployment</div>
+      <p class="prose"><strong>Autopilot</strong> lets a brand-new laptop ship directly from Dell/HP/Lenovo straight to an employee's home — and when they power it on, it automatically sets itself up as a corporate device, installs all required apps, and configures all settings. IT never touches the laptop physically.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">🏭</span><span class="fl">Manufacturer<br>registers device</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📦</span><span class="fl">Ships direct<br>to employee</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🔌</span><span class="fl">Employee powers<br>on + signs in</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">☁️</span><span class="fl">Intune configures<br>everything</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">💼</span><span class="fl">Ready for work<br>in 30 minutes</span></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A consulting firm hires 50 people across 8 cities. Without Autopilot: IT ships laptops to HQ, configures each manually (4 hours each), re-ships to cities. 200+ hours of IT work. <strong>With Autopilot:</strong> Laptops ship directly to each new hire. They sign in on Day 1, Intune pushes all apps (Office, VPN, security tools), configures WiFi and VPN automatically. IT does zero manual configuration. New hires are productive from their first login.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- M365 APPS -->
+<div id="pg-apps" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › M365 Apps / Office Suite</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(239,68,68,.12)">🖥️</div><div><div class="pg-title">M365 Apps — The Office Suite</div><div class="pg-sub">Licensing, Click-to-Run, activation, update channels — why Office works the way it does</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>M365 Apps vs. Traditional Office — The Key Difference</div>
+      <div class="analogy">
+        <div class="analogy-lbl">📺 Real World Analogy</div>
+        <div class="analogy-txt"><strong>Traditional Office (2019, 2021)</strong> is like buying a TV — you pay once, own it forever, but it never gets new features. The hardware and software age together.<br><br><strong>M365 Apps</strong> is like a Netflix subscription for software — you pay monthly/annually, always have the latest version with new features, and you can install it on up to 5 devices. Cancel the subscription and it stops working (goes to read-only mode). It's software as a service.</div>
+      </div>
+      <table class="tbl">
+        <tr><th></th><th>M365 Apps for Enterprise</th><th>Office 2021 (Perpetual)</th></tr>
+        <tr><td>Updates</td><td>Monthly new features + security patches automatically</td><td>Security patches only — no new features ever</td></tr>
+        <tr><td>Licensing</td><td>Subscription — per user per month</td><td>One-time purchase per device</td></tr>
+        <tr><td>Devices</td><td>Up to 5 devices per user license</td><td>1 device (the one you bought it for)</td></tr>
+        <tr><td>Online dependency</td><td>Must check in online every 30 days to validate license</td><td>Works fully offline after activation</td></tr>
+        <tr><td>Co-authoring</td><td>Full real-time co-authoring</td><td>Limited co-authoring</td></tr>
+      </table>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>How Click-to-Run (C2R) Works</div>
+      <p class="prose">M365 Apps uses a delivery technology called <strong>Click-to-Run (C2R)</strong>. Unlike traditional MSI installations that copy files to the disk, C2R uses <em>virtualized application streaming</em>. This means Office can start running before it's fully downloaded, and multiple versions can coexist on the same machine without conflicts.</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">ClickToRunSvc</div><div class="term-d">The Windows service that manages Office installation and updates. If this service stops, Office stops updating.</div></div>
+        <div class="term"><div class="term-w">Update Channel</div><div class="term-d">How often Office receives updates. Current Channel = monthly. Monthly Enterprise = monthly but delayed 2 months. Semi-Annual = every 6 months.</div></div>
+        <div class="term"><div class="term-w">ODT</div><div class="term-d">Office Deployment Tool — command-line tool IT uses to customize, deploy, and update M365 Apps at scale</div></div>
+        <div class="term"><div class="term-w">ospp.vbs</div><div class="term-d">Office Software Protection Platform script — used to check activation status and force license checks</div></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>How Office Activation Works</div>
+      <p class="prose">M365 Apps requires <strong>online activation every 30 days</strong>. When you sign in to Office with your M365 account, your credentials are verified against Entra ID, your license is confirmed, and a local activation token is stored. Office checks this token daily. After 30 days, it contacts Microsoft's licensing servers to renew.</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">👤</span><span class="fl">User signs in<br>to Office</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🔐</span><span class="fl">Entra ID<br>verifies identity</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">📋</span><span class="fl">License service<br>confirms assignment</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">🎫</span><span class="fl">Activation token<br>stored locally</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">✅</span><span class="fl">Office fully<br>functional</span></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example — Why "Unlicensed Product" Happens</div>
+        <div class="example-txt">A user's M365 license is removed by an admin (maybe switched from E3 to F3 which has no desktop apps). The next time Office tries to validate its token (within 30 days), it fails. Office immediately shows the red "UNLICENSED PRODUCT" banner and enters read-only mode. <strong>Fix: Assign a license that includes M365 Apps → user signs out and back in to Office → activation token refreshes → banner disappears.</strong></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Shared Computer Activation — For VDI and RDS Environments</div>
+      <p class="prose">In a normal setup, one license = up to 5 devices. But in a <strong>VDI (Virtual Desktop Infrastructure)</strong> or <strong>RDS (Remote Desktop Services)</strong> environment, 100 users might log in to the SAME server at different times. You can't assign 100 licenses to 1 machine. The solution is <strong>Shared Computer Activation (SCA)</strong>.</p>
+      <p class="prose">With SCA enabled, activation is per-user-session instead of per-machine. Each user who logs in to the VDI/RDS gets their own temporary 12-hour activation token tied to their personal license. When they log out, the token is released. The machine has no persistent activation — users bring their own license at login time.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- POWER PLATFORM -->
+<div id="pg-power" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Power Platform</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(234,179,8,.12)">⚡</div><div><div class="pg-title">Power Platform — Automate &amp; Build</div><div class="pg-sub">Power Automate, Power Apps, Power BI, Dataverse — no-code/low-code tools explained</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is Power Platform?</div>
+      <p class="prose">Power Platform is a suite of tools that lets <strong>business users automate tasks, build apps, and analyze data — without writing traditional code</strong>. It has four main components: Power Automate, Power Apps, Power BI, and Power Virtual Agents (Copilot Studio). They all connect to the same data platform (Dataverse) and integrate natively with M365.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🏭 Real World Analogy</div>
+        <div class="analogy-txt">Before Power Platform, if a business team needed a leave approval workflow, they submitted a request to IT who built it in 3 months. With Power Platform, the HR team builds it themselves in a day using point-and-click tools — <strong>no IT department required for routine business automation</strong>. Think of it as giving business users a "programmable spreadsheet" that can connect to any system and take actions automatically.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>Power Automate — Automate Repetitive Work</div>
+      <p class="prose">Power Automate creates <strong>automated workflows</strong>. A workflow has three parts: a <em>Trigger</em> (what starts it), <em>Conditions</em> (optional rules), and <em>Actions</em> (what it does).</p>
+      <div class="flow">
+        <div class="fbox"><span class="fi">⚡</span><span class="fl">Trigger<br>"When..." something happens</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">❓</span><span class="fl">Condition<br>"If..." this is true</span></div>
+        <div class="farr ac">→</div>
+        <div class="fbox"><span class="fi">⚙️</span><span class="fl">Actions<br>"Then..." do these steps</span></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example — Leave Approval Workflow</div>
+        <div class="example-txt"><strong>Trigger:</strong> When a new item is added to the "Leave Requests" SharePoint list<br><strong>Condition:</strong> If leave days requested &gt; 5<br><strong>Action 1:</strong> Send approval request to manager (Teams Approval + Email)<br><strong>Action 2:</strong> If approved → update the list item to "Approved" + send confirmation email to employee<br><strong>Action 3:</strong> If rejected → notify employee with reason<br><br>This entire process is automated. Zero manual steps from IT. <strong>Built in 2 hours using drag-and-drop in Power Automate.</strong></div>
+      </div>
+      <div class="terms">
+        <div class="term"><div class="term-w">Connector</div><div class="term-d">A pre-built integration to a service (SharePoint, Teams, Outlook, Salesforce, SAP, SQL). Over 900 connectors available.</div></div>
+        <div class="term"><div class="term-w">Flow</div><div class="term-d">The actual workflow you build. A set of triggers + conditions + actions.</div></div>
+        <div class="term"><div class="term-w">DLP Policy</div><div class="term-d">Data Loss Prevention policy that governs which connectors can be combined — prevents data flowing to unauthorized destinations</div></div>
+        <div class="term"><div class="term-w">Environment</div><div class="term-d">A container that holds flows, apps, and data. Separate environments for Dev, Test, and Production is best practice.</div></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>Power Apps — Build Business Apps Without Code</div>
+      <p class="prose">Power Apps lets you <strong>build mobile and web apps</strong> using a drag-and-drop interface — similar to building Excel formulas, not traditional programming. There are two types:</p>
+      <table class="tbl">
+        <tr><th>Type</th><th>What It Is</th><th>Best For</th></tr>
+        <tr><td>Canvas App</td><td>Completely free-form — you design every screen pixel by pixel. Works like PowerPoint for apps.</td><td>Custom UI that matches your exact business workflow</td></tr>
+        <tr><td>Model-Driven App</td><td>Auto-generated UI based on your Dataverse data model. Less design control, more structure.</td><td>CRM-style apps, data entry forms, complex business logic</td></tr>
+      </table>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A field service company needs technicians to submit job completion reports from their phones — including photos, GPS location, parts used, and customer signature. Previously: paper forms sent by post, manually entered by an admin (2-day delay). <strong>With Power Apps:</strong> Technician opens the canvas app on their phone, fills out the form, takes photos, adds signature, submits. Data instantly appears in SharePoint. Manager sees it in a Power BI dashboard in real time. <strong>Built in 1 week, zero code.</strong></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Power BI — Turn Data Into Insights</div>
+      <p class="prose">Power BI is Microsoft's <strong>business intelligence and data visualization tool</strong>. You connect it to data sources (Excel, SharePoint, SQL, Salesforce, etc.), it processes the data, and you create interactive dashboards and reports. Anyone can filter, drill down, and explore the data visually.</p>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A sales manager has data spread across: <strong>Salesforce</strong> (pipeline data), <strong>Excel</strong> (quotas), and <strong>SharePoint</strong> (contract status). With Power BI: connect all three sources, create one dashboard with a map of deals by region, a funnel chart of pipeline stages, and a bar chart of quota attainment per rep. <strong>Refreshes automatically every hour. Shared via Teams tab. Every sales meeting now starts with live data instead of manually compiled spreadsheets.</strong></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECURITY -->
+<div id="pg-security" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Security &amp; Compliance</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(13,148,136,.12)">🛡️</div><div><div class="pg-title">Security &amp; Microsoft Purview</div><div class="pg-sub">DLP, Sensitivity Labels, Defender, Audit Logs — protecting data and meeting compliance</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>The Two Layers of M365 Security</div>
+      <p class="prose">M365 security operates at two distinct levels, often managed by separate teams:</p>
+      <table class="tbl">
+        <tr><th>Layer</th><th>Protects</th><th>Tools</th><th>Admin Portal</th></tr>
+        <tr><td><strong>Identity &amp; Access Security</strong></td><td>Who can sign in and from where</td><td>Conditional Access, MFA, PIM, ID Protection</td><td>Entra Admin Center</td></tr>
+        <tr><td><strong>Information &amp; Compliance</strong></td><td>What data can be accessed and what happens to it</td><td>DLP, Sensitivity Labels, Retention, eDiscovery, Audit</td><td>Purview Compliance Portal</td></tr>
+      </table>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>DLP — Data Loss Prevention</div>
+      <p class="prose"><strong>DLP policies</strong> automatically detect and protect sensitive information as it moves through M365 — email, Teams chats, SharePoint files, OneDrive files. DLP uses <em>sensitive information types</em> (pre-built regex patterns for credit cards, SSNs, passport numbers, etc.) to identify sensitive content and then takes action.</p>
+      <div class="analogy">
+        <div class="analogy-lbl">🔍 Real World Analogy</div>
+        <div class="analogy-txt">DLP is like an <strong>X-ray machine at airport security</strong>. Every bag (email/file) going through gets scanned automatically. The machine is pre-programmed to recognize dangerous items (sensitive data patterns). If it finds something suspicious, it alerts the security officer (compliance alert), holds the bag (blocks email), or stamps it as "reviewed" (policy tip notification). This happens to ALL bags — the person carrying it doesn't have to do anything differently.</div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">A bank employee accidentally emails a spreadsheet with 500 customer credit card numbers to an external Gmail address. <strong>Without DLP:</strong> Email delivers. Compliance breach. Potential fine. <strong>With DLP:</strong> DLP policy detects 500+ credit card number patterns in the attachment. It blocks the email from delivering, shows the user a policy tip ("This email may contain sensitive information — are you sure?"), and alerts the compliance team with full details. <strong>Data breach prevented automatically, in milliseconds.</strong></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>Sensitivity Labels — Classify and Protect Content</div>
+      <p class="prose">Sensitivity labels are <strong>tags you apply to documents and emails to classify their sensitivity level</strong>. Unlike DLP which acts on content patterns, sensitivity labels can encrypt files, restrict who can open them, add watermarks, and prevent forwarding — based on the classification applied.</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">Public</div><div class="term-d">Anyone can see this. No restrictions. Annual report, public website content.</div></div>
+        <div class="term"><div class="term-w">Internal</div><div class="term-d">Employees only. Can be shared internally but not externally.</div></div>
+        <div class="term"><div class="term-w">Confidential</div><div class="term-d">Specific teams only. Adds encryption. Only assigned users can open the file.</div></div>
+        <div class="term"><div class="term-w">Highly Confidential</div><div class="term-d">Maximum protection. Encrypted. Cannot be forwarded. Watermarked. Audit logged.</div></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Example</div>
+        <div class="example-txt">An HR manager applies the "Highly Confidential — HR Only" label to a salary spreadsheet in SharePoint. <strong>What happens automatically:</strong> The file is encrypted. Only HR department members can open it (verified at the time of opening, not just at download). If anyone forwards the file to an external person, the external person cannot open it — they get an "Access Denied" message because encryption checked their identity against the allowed list. The watermark "HIGHLY CONFIDENTIAL" appears on every page when printed.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Audit Logs — The "Security Camera" of M365</div>
+      <p class="prose">The <strong>Microsoft Purview Audit Log</strong> records virtually every user and admin action in M365 — who signed in, who downloaded what file, who deleted an email, who changed a permission, who created a new inbox rule. It's the forensic trail for security investigations and compliance audits.</p>
+      <div class="example">
+        <div class="example-lbl">✅ Real Scenario</div>
+        <div class="example-txt">An employee is suspected of stealing customer data before resigning. The compliance team searches the Audit Log for that user: <strong>Week before resignation:</strong> Audit shows 2,000 file downloads from SharePoint, mass email to personal Gmail (caught by DLP — but DLP logs are also in audit), creation of an inbox forwarding rule to personal email. <strong>This audit trail becomes evidence in the HR investigation.</strong> Without audit logs, there would be no way to prove what happened.</div>
+      </div>
+      <div class="warn">⚠️ Audit logging is NOT enabled by default in older tenants. Always verify it's on: Purview Compliance Portal → Audit → Search. If you see "Start recording activity," it was never turned on. Enable it immediately — you cannot recover past events once they're not logged.</div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">5</div>Microsoft Defender for Office 365 — Email Threat Protection</div>
+      <p class="prose">Defender for Office 365 protects against <strong>malicious emails, phishing, and malware</strong>. It adds threat intelligence on top of Exchange Online's basic spam filtering.</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">Safe Attachments</div><div class="term-d">Opens every email attachment in a virtual sandbox (isolated environment) before delivering it. If the attachment does something malicious in the sandbox, it's blocked. Zero-day protection.</div></div>
+        <div class="term"><div class="term-w">Safe Links</div><div class="term-d">Rewrites every URL in emails. When user clicks a link, Safe Links checks the URL in real-time at click-time (not just at delivery). Catches links that became malicious after delivery.</div></div>
+        <div class="term"><div class="term-w">Anti-Phishing</div><div class="term-d">AI-powered analysis detecting impersonation attempts, spoofed domains, and suspicious sender behavior.</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- HOW ALL SERVICES CONNECT -->
+<div id="pg-together" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › How All Services Connect</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(168,85,247,.12)">🔗</div><div><div class="pg-title">How All M365 Services Work Together</div><div class="pg-sub">The complete architecture — and a single employee's workday to tie it all together</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>The M365 Architecture — Everything Connected to Identity</div>
+      <p class="prose">Every single M365 service connects through one central hub: <strong>Entra ID (Identity)</strong>. No service works without identity. This is the foundational principle of the entire platform:</p>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:24px;margin:16px 0;text-align:center">
+        <div style="display:inline-block;background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:50%;width:70px;height:70px;line-height:70px;font-size:28px;margin-bottom:16px">🔐</div>
+        <div style="font-family:var(--head);font-size:14px;font-weight:800;margin-bottom:20px;color:var(--ac)">ENTRA ID — The Center of Everything</div>
+        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+          <div style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--ac3)">📧 Exchange<br>Online</div>
+          <div style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:#818cf8">💬 Microsoft<br>Teams</div>
+          <div style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--ok)">📁 SharePoint<br>Online</div>
+          <div style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--ac)">☁️ OneDrive<br>Business</div>
+          <div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--warn)">📱 Intune<br>Endpoint</div>
+          <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--err)">🖥️ M365<br>Apps</div>
+          <div style="background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:#fde047">⚡ Power<br>Platform</div>
+          <div style="background:rgba(13,148,136,.1);border:1px solid rgba(13,148,136,.25);border-radius:8px;padding:10px 14px;font-size:11px;color:#2dd4bf">🛡️ Security<br>Purview</div>
+        </div>
+      </div>
+      <p class="prose">Every service above checks with Entra ID on every request: <em>"Is this user authenticated? Do they have the right license? Do their Conditional Access policies allow this?"</em> If Entra says yes, access is granted. This is why an MFA lockout or Conditional Access misconfiguration instantly breaks access to ALL services simultaneously.</p>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>The Service Dependencies Map</div>
+      <p class="prose">Services don't just connect to Entra ID — they also depend on each other:</p>
+      <div class="together-card">
+        <div class="tc-title">💬 Microsoft Teams depends on:</div>
+        <div class="tc-body">
+          <strong>Exchange Online</strong> — Calendar, meeting invites, chat message compliance storage<br>
+          <strong>SharePoint Online</strong> — All Files tabs in channels, wiki content, tabs<br>
+          <strong>OneDrive</strong> — Personal file sharing in chat, meeting recordings storage<br>
+          <strong>Entra ID</strong> — Authentication, guest access, M365 Groups (team membership)<br>
+          <strong>Intune</strong> — Device compliance signals for Conditional Access to Teams
+        </div>
+      </div>
+      <div class="together-card">
+        <div class="tc-title">📁 SharePoint Online depends on:</div>
+        <div class="tc-body">
+          <strong>Entra ID</strong> — User authentication, external B2B guest accounts<br>
+          <strong>Exchange Online</strong> — SharePoint sends email notifications and alerts through EXO<br>
+          <strong>OneDrive</strong> — OneDrive IS SharePoint (personal sites built on SPO technology)<br>
+          <strong>Microsoft Purview</strong> — Retention policies, sensitivity labels, DLP policies all apply to SPO content
+        </div>
+      </div>
+      <div class="together-card">
+        <div class="tc-title">📱 Intune depends on:</div>
+        <div class="tc-body">
+          <strong>Entra ID</strong> — Device registration, user identity for MDM enrollment, group targeting<br>
+          <strong>M365 Apps</strong> — Intune deploys and manages Office installations<br>
+          <strong>Conditional Access</strong> — Intune compliance status is a signal CA policies evaluate<br>
+          <strong>Exchange Online</strong> — Mobile device policies apply to Exchange ActiveSync connections
+        </div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>A Complete Workday — How Every Service Plays Its Role</div>
+      <p class="prose">Let's follow <strong>Arjun</strong>, an IT consultant at Wipro, through his workday and see every M365 service in action:</p>
+
+      <div class="together-card">
+        <div class="tc-title">☀️ 8:45 AM — Arjun opens his laptop and signs in</div>
+        <div class="tc-body">
+          His Windows laptop (managed by <strong>Intune</strong>) has already received today's security policy updates overnight via Intune configuration profiles. Windows Hello (biometric) signs him in using a credential backed by <strong>Entra ID</strong>. <strong>Conditional Access</strong> checks: Is device compliant? Yes. Is MFA already satisfied by Windows Hello? Yes. Is sign-in from trusted network? Yes. Access granted to all M365 services instantly.
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">📧 9:00 AM — Opens Outlook, checks email</div>
+        <div class="tc-body">
+          <strong>Exchange Online</strong> delivers his emails. Outlook connects to EXO using Modern Authentication (OAuth token from Entra). A client email came in overnight — <strong>Defender for Office 365</strong> already scanned all attachments in a sandbox. One PDF had a suspicious link — Safe Links rewrote it to block if clicked. The email is clean. <strong>DLP policy</strong> reminds him via policy tip when he tries to reply with the client's contract attached — "This email may contain confidential information."
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">💬 10:00 AM — Joins a project standup on Teams</div>
+        <div class="tc-body">
+          The meeting invite was stored in his <strong>Exchange Online calendar</strong>. He joins via <strong>Teams</strong> — his audio and video travel over UDP to Microsoft's media relay servers. The team shares a project tracker — it's a <strong>SharePoint list</strong> embedded as a tab in the Teams channel. He opens the shared proposal document in the Files tab — stored in the <strong>SharePoint document library</strong> backing the Teams channel. He and his colleague edit it simultaneously — real-time co-authoring powered by <strong>M365 Apps</strong> saving to <strong>SharePoint</strong>.
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">📄 12:00 PM — Works on a personal report</div>
+        <div class="tc-body">
+          He creates a financial analysis Excel file and saves it to his <strong>OneDrive</strong> (personal storage). <strong>Known Folder Move</strong> means his Desktop and Documents are already syncing to OneDrive automatically. He applies a <strong>Sensitivity Label: "Confidential — Internal"</strong> — the file is encrypted and watermarked. Only Wipro employees can open it. He heads to lunch — the file is safely in the cloud.
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">⚡ 2:30 PM — Receives automated approval request</div>
+        <div class="tc-body">
+          The procurement team built a purchase order approval app in <strong>Power Apps</strong>. When the admin submits a PO above ₹1,00,000, a <strong>Power Automate flow</strong> triggers. It sends an approval request to Arjun's manager via <strong>Teams Approvals</strong>. The manager approves from the Teams notification. The flow then updates the <strong>SharePoint list</strong> status to "Approved" and sends a confirmation email via <strong>Exchange Online</strong> — all automatically, no manual steps.
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">🔒 6:00 PM — End of day, compliance running in background</div>
+        <div class="tc-body">
+          All of Arjun's activities today were logged in the <strong>Microsoft Purview Audit Log</strong> — every file he opened, every email he sent, every Teams meeting he joined. <strong>Retention policies</strong> are preserving all emails and Teams chats for 7 years as required by compliance regulations. <strong>Intune</strong> checks device compliance status one more time before he locks the screen. <strong>Entra ID Protection</strong> noted no suspicious sign-in activity today. Everything normal.
+        </div>
+      </div>
+
+      <div class="note">💡 <strong>Key Takeaway:</strong> In that single workday, Arjun used every M365 service — often without realizing it. As an M365 support engineer, when something breaks in his day, <em>your job is to trace which service in this chain failed</em> and why. That's why understanding how they connect is more valuable than memorizing commands.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LICENSING -->
+<div id="pg-licensing" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Licensing Explained</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(236,72,153,.12)">💳</div><div><div class="pg-title">M365 Licensing — Simply Explained</div><div class="pg-sub">E1, E3, E5, F3, Business Basic, Business Premium — what's in each plan</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>The Simple Mental Model for Licensing</div>
+      <div class="analogy">
+        <div class="analogy-lbl">🍽️ Real World Analogy</div>
+        <div class="analogy-txt">Think of M365 plans like restaurant meal deals. <strong>Starter (E1/Business Basic)</strong>: The basics — email, Teams, SharePoint, cloud storage. No desktop Office apps. <strong>Main Course (E3/Business Standard)</strong>: Everything in Starter plus desktop Word/Excel/PowerPoint/Outlook installed on your PC + compliance tools. <strong>Full Premium (E5/Business Premium)</strong>: Everything in Main Course plus advanced security (Defender for Identity, Defender for Endpoint), advanced compliance, Power BI Pro, and more. You're paying for both the food AND a security guard at the door.</div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>Enterprise Plans (for large organizations)</div>
+      <table class="tbl">
+        <tr><th>Plan</th><th>Price Range</th><th>Includes</th><th>Missing vs. Next Tier</th></tr>
+        <tr><td><strong style="color:var(--ac)">M365 E1</strong></td><td>~$10/user/mo</td><td>Exchange Online, Teams, SharePoint, OneDrive 1TB, web Office apps only (Word/Excel in browser)</td><td>No desktop Office apps, no advanced security, no compliance</td></tr>
+        <tr><td><strong style="color:var(--ok)">M365 E3</strong></td><td>~$36/user/mo</td><td>Everything in E1 + M365 Apps (desktop Office), Azure AD P1 (Conditional Access), compliance tools, sensitivity labels</td><td>No advanced security (Defender P2, Identity Protection), no Power BI Pro</td></tr>
+        <tr><td><strong style="color:var(--warn)">M365 E5</strong></td><td>~$57/user/mo</td><td>Everything in E3 + Defender for Endpoint P2, Defender for Identity, Advanced Compliance, Power BI Pro, Phone System</td><td>Nothing significant — this is the top tier</td></tr>
+        <tr><td><strong style="color:var(--txt3)">M365 F3</strong></td><td>~$8/user/mo</td><td>For Frontline workers. Exchange (2GB), Teams, SharePoint. No desktop apps. For warehouse/retail workers.</td><td>Very limited compared to E1 — no desktop apps, limited mailbox size</td></tr>
+      </table>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>Business Plans (for small-medium organizations, under 300 users)</div>
+      <table class="tbl">
+        <tr><th>Plan</th><th>Equivalent to</th><th>Best For</th></tr>
+        <tr><td><strong>M365 Business Basic</strong></td><td>Similar to E1</td><td>Small businesses needing cloud email + Teams + SharePoint only</td></tr>
+        <tr><td><strong>M365 Business Standard</strong></td><td>Between E1 and E3</td><td>SMBs needing desktop Office apps + business services</td></tr>
+        <tr><td><strong>M365 Business Premium</strong></td><td>Similar to E3 with some E5 security features</td><td>SMBs that need Intune, Defender for Business, Azure AD P1 security</td></tr>
+      </table>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Add-On Licenses — Extending Base Plans</div>
+      <p class="prose">Some features aren't included in base plans and require add-on licenses:</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">Teams Phone</div><div class="term-d">Add-on that enables PSTN calling in Teams (Direct Routing or Calling Plans). Requires additional Calling Plan or SBC for Direct Routing.</div></div>
+        <div class="term"><div class="term-w">Power BI Pro</div><div class="term-d">Needed to share Power BI reports with others. Included in E5 or $10/user/month as add-on.</div></div>
+        <div class="term"><div class="term-w">Defender for Office P2</div><div class="term-d">Advanced threat hunting and attack simulation. Included in E5, add-on for E3.</div></div>
+        <div class="term"><div class="term-w">M365 Copilot</div><div class="term-d">AI assistant embedded across all M365 apps. Requires E3 or E5 base license + $30/user/month Copilot add-on.</div></div>
+      </div>
+      <div class="example">
+        <div class="example-lbl">✅ Real Licensing Example</div>
+        <div class="example-txt">A 200-person company has: <strong>180 E3 users</strong> (most employees need desktop Office), <strong>15 E5 users</strong> (security team + executives need advanced security and compliance), <strong>5 F3 users</strong> (warehouse staff who just need email and Teams on shared tablets). Total: they pay for three different license tiers, each sized to the actual needs of those user groups. This is common in real enterprise M365 deployments.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GITHUB -->
+<div id="pg-github" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Host on GitHub Pages</div>
+    <div class="pg-title-row"><div class="pg-ic" style="background:rgba(100,116,139,.12)">🐙</div><div><div class="pg-title">Host Both Guides on GitHub Pages — Free</div><div class="pg-sub">Step-by-step guide to access your HTML files from ANY device, online or offline</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">1</div>What is GitHub Pages and Why Use It?</div>
+      <p class="prose"><strong>GitHub Pages</strong> is a free service from GitHub that hosts static websites (HTML files) directly from a GitHub repository. Your HTML files become a website accessible from any browser, on any device, anywhere. It's 100% free and needs no server to maintain.</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">GitHub</div><div class="term-d">A free cloud platform for storing code files. Like OneDrive but specifically for code and text files. Free accounts get unlimited public repositories.</div></div>
+        <div class="term"><div class="term-w">Repository (Repo)</div><div class="term-d">A folder/project on GitHub. You'll create one repo to hold both your HTML guide files.</div></div>
+        <div class="term"><div class="term-w">GitHub Pages</div><div class="term-d">A feature that turns any repository's HTML files into a live website with a URL like: username.github.io/repo-name/</div></div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">2</div>Step-by-Step Setup — No Coding Required</div>
+
+      <div class="together-card">
+        <div class="tc-title">Step 1 — Create a Free GitHub Account</div>
+        <div class="tc-body">
+          1. Go to <strong>github.com</strong> and click "Sign up"<br>
+          2. Enter your email address, create a password, choose a username (e.g., <em>astro-m365</em>)<br>
+          3. Verify your email address<br>
+          4. Choose the free plan (Free plan is all you need — it includes unlimited public repos and GitHub Pages)
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">Step 2 — Create a New Repository</div>
+        <div class="tc-body">
+          1. Once logged in, click the <strong>green "New"</strong> button (or the + icon → "New repository")<br>
+          2. Repository name: type <strong>m365-guides</strong> (no spaces — use hyphens)<br>
+          3. Description: "My M365 Study Guides"<br>
+          4. Select <strong>Public</strong> (required for free GitHub Pages)<br>
+          5. Check ✅ <strong>"Add a README file"</strong><br>
+          6. Click <strong>"Create repository"</strong>
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">Step 3 — Upload Your HTML Files</div>
+        <div class="tc-body">
+          1. You're now in your repository. Click <strong>"Add file" → "Upload files"</strong><br>
+          2. Drag and drop <strong>both HTML files</strong> into the upload area:<br>
+          &nbsp;&nbsp;• <code style="font-family:var(--mono);background:var(--s3);padding:2px 6px;border-radius:3px">m365_support_guide.html</code> (the troubleshooting guide)<br>
+          &nbsp;&nbsp;• <code style="font-family:var(--mono);background:var(--s3);padding:2px 6px;border-radius:3px">m365_fundamentals_guide.html</code> (this guide)<br>
+          3. At the bottom, make sure <strong>"Commit directly to the main branch"</strong> is selected<br>
+          4. Click <strong>"Commit changes"</strong><br>
+          5. Wait 30 seconds — both files are now in the cloud!
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">Step 4 — Enable GitHub Pages</div>
+        <div class="tc-body">
+          1. In your repository, click <strong>"Settings"</strong> (the gear icon in the top menu)<br>
+          2. Scroll down the left sidebar and click <strong>"Pages"</strong><br>
+          3. Under "Source," click the dropdown that says "None" → select <strong>"Deploy from a branch"</strong><br>
+          4. Under "Branch," select <strong>"main"</strong> from the first dropdown, leave folder as "/(root)"<br>
+          5. Click <strong>"Save"</strong><br>
+          6. Wait 2–5 minutes. Refresh the page. You'll see a green box with your live URL:<br>
+          &nbsp;&nbsp;<code style="font-family:var(--mono);background:var(--s3);padding:2px 6px;border-radius:3px">https://astro-m365.github.io/m365-guides/</code>
+        </div>
+      </div>
+
+      <div class="together-card">
+        <div class="tc-title">Step 5 — Create an Index Page (Recommended)</div>
+        <div class="tc-body">
+          Create a simple homepage that links to both guides. In your repository:<br>
+          1. Click <strong>"Add file" → "Create new file"</strong><br>
+          2. Name it: <strong>index.html</strong><br>
+          3. Paste this code:
+          <div class="cb">&lt;!DOCTYPE html&gt;
+&lt;html&gt;&lt;head&gt;&lt;title&gt;My M365 Guides&lt;/title&gt;
+&lt;style&gt;body{font-family:sans-serif;max-width:600px;margin:60px auto;background:#0a0f1a;color:#e2e8f0}
+a{color:#3b82f6;font-size:18px;display:block;margin:20px 0;padding:16px;background:#1e2d48;border-radius:8px;text-decoration:none}
+a:hover{background:#253556}&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;📘 My M365 Study Guides&lt;/h1&gt;
+&lt;a href="m365_fundamentals_guide.html"&gt;📘 M365 Fundamentals — How Everything Works&lt;/a&gt;
+&lt;a href="m365_support_guide.html"&gt;🛠️ M365 Support Engineer Prep — 100 Real Issues&lt;/a&gt;
+&lt;/body&gt;&lt;/html&gt;</div>
+          4. Click "Commit changes"<br>
+          5. Now <code style="font-family:var(--mono);background:var(--s3);padding:2px 6px;border-radius:3px">https://username.github.io/m365-guides/</code> shows a homepage linking to both guides!
+        </div>
+      </div>
+
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">3</div>How to Access Offline — Save for Offline Use</div>
+      <div class="together-card">
+        <div class="tc-title">Option A — Download HTML Files Directly (Works Offline)</div>
+        <div class="tc-body">
+          1. Open each guide URL in your browser<br>
+          2. Press <strong>Ctrl+S (Windows)</strong> or <strong>Cmd+S (Mac)</strong> → Save as "Webpage, HTML Only"<br>
+          3. The HTML file is saved to your Downloads folder<br>
+          4. Open the saved file in any browser — <strong>works completely offline, no internet needed</strong><br>
+          5. Save to Google Drive / iCloud / OneDrive to sync across all your devices
+        </div>
+      </div>
+      <div class="together-card">
+        <div class="tc-title">Option B — Add to Home Screen on Phone (Works Like an App)</div>
+        <div class="tc-body">
+          <strong>iPhone (Safari):</strong><br>
+          1. Open your GitHub Pages URL in Safari<br>
+          2. Tap the Share icon (box with arrow) → "Add to Home Screen"<br>
+          3. Name it "M365 Guide" → Add<br>
+          4. The guide icon appears on your home screen like an app. Tap to open instantly.<br><br>
+          <strong>Android (Chrome):</strong><br>
+          1. Open your GitHub Pages URL in Chrome<br>
+          2. Tap the 3-dot menu → "Add to Home screen"<br>
+          3. Confirm → Done. Works like a native app icon.
+        </div>
+      </div>
+      <div class="together-card">
+        <div class="tc-title">Option C — Update Files When You Learn More</div>
+        <div class="tc-body">
+          Your guides live on GitHub — you can update them anytime:<br>
+          1. Go to your repository on github.com<br>
+          2. Click on the HTML file you want to update<br>
+          3. Click the pencil ✏️ icon (Edit)<br>
+          4. Make changes directly in the browser editor<br>
+          5. Click "Commit changes"<br>
+          6. GitHub Pages automatically redeploys in 2–5 minutes<br>
+          7. Your URL stays the same — the content updates everywhere automatically
+        </div>
+      </div>
+    </div>
+
+    <div class="csec">
+      <div class="csec-title"><div class="csec-num">4</div>Your Final URLs</div>
+      <div class="note">💡 Your guides will be available at these permanent URLs (replace <strong>astro-m365</strong> with your actual GitHub username):<br><br>
+      🏠 Homepage: <strong>https://astro-m365.github.io/m365-guides/</strong><br>
+      📘 Fundamentals Guide: <strong>https://astro-m365.github.io/m365-guides/m365_fundamentals_guide.html</strong><br>
+      🛠️ Support Guide: <strong>https://astro-m365.github.io/m365-guides/m365_support_guide.html</strong><br><br>
+      Bookmark all three. Share with study partners. Access from any device. <strong>Free forever.</strong></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+const pages=document.querySelectorAll('.pg');
+const navItems=document.querySelectorAll('.ni');
+
+function go(id){
+  pages.forEach(p=>p.classList.remove('act'));
+  const t=document.getElementById('pg-'+id);
+  if(t) t.classList.add('act');
+  navItems.forEach(n=>n.classList.remove('act'));
+  navItems.forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+id+"'")) n.classList.add('act');
+  });
+  document.getElementById('main').scrollTop=0;
+  document.getElementById('srch').value='';
+}
+
+function doSearch(q){
+  q=q.toLowerCase().trim();
+  if(!q){
+    pages.forEach(p=>p.classList.remove('act'));
+    document.getElementById('pg-home').classList.add('act');
+    return;
+  }
+  pages.forEach(p=>p.classList.remove('act'));
+  const found=[];
+  document.querySelectorAll('.pg:not(#pg-home)').forEach(p=>{
+    if(p.textContent.toLowerCase().includes(q)){
+      found.push(p);
+    }
+  });
+  if(found.length>0){
+    found[0].classList.add('act');
+  }
+}
+</script>
+</main>
+</body>
+</html>

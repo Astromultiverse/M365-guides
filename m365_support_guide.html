@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Microsoft 365 Support Engineer Prep Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080c12;--s1:#0d1320;--s2:#121a2b;--s3:#192136;--bd:#1e2d48;--ac:#2563eb;--ac2:#7c3aed;--ac3:#0891b2;--ok:#059669;--warn:#d97706;--err:#dc2626;--pur:#9333ea;--txt:#e2e8f0;--txt2:#94a3b8;--txt3:#475569;--mono:'JetBrains Mono',monospace;--head:'Syne',sans-serif;--body:'DM Sans',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--body);display:flex;height:100vh;overflow:hidden;font-size:14px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+/* SIDEBAR */
+#sb{width:260px;min-width:260px;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow-y:auto}
+.sb-hdr{padding:18px 14px 14px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--s1);z-index:5}
+.logo{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.logo-txt{font-family:var(--head);font-size:13px;font-weight:800;line-height:1.2}
+.logo-sub{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;font-weight:400}
+.srch{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:6px 10px;font-family:var(--body);font-size:12px;color:var(--txt);outline:none;transition:border-color .2s}
+.srch:focus{border-color:var(--ac)}.srch::placeholder{color:var(--txt3)}
+.ns{padding:10px 8px 2px}.nl{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);padding:0 6px;margin-bottom:3px}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:5px;cursor:pointer;transition:all .15s;font-size:12.5px;color:var(--txt2);font-weight:400;position:relative;user-select:none}
+.ni:hover{background:var(--s2);color:var(--txt)}.ni.act{background:var(--s3);color:var(--ac);font-weight:500}
+.ni.act::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:3px;border-radius:0 2px 2px 0;background:var(--ac)}
+.nd{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.nb{margin-left:auto;background:var(--s3);color:var(--txt3);font-size:10px;padding:1px 5px;border-radius:8px;font-family:var(--mono)}
+.ni.act .nb{background:var(--ac);color:#fff}
+
+/* MAIN */
+#main{flex:1;overflow-y:auto;background:var(--bg)}
+.pg{display:none;animation:fi .2s ease}.pg.act{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* HOME */
+.hero{padding:36px 36px 28px;border-bottom:1px solid var(--bd);background:linear-gradient(135deg,var(--s1),var(--bg));position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-50px;right:-50px;width:280px;height:280px;background:radial-gradient(circle,rgba(37,99,235,.06),transparent 70%);pointer-events:none}
+.htag{display:inline-flex;align-items:center;gap:5px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);color:var(--ac);border-radius:20px;font-size:10px;font-weight:600;padding:3px 10px;letter-spacing:.05em;margin-bottom:14px}
+.htitle{font-family:var(--head);font-size:28px;font-weight:800;line-height:1.2;margin-bottom:12px}
+.htitle span{background:linear-gradient(90deg,var(--ac),var(--ac3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdesc{color:var(--txt2);font-size:13px;line-height:1.7;max-width:640px;margin-bottom:20px}
+.stats{display:flex;gap:16px;flex-wrap:wrap}
+.stat{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;min-width:100px}
+.sn{font-family:var(--head);font-size:22px;font-weight:800;color:var(--ac);line-height:1}
+.sl{font-size:10px;color:var(--txt3);margin-top:2px}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:24px 36px}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.sc:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 6px 24px rgba(37,99,235,.08)}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cc,var(--ac));opacity:.5}
+.sc-ic{font-size:22px;margin-bottom:8px}.sc-t{font-family:var(--head);font-size:13px;font-weight:700;margin-bottom:5px}
+.sc-d{font-size:11px;color:var(--txt2);line-height:1.5;margin-bottom:10px}
+.tags{display:flex;gap:4px;flex-wrap:wrap}
+.tg{font-size:9px;padding:2px 6px;border-radius:8px;font-weight:500;background:var(--s3);color:var(--txt3);font-family:var(--mono)}
+
+/* SERVICE HEADER */
+.svc-hdr{padding:26px 36px 20px;border-bottom:1px solid var(--bd);background:var(--s1)}
+.bc{font-size:10px;color:var(--txt3);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.bc span{cursor:pointer}.bc span:hover{color:var(--ac)}
+.strow{display:flex;align-items:center;gap:12px}
+.sic{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.st{font-family:var(--head);font-size:20px;font-weight:800}
+.ss{font-size:12px;color:var(--txt2);margin-top:2px}
+
+/* ISSUES */
+.ic-wrap{padding:20px 36px}
+.ic{background:var(--s1);border:1px solid var(--bd);border-radius:10px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.ih{padding:14px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:background .15s}
+.ih:hover{background:var(--s2)}
+.inum{min-width:26px;height:26px;background:var(--s3);border-radius:5px;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--txt3);display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+.im{flex:1}.it{font-size:13px;font-weight:600;margin-bottom:4px;color:var(--txt)}
+.ibgs{display:flex;gap:5px;flex-wrap:wrap}
+.badge{font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;font-family:var(--mono);letter-spacing:.02em}
+.bm{background:rgba(147,51,234,.15);color:var(--pur);border:1px solid rgba(147,51,234,.25)}
+.bs{background:rgba(37,99,235,.15);color:var(--ac);border:1px solid rgba(37,99,235,.25)}
+.bu{background:rgba(220,38,38,.15);color:var(--err);border:1px solid rgba(220,38,38,.25)}
+.bp{background:rgba(5,150,105,.15);color:var(--ok);border:1px solid rgba(5,150,105,.25)}
+.bh{background:rgba(220,38,38,.1);color:var(--err);border:1px solid rgba(220,38,38,.2)}
+.ei{color:var(--txt3);font-size:12px;margin-top:3px;transition:transform .2s;flex-shrink:0}
+.ic.open .ei{transform:rotate(180deg)}
+.ib{display:none;padding:0 18px 18px;border-top:1px solid var(--bd)}.ic.open .ib{display:block}
+.sec{margin-top:14px}
+.slbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.slbl::before{content:'';width:3px;height:11px;border-radius:2px;background:var(--ac);display:inline-block}
+.slbl.sy::before{background:var(--warn)}.slbl.ca::before{background:var(--err)}.slbl.fx::before{background:var(--ok)}.slbl.cm::before{background:var(--pur)}.slbl.nt::before{background:var(--ac3)}
+.syml{list-style:none;font-size:12.5px;line-height:1.6;color:var(--txt2)}
+.syml li{padding:3px 0 3px 13px;position:relative}
+.syml li::before{content:'▸';position:absolute;left:0;color:var(--warn);font-size:10px;top:5px}
+.stpl{list-style:none;counter-reset:s;font-size:12.5px;line-height:1.6;color:var(--txt2)}
+.stpl li{padding:5px 0 5px 24px;position:relative;border-bottom:1px solid var(--s3);counter-increment:s}
+.stpl li:last-child{border-bottom:none}
+.stpl li::before{content:counter(s);position:absolute;left:0;width:17px;height:17px;background:var(--ok);color:#000;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;top:7px}
+.cb{background:var(--s3);border:1px solid var(--bd);border-radius:7px;padding:10px 12px;font-family:var(--mono);font-size:11px;color:#a5f3fc;margin:6px 0;overflow-x:auto;line-height:1.8;white-space:pre}
+.cb .g{color:#86efac}.cb .c{color:var(--txt3);font-style:italic}.cb .y{color:#fcd34d}.cb .p{color:#f9a8d4}
+.nb2{background:rgba(8,145,178,.07);border-left:3px solid var(--ac3);border-radius:0 5px 5px 0;padding:9px 12px;font-size:11.5px;color:var(--txt2);line-height:1.6;margin-top:7px}
+.wb{background:rgba(217,119,6,.07);border-left:3px solid var(--warn);border-radius:0 5px 5px 0;padding:9px 12px;font-size:11.5px;color:var(--txt2);line-height:1.6;margin-top:7px}
+.rb{background:rgba(220,38,38,.06);border-left:3px solid var(--err);border-radius:0 5px 5px 0;padding:9px 12px;font-size:12.5px;color:var(--txt2);line-height:1.6;margin-top:7px}
+</style>
+</head>
+<body>
+<nav id="sb">
+  <div class="sb-hdr">
+    <div class="logo"><div class="logo-icon">M</div><div><div class="logo-txt">M365 Support Guide</div><div class="logo-sub">Engineer & Consultant Prep</div></div></div>
+    <input class="srch" id="srch" type="text" placeholder="Search any issue..." oninput="doSearch(this.value)"/>
+  </div>
+  <div class="ns"><div class="nl">Overview</div>
+    <div class="ni act" onclick="go('home')"><div class="nd" style="background:rgba(37,99,235,.12)">🏠</div>Dashboard</div>
+  </div>
+  <div class="ns"><div class="nl">Services (10 each)</div>
+    <div class="ni" onclick="go('exo')"><div class="nd" style="background:rgba(8,145,178,.12)">📧</div>Exchange Online<span class="nb">10</span></div>
+    <div class="ni" onclick="go('teams')"><div class="nd" style="background:rgba(99,102,241,.12)">💬</div>Microsoft Teams<span class="nb">10</span></div>
+    <div class="ni" onclick="go('spo')"><div class="nd" style="background:rgba(5,150,105,.12)">📁</div>SharePoint Online<span class="nb">10</span></div>
+    <div class="ni" onclick="go('odfb')"><div class="nd" style="background:rgba(37,99,235,.12)">☁️</div>OneDrive Business<span class="nb">10</span></div>
+    <div class="ni" onclick="go('entra')"><div class="nd" style="background:rgba(124,58,237,.12)">🔐</div>Entra ID / AAD<span class="nb">10</span></div>
+    <div class="ni" onclick="go('intune')"><div class="nd" style="background:rgba(217,119,6,.12)">📱</div>Intune / Endpoint<span class="nb">10</span></div>
+    <div class="ni" onclick="go('apps')"><div class="nd" style="background:rgba(220,38,38,.12)">🖥️</div>M365 Apps / Office<span class="nb">10</span></div>
+    <div class="ni" onclick="go('purview')"><div class="nd" style="background:rgba(20,184,166,.12)">🛡️</div>Security & Purview<span class="nb">10</span></div>
+    <div class="ni" onclick="go('pp')"><div class="nd" style="background:rgba(234,179,8,.12)">⚡</div>Power Platform<span class="nb">10</span></div>
+    <div class="ni" onclick="go('admin')"><div class="nd" style="background:rgba(148,163,184,.12)">⚙️</div>Admin & Licensing<span class="nb">10</span></div>
+  </div>
+  <div class="ns"><div class="nl">By Scenario</div>
+    <div class="ni" onclick="filterTag('Migration')"><div class="nd" style="background:rgba(147,51,234,.12)">🔄</div>Migration Issues</div>
+    <div class="ni" onclick="filterTag('Sudden')"><div class="nd" style="background:rgba(220,38,38,.12)">🚨</div>Sudden Outages</div>
+    <div class="ni" onclick="filterTag('Project')"><div class="nd" style="background:rgba(5,150,105,.12)">📋</div>Project / Change</div>
+  </div>
+</nav>
+<main id="main">
+<!-- HOME -->
+<div id="pg-home" class="pg act">
+  <div class="hero">
+    <div class="htag">⚡ Complete Preparation Guide — 100 Real Cases</div>
+    <h1 class="htitle">Microsoft 365<br><span>Support Engineer</span> Prep</h1>
+    <p class="hdesc">A comprehensive reference of <strong>100 real-world issues</strong> across 10 M365 services — each with symptoms, root cause analysis, step-by-step resolution, and PowerShell commands. Covers Support calls, Migrations, Project/Change requests, and Sudden outages.</p>
+    <div class="stats">
+      <div class="stat"><div class="sn">100</div><div class="sl">Real Issues</div></div>
+      <div class="stat"><div class="sn">10</div><div class="sl">M365 Services</div></div>
+      <div class="stat"><div class="sn">4</div><div class="sl">Scenario Types</div></div>
+      <div class="stat"><div class="sn">PS</div><div class="sl">Commands Included</div></div>
+    </div>
+  </div>
+  <div class="sgrid">
+    <div class="sc" style="--cc:#0891b2" onclick="go('exo')"><div class="sc-ic">📧</div><div class="sc-t">Exchange Online</div><div class="sc-d">Mail flow NDRs, hybrid cutover, auth loops, journaling, transport rules</div><div class="tags"><span class="tg">NDR codes</span><span class="tg">Hybrid</span><span class="tg">Migration</span></div></div>
+    <div class="sc" style="--cc:#6366f1" onclick="go('teams')"><div class="sc-ic">💬</div><div class="sc-t">Microsoft Teams</div><div class="sc-d">Audio/video failures, guest access, direct routing, policy conflicts, SfB upgrade</div><div class="tags"><span class="tg">Meetings</span><span class="tg">Voice</span><span class="tg">Policies</span></div></div>
+    <div class="sc" style="--cc:#059669" onclick="go('spo')"><div class="sc-ic">📁</div><div class="sc-t">SharePoint Online</div><div class="sc-d">Permissions, SPMT migration, search, storage quota, workflow retirement</div><div class="tags"><span class="tg">Permissions</span><span class="tg">Migration</span><span class="tg">Search</span></div></div>
+    <div class="sc" style="--cc:#2563eb" onclick="go('odfb')"><div class="sc-ic">☁️</div><div class="sc-t">OneDrive Business</div><div class="sc-d">KFM failures, sync errors, storage quota, external sharing, co-authoring</div><div class="tags"><span class="tg">Sync</span><span class="tg">KFM</span><span class="tg">Sharing</span></div></div>
+    <div class="sc" style="--cc:#7c3aed" onclick="go('entra')"><div class="sc-ic">🔐</div><div class="sc-t">Entra ID / Azure AD</div><div class="sc-d">MFA lockout, CA blocking, AAD Connect sync errors, SSO failures, compromised accounts</div><div class="tags"><span class="tg">MFA</span><span class="tg">CA</span><span class="tg">Sync</span></div></div>
+    <div class="sc" style="--cc:#d97706" onclick="go('intune')"><div class="sc-ic">📱</div><div class="sc-t">Intune / Endpoint</div><div class="sc-d">Autopilot failures, compliance issues, app deployment errors, Windows Update rings</div><div class="tags"><span class="tg">Autopilot</span><span class="tg">Compliance</span><span class="tg">Apps</span></div></div>
+    <div class="sc" style="--cc:#dc2626" onclick="go('apps')"><div class="sc-ic">🖥️</div><div class="sc-t">M365 Apps / Office</div><div class="sc-d">Activation failures, sign-in loops, C2R updates, co-authoring, VDI/RDS SCA</div><div class="tags"><span class="tg">Activation</span><span class="tg">C2R</span><span class="tg">Licensing</span></div></div>
+    <div class="sc" style="--cc:#0d9488" onclick="go('purview')"><div class="sc-ic">🛡️</div><div class="sc-t">Security & Purview</div><div class="sc-d">DLP false positives, eDiscovery gaps, Safe Links, audit retention, sensitivity labels</div><div class="tags"><span class="tg">DLP</span><span class="tg">eDiscovery</span><span class="tg">Defender</span></div></div>
+    <div class="sc" style="--cc:#ca8a04" onclick="go('pp')"><div class="sc-ic">⚡</div><div class="sc-t">Power Platform</div><div class="sc-d">Flow connection breaks, DLP blocking, approval issues, governance, throttling</div><div class="tags"><span class="tg">Power Automate</span><span class="tg">Apps</span><span class="tg">Governance</span></div></div>
+    <div class="sc" style="--cc:#64748b" onclick="go('admin')"><div class="sc-ic">⚙️</div><div class="sc-t">Admin & Licensing</div><div class="sc-d">License errors, role conflicts, service health, T2T migration, domain verification</div><div class="tags"><span class="tg">Licensing</span><span class="tg">Roles</span><span class="tg">Migration</span></div></div>
+  </div>
+</div>
+
+<!-- EXCHANGE ONLINE -->
+<div id="pg-exo" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Exchange Online</div>
+    <div class="strow"><div class="sic" style="background:rgba(8,145,178,.12)">📧</div><div><div class="st">Exchange Online</div><div class="ss">Top 10 Real-World Support Cases — Mail Flow · Hybrid · Migration · Auth · Compliance</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">NDR 550 5.7.1 — Sender Not Authorized / Unable to Relay</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bs">Support</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Users or apps receive 550 5.7.1 NDR when sending email externally</li><li>Message trace shows "Sender identity does not match accepted domain"</li><li>Works in OWA but fails from desktop Outlook or scanner/application relay</li><li>Shared mailbox can receive but cannot send</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Most common: An application, printer, or shared mailbox is trying to relay via EXO SMTP but is not correctly configured — wrong connector, no Send As permission, or SMTP AUTH disabled. In hybrid, the outbound connector may be routing mail back to on-premises instead of directly out.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Run Message Trace (Admin Center → Exchange → Mail flow → Message trace) to capture the exact rejection reason and which connector was used.</li><li>Check Accepted Domains: EAC → Mail flow → Accepted domains — sender domain must be listed (Authoritative or Internal Relay).</li><li>For application SMTP relay: Create a dedicated inbound connector with the app's static IP, OR enable SMTP AUTH on a service account and use port 587.</li><li>For shared mailboxes: Assign "Send As" permission to the user, or enable SMTP AUTH on the shared mailbox.</li><li>Check for transport rules that may be rejecting or redirecting mail: EAC → Mail flow → Rules → look for broad reject/delete actions.</li><li>Verify the outbound connector is not force-routing to on-prem smart host when it should go direct.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Enable SMTP AUTH on a specific mailbox</span>
+<span class="g">Set-CASMailbox</span> -Identity <span class="p">"app@contoso.com"</span> -SmtpClientAuthenticationDisabled $false
+
+<span class="c"># Check accepted domains</span>
+<span class="g">Get-AcceptedDomain</span> | Select Name, DomainName, DomainType
+
+<span class="c"># Check who is on the restricted senders list</span>
+<span class="g">Get-BlockedSenderAddress</span></div></div>
+        <div class="nb2">💡 <strong>Interview Tip:</strong> Message Trace is the #1 diagnostic tool for Exchange issues. Always start there — it shows exact connector used, rejection reason, and timestamps.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">Exchange Hybrid Cutover — Mail Stuck in On-Premises After Mailbox Migration</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Migrated users get email delivered to old on-premises mailbox, not EXO</li><li>Message trace shows delivery to "Internal Relay" instead of EXO</li><li>External senders get NDR 550 5.1.1 for migrated users</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">MX records still point to on-premises after cutover. Or the on-prem Exchange isn't routing to EXO because the TargetDeliveryDomain (contoso.mail.onmicrosoft.com) isn't set on the remote mailbox object, or the hybrid send connector is broken.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify MX records: Use nslookup or MXToolbox — after cutover MX must point to contoso-com.mail.protection.outlook.com.</li><li>Check on-prem remote mailbox routing address: must have targetAddress = user@contoso.mail.onmicrosoft.com.</li><li>Run Azure AD Connect delta sync to replicate targetAddress to Entra ID.</li><li>Verify the Hybrid Configuration Wizard (HCW)-generated send connector is still active on on-prem Exchange (points to *.mail.protection.outlook.com).</li><li>Check if migration batch is complete — never change MX while migration is in "Syncing" state. Only update MX after completing the batch.</li><li>If EXO mailbox is SoftDeleted, restore it before re-migrating the batch.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Check migration batch status</span>
+<span class="g">Get-MigrationBatch</span> | Select Identity, Status, SyncedCount, FailedCount
+
+<span class="c"># Check remote mailbox routing address (on-premises)</span>
+<span class="g">Get-RemoteMailbox</span> <span class="p">"user"</span> | Select PrimarySmtpAddress, RemoteRoutingAddress
+
+<span class="c"># Find soft-deleted mailboxes in EXO</span>
+<span class="g">Get-Mailbox</span> -SoftDeletedMailbox | Where {$_.PrimarySmtpAddress -like <span class="p">"*user*"</span>}</div></div>
+        <div class="wb">⚠️ Never update MX before completing migration and testing mail flow in UAT. Rushed MX changes cause exactly this scenario — lost mail for active users.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Outlook Keeps Prompting for Password — Modern Auth / Credential Loop</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Outlook repeatedly prompts for credentials despite correct password being entered</li><li>Works in OWA (browser) but not desktop Outlook</li><li>Affects multiple users after a Conditional Access policy change</li><li>Password prompts appear every few hours even after successful sign-in</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Top causes: (1) Modern Authentication disabled on tenant — forces Basic Auth which Microsoft has deprecated. (2) Corrupted tokens in Windows Credential Manager. (3) Conditional Access policy requiring MFA is blocking Outlook's OAuth token refresh. (4) Autodiscover returning wrong endpoint, causing profile to re-authenticate constantly.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Enable Modern Authentication tenant-wide: Admin Center → Settings → Org Settings → Modern Authentication → Enable.</li><li>Clear Credential Manager: Control Panel → Credential Manager → Windows Credentials → Remove all "MicrosoftOffice" entries.</li><li>Delete and recreate the Outlook profile: Control Panel → Mail → Profiles → Remove old profile, let Autodiscover build a new one.</li><li>Test Autodiscover: CTRL + right-click Outlook taskbar icon → Test Email AutoConfiguration — HTTPS Autodiscover must succeed (not SRV or HTTP fallback).</li><li>If CA-related: Entra → Security → Conditional Access — check if "Require MFA" policy is causing token expiry. Review token lifetime policies.</li><li>Check if Basic Auth is fully blocked via an Authentication Policy — clients using Basic Auth will loop infinitely if it's blocked.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Check if Modern Auth is enabled</span>
+<span class="g">Get-OrganizationConfig</span> | Select OAuth2ClientProfileEnabled
+
+<span class="c"># Enable Modern Auth</span>
+<span class="g">Set-OrganizationConfig</span> -OAuth2ClientProfileEnabled $true
+
+<span class="c"># Check authentication policies</span>
+<span class="g">Get-AuthenticationPolicy</span> | Select Name, AllowBasicAuthOutlookService</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">SPF / DKIM / DMARC Failures — Legitimate Email Marked as Spam</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Outbound emails land in recipients' junk/spam folders</li><li>Email headers show spf=fail or dmarc=fail</li><li>Started after migrating from on-premises to EXO (IPs changed)</li><li>External partners report emails being rejected by their mail gateway</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">SPF record doesn't include Microsoft's IP range (spf.protection.outlook.com). DKIM signing not enabled in EXO. DMARC set to p=reject before verifying SPF/DKIM alignment. During migration, old on-premises IPs removed from SPF too early, or too many DNS lookups causing SPF permerror (10-lookup limit).</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Fix SPF: DNS TXT record must include: v=spf1 include:spf.protection.outlook.com -all (remove old IPs post-migration).</li><li>Enable DKIM in EXO: Defender Portal → Email &amp; Collaboration → Policies → DKIM → Enable for your domain, then add the two CNAME records to DNS.</li><li>Configure DMARC: Start with p=none for monitoring: v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com</li><li>Analyze DMARC reports (use dmarcanalyzer.com or valimail.com) to find unauthorized senders.</li><li>Gradually move from p=none → p=quarantine → p=reject only after confirming all legitimate mail passes SPF/DKIM.</li><li>Validate with MXToolbox.com — check SPF, DKIM, and DMARC from external DNS perspective.</li></ol></div>
+        <div class="nb2">💡 <strong>Key principle:</strong> Never set DMARC p=reject on day 1. Always start with p=none, analyze for 2–4 weeks, fix legitimate senders, then tighten policy.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">Distribution List Not Receiving External Email — RequireSenderAuthenticationEnabled</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>External senders get NDR when emailing the distribution list</li><li>Internal users can email the DL without issue</li><li>Message trace shows "Recipient not found" or 550 5.4.1</li><li>DL appears correctly in GAL</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">The DL has RequireSenderAuthenticationEnabled = True (default for DLs synced from on-premises AD). This only allows authenticated (internal) senders. External senders are unauthenticated so they are rejected. This setting must be changed in on-premises AD if the DL is synced — changes in EXO will be overwritten by the next AAD Connect sync.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify the setting: Get-DistributionGroup "DLName" | Select RequireSenderAuthenticationEnabled — if True, that's the cause.</li><li>If DL is cloud-only: Set-DistributionGroup "DLName" -RequireSenderAuthenticationEnabled $false</li><li>If DL is synced from on-premises: Make the change on-prem AD using Set-DistributionGroup (on-prem Exchange) or edit msExchRequireAuthToSendTo AD attribute, then wait for AAD Connect sync.</li><li>Consider alternatives for security: Instead of allowing all external senders, add specific allowed external senders using -AcceptMessagesOnlyFrom or set up a moderated DL.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Fix DL to accept external email (cloud-only DL)</span>
+<span class="g">Set-DistributionGroup</span> -Identity <span class="p">"dl-support@contoso.com"</span> -RequireSenderAuthenticationEnabled $false
+
+<span class="c"># Verify the change</span>
+<span class="g">Get-DistributionGroup</span> <span class="p">"dl-support@contoso.com"</span> | Select RequireSenderAuthenticationEnabled</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Hybrid Free/Busy Not Working — Calendar Scheduling Shows "No Information"</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>On-prem users see "No Information" for EXO users in Scheduling Assistant</li><li>EXO users cannot see free/busy of on-prem users</li><li>Error: "Calendar data can't be retrieved" in Outlook</li><li>OWA shows free/busy but Outlook desktop does not</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Free/busy in hybrid uses OAuth between on-premises Exchange and EXO via the Organization Relationship. If the OAuth trust is broken, the Availability Address Space is wrong, or the on-premises EWS (Exchange Web Services) URL isn't published correctly, free/busy fails. Running the HCW fixes this automatically but the config can drift post-deployment.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Test OAuth connectivity from on-premises Exchange: Test-OAuthConnectivity -Service EWS -TargetUri https://outlook.office365.com/ews/exchange.asmx -Mailbox admin@contoso.com -Verbose</li><li>Check Organization Relationship in EXO: Get-OrganizationRelationship — verify FreeBusyAccessEnabled = True, TargetApplicationUri, and TargetAutodiscoverEpr are correct.</li><li>Re-run the Hybrid Configuration Wizard (HCW) — this is the fastest fix and reconfigures OAuth, connectors, and organization relationships automatically.</li><li>Verify on-prem Autodiscover is externally resolvable — EXO needs to discover the on-prem EWS endpoint.</li><li>Check on-prem Exchange certificate has all required SANs (mail, autodiscover, EWS).</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Test OAuth (run on on-premises Exchange server)</span>
+<span class="g">Test-OAuthConnectivity</span> -Service EWS -TargetUri https://outlook.office365.com/ews/exchange.asmx -Mailbox <span class="p">"admin@contoso.com"</span> -Verbose
+
+<span class="c"># Check EXO Organization Relationship</span>
+<span class="g">Get-OrganizationRelationship</span> | Select Name, DomainNames, FreeBusyAccessEnabled, TargetApplicationUri</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Mailbox Migration Stuck at 95% or Failing with BadItemLimit Error</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Migration batch stuck at 95% for hours — never completing</li><li>Specific mailboxes fail with "MigrationPermanentException" or "CorruptedItemDetected"</li><li>Migration report shows BadItemCount exceeding configured threshold</li><li>Large mailboxes (50GB+) always fail or time out</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Corrupted items in source mailbox (common in Exchange 2010/2013). The migration batch hit its BadItemLimit threshold and stopped. Stuck at 95% = "final sync" phase — the mailbox is still receiving active mail and the delta sync loop won't complete until the user stops receiving messages (or you force-complete). Large Recoverable Items folder (over EXO 100GB limit) also causes failures.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Get detailed failure report: Get-MigrationUserStatistics -Identity "user@contoso.com" -IncludeReport | fl</li><li>For BadItemLimit: Increase it on the batch (carefully — you are accepting data loss for corrupted items): Set-MigrationBatch -Identity BatchName -BadItemLimit 50 -LargeItemLimit 10</li><li>For corrupted items: Run NewMailboxRepairRequest on source mailbox before retrying migration.</li><li>For stuck at 95%: Schedule Complete-MigrationBatch during off-peak hours when the mailbox is least active. This forces final cutover.</li><li>For large Recoverable Items: Remove unnecessary holds temporarily or use New-ComplianceSearch to reduce item count before migrating.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Get per-user migration failure details</span>
+<span class="g">Get-MigrationUserStatistics</span> -Identity <span class="p">"user@contoso.com"</span> -IncludeReport | fl
+
+<span class="c"># Repair source mailbox corruption (run on-premises)</span>
+<span class="g">New-MailboxRepairRequest</span> -Mailbox <span class="p">"user@contoso.com"</span> -CorruptionType ProvisionedFolder,SearchFolder,AggregateCounts
+
+<span class="c"># Force complete the migration batch</span>
+<span class="g">Complete-MigrationBatch</span> -Identity <span class="p">"BatchName"</span></div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">Shared Mailbox Not Receiving Email — ProxyAddress Accidentally Removed</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Emails to shared mailbox address bounce with 550 5.4.1 or "Recipient not found"</li><li>Mailbox is visible and working for internal users but external delivery fails</li><li>Message trace: recipient lookup returns no result for the SMTP address</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">The shared mailbox's primary SMTP address was accidentally removed — either by an admin, a PowerShell script, or an AAD Connect sync conflict that wrote back a different set of ProxyAddresses. The mailbox exists but its email address is gone, so inbound mail cannot be delivered.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify current email addresses: Get-Mailbox "SharedMailbox" | Select -ExpandProperty EmailAddresses</li><li>Re-add the missing primary address (uppercase SMTP = primary): Set-Mailbox "SharedMailbox" -EmailAddresses @{Add="SMTP:helpdesk@contoso.com"}</li><li>If cloud-synced from on-prem: Fix the ProxyAddresses attribute in on-premises AD and wait for AAD Connect delta sync — don't fix in EXO as it gets overwritten.</li><li>Wait 15–30 minutes for mail routing to update, then test delivery with a fresh message trace.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># View all current email addresses</span>
+<span class="g">Get-Mailbox</span> <span class="p">"SharedMailboxName"</span> | Select -ExpandProperty EmailAddresses
+
+<span class="c"># Re-add the missing primary SMTP address</span>
+<span class="g">Set-Mailbox</span> <span class="p">"SharedMailboxName"</span> -EmailAddresses @{Add=<span class="p">"SMTP:helpdesk@contoso.com"</span>}</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">Litigation Hold Not Protecting Items — Items Still Being Purged</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Litigation Hold was applied but items are still disappearing after the deleted item retention period</li><li>eDiscovery search returns fewer items than expected for a user on hold</li><li>Compliance team reports gaps in preserved email records</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Litigation Hold was set but LitigationHoldDuration was not set to Unlimited — items are held for a finite period then eligible for purge. Or the hold was set AFTER the items were already purged. Managed Folder Assistant (MFA) runs every 7 days and processes deletions — if hold isn't properly applied, MFA cleans up Recoverable Items after the default 14-day retention.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify hold status and duration: Get-Mailbox "user" | Select LitigationHoldEnabled, LitigationHoldDuration, LitigationHoldDate</li><li>Set to unlimited hold: Set-Mailbox "user" -LitigationHoldEnabled $true -LitigationHoldDuration Unlimited</li><li>Check Recoverable Items size — if growing, the hold is working: Get-MailboxFolderStatistics "user" -FolderScope RecoverableItems</li><li>For already-purged items: Search the Recoverable Items\Purges folder using compliance search — items may still be there if within the purge window.</li><li>Consider using Microsoft Purview retention policies instead of Litigation Hold for better management and reporting.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Apply Litigation Hold with unlimited duration</span>
+<span class="g">Set-Mailbox</span> <span class="p">"user@contoso.com"</span> -LitigationHoldEnabled $true -LitigationHoldDuration Unlimited
+
+<span class="c"># Check Recoverable Items usage</span>
+<span class="g">Get-MailboxFolderStatistics</span> <span class="p">"user@contoso.com"</span> -FolderScope RecoverableItems | Select Name, ItemsInFolder, FolderSize</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">Transport Rules Silently Dropping or Misrouting Email</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Emails from specific senders never arrive — no bounce, no error</li><li>Double disclaimers on outbound emails</li><li>Emails suddenly redirected to wrong mailbox after new rule was created</li><li>Issue started immediately after a new transport rule was added</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">A transport rule with broad conditions (e.g., applies to all senders) combined with a Delete, Redirect, or Reject action is silently consuming mail. Transport rules are evaluated in priority order — a "Stop processing more rules" action on a high-priority rule prevents lower-priority rules from firing, causing unexpected behavior.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Audit all transport rules by priority: EAC → Mail flow → Rules → sort by Priority. Look for broad conditions with Delete/Redirect actions.</li><li>Use Message Trace: Select affected message → "Applied rules" section shows exactly which rules fired and what action was taken.</li><li>Test rules safely with Audit mode: Set-TransportRule "RuleName" -Mode AuditAndNotify before setting to Enforce.</li><li>Check "Stop processing more rules" checkboxes — they short-circuit the entire rule pipeline.</li><li>Disable suspected rules one-by-one to isolate the culprit, then narrow conditions before re-enabling.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># List all transport rules with priority order</span>
+<span class="g">Get-TransportRule</span> | Select Priority, Name, State, Mode | Sort Priority
+
+<span class="c"># Set a rule to Audit-only (safe testing)</span>
+<span class="g">Set-TransportRule</span> -Identity <span class="p">"RuleName"</span> -Mode AuditAndNotify
+
+<span class="c"># Disable a problematic rule immediately</span>
+<span class="g">Disable-TransportRule</span> -Identity <span class="p">"RuleName"</span></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- TEAMS -->
+<div id="pg-teams" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Microsoft Teams</div>
+    <div class="strow"><div class="sic" style="background:rgba(99,102,241,.12)">💬</div><div><div class="st">Microsoft Teams</div><div class="ss">Top 10 Real-World Issues — Meetings · Voice · Policies · Guest Access · SfB Migration</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">Teams Meeting Audio/Video Broken — Stuck on "Connecting" (Network/Firewall)</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bs">Support</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Users stuck on "Connecting to audio..." indefinitely during meetings</li><li>Video freezes or black screen — audio only also broken</li><li>Works perfectly on home WiFi but fails on corporate network</li><li>Entire office affected simultaneously — single user issues are different</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Teams uses UDP ports 3478–3481 and 50000–59999 for real-time media. Corporate firewalls blocking UDP cause Teams to attempt TCP fallback or relay servers, resulting in poor quality or failure. Running Teams media through a proxy (instead of bypassing it) adds massive latency. Microsoft classifies Teams traffic into Optimize/Allow/Default categories — Optimize traffic MUST bypass proxy.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Run Teams Network Assessment Tool on affected machines — measures packet loss, jitter, and round-trip time to Microsoft media relays.</li><li>Check proxy bypass: Add Microsoft's Optimize-category IPs and FQDNs (aka.ms/o365ips) to proxy bypass/split-tunnel list. Teams media must NOT go through a proxy.</li><li>Open required firewall ports: UDP 3478–3481 outbound, UDP/TCP 50000–59999 outbound to *.teams.microsoft.com and *.lync.com.</li><li>Configure QoS DSCP markings: Audio = EF (46), Video = AF41 (34), Sharing = AF21 (18) to prioritize Teams traffic at network layer.</li><li>Use Call Quality Dashboard (CQD) in Teams Admin Center to identify poor streams by building, subnet, or device type.</li><li>Check Teams Admin Center → Users → Select user → Call history → View per-call metrics (jitter, packet loss, round-trip).</li></ol></div>
+        <div class="nb2">💡 Use <strong>Call Analytics</strong> for individual call troubleshooting and <strong>CQD</strong> for organization-wide quality trends. Both are in Teams Admin Center and are essential diagnostic tools.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">Guest Access Not Working — "You Don't Have Access to This Team"</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Guests receive invitation but get "Access denied" when trying to join</li><li>"Your IT admin has restricted access to this feature" error</li><li>Guest can see team listed but all channels are empty or inaccessible</li><li>Guest access worked before but stopped after a policy change</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Guest access requires 3 independent controls ALL set correctly: (1) Entra ID External Collaboration settings, (2) Teams Admin Center guest access toggle, (3) individual team-level guest settings. Any one missing = blocked. Also: Conditional Access policies targeting "All users" apply to guests too. SharePoint external sharing controls Teams file access.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Entra ID: Azure Portal → Entra ID → External Identities → External collaboration settings → Allow guest invitations.</li><li>Teams Admin Center: Org-wide settings → Guest access → Turn ON. Enable calling, meeting, and messaging for guests.</li><li>Per-team: Team Settings → Guest permissions → check appropriate permissions are granted.</li><li>SharePoint Admin Center: Policies → Sharing → Allow sharing with new and existing guests (minimum).</li><li>Conditional Access: Check if any CA policy forces compliant device or MFA requirement that guest devices can't satisfy — add guest exclusion if appropriate.</li><li>Note: Guest access changes can take up to 24 hours to propagate through the system.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Check guest access settings</span>
+<span class="g">Get-CsTeamsClientConfiguration</span> | Select AllowGuestUser
+
+<span class="c"># Check federation configuration</span>
+<span class="g">Get-CsTenantFederationConfiguration</span> | Select AllowTeamsConsumer, AllowFederatedUsers, AllowPublicUsers</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Teams Direct Routing — PSTN Calls Failing (SIP 403/503) or One-Way Audio</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>External PSTN calls fail with SIP 403 Forbidden or 503 Service Unavailable</li><li>Calls connect but only one side can hear audio (one-way audio)</li><li>All calls broke after SBC TLS certificate was renewed</li><li>Specific users can't make external calls — others on same SBC can</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">SIP 403 = User not licensed for Phone System OR no voice routing policy assigned. One-way audio = Media bypass misconfigured causing NAT traversal failure, or SRTP key mismatch between Teams and SBC. After certificate renewal, the SBC FQDN on the cert must exactly match what's registered in Teams Admin Center. TLS 1.2 is minimum — TLS 1.0/1.1 causes silent failures.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check SBC health: Teams Admin Center → Voice → Direct Routing → View SBC status, certificate validity, and TLS connection state.</li><li>Verify user licensing: User needs Teams Phone (Phone System) license AND a PSTN connectivity option (Calling Plan or Direct Routing). Check in Admin Center → Users → Licenses.</li><li>Verify number assignment: Get-CsOnlineUser -Identity "user" | Select LineUri, EnterpriseVoiceEnabled</li><li>For one-way audio: Temporarily disable media bypass to test: Set-CsOnlinePSTNGateway -Identity sbc.contoso.com -MediaBypass $false. If this fixes it, reconfigure media bypass properly.</li><li>Post certificate renewal: Re-bind TLS cert on SBC, verify FQDN matches exactly what's in Teams (including case), and test TLS handshake.</li><li>Review voice routing policy: Ensure online voice routing policy is assigned and routing rules match the called number format.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Check Direct Routing SBC configuration</span>
+<span class="g">Get-CsOnlinePSTNGateway</span> | Select Identity, Fqdn, SipSignalingPort, Enabled, MediaBypass
+
+<span class="c"># Assign phone number to user</span>
+<span class="g">Set-CsPhoneNumberAssignment</span> -Identity <span class="p">"user@contoso.com"</span> -PhoneNumber <span class="p">"+14255550100"</span> -PhoneNumberType DirectRouting
+
+<span class="c"># Assign voice routing policy</span>
+<span class="g">Grant-CsOnlineVoiceRoutingPolicy</span> -Identity <span class="p">"user@contoso.com"</span> -PolicyName <span class="p">"International"</span></div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Teams Upgrade from Skype for Business — Chats Routing to Wrong App</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>After "migrating to Teams," some users receive chats in Skype for Business instead of Teams</li><li>Meeting invites still show Skype join links, not Teams links</li><li>External federated users reach users on Skype instead of Teams</li><li>Islands mode causes split conversations — some in Teams, some in SfB</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">The Teams coexistence mode is set to "Islands" — both SfB and Teams run simultaneously and external routing is unpredictable. Users must be moved to "TeamsOnly" mode to route all communication through Teams. Existing Skype meeting links won't automatically convert — the Meeting Migration Service (MMS) must run to update calendar invites.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Move users to TeamsOnly: Grant-CsTeamsUpgradePolicy -Identity user@contoso.com -PolicyName UpgradeToTeams</li><li>Run Meeting Migration Service to convert all existing Skype meeting links to Teams: Start-CsExMeetingMigration -Identity user@contoso.com -TargetMeetingType Teams</li><li>For tenant-wide upgrade: Grant-CsTeamsUpgradePolicy -Global -PolicyName UpgradeToTeams</li><li>For on-premises SfB hybrid: Use Move-CsUser to move users to the cloud before granting TeamsOnly mode.</li><li>Communicate to users: In TeamsOnly mode, SfB client is read-only for history. All new chats/calls come to Teams.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Check current upgrade mode for a user</span>
+<span class="g">Get-CsOnlineUser</span> <span class="p">"user@contoso.com"</span> | Select TeamsUpgradeEffectiveMode
+
+<span class="c"># Upgrade user to Teams Only</span>
+<span class="g">Grant-CsTeamsUpgradePolicy</span> -Identity <span class="p">"user@contoso.com"</span> -PolicyName UpgradeToTeams
+
+<span class="c"># Trigger meeting migration and check status</span>
+<span class="g">Start-CsExMeetingMigration</span> -Identity <span class="p">"user@contoso.com"</span> -TargetMeetingType Teams
+<span class="g">Get-CsMeetingMigrationStatus</span> -Identity <span class="p">"user@contoso.com"</span></div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">Teams Policies Not Applying — Feature Available When It Should Be Blocked</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>User can record meetings even though recording policy says disabled</li><li>Policy change deployed but user experience unchanged after 24+ hours</li><li>Group-based policy assignment seems to have no effect</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Teams policy precedence: Direct user assignment > Group-based assignment > Global (org-wide default). If a user has a DIRECT policy assignment, group policies are completely ignored for that user. Multiple groups assigning different policies are ranked — highest-rank (lowest number) wins. Policy propagation can take up to 4 hours.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check effective policy: Teams Admin Center → Users → Select user → Policies tab — this shows what's actually applied vs. what's assigned.</li><li>Remove incorrect direct assignment: Grant-CsTeamsMeetingPolicy -Identity "user" -PolicyName $null (falls back to group or global).</li><li>For group policy conflicts: Teams Admin Center → Group policy assignments → review all groups and their rank numbers.</li><li>Use Get-CsUserPolicyAssignment to audit all policy assignments for any user across all policy types.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Check all policy assignments for a user</span>
+<span class="g">Get-CsUserPolicyAssignment</span> -Identity <span class="p">"user@contoso.com"</span>
+
+<span class="c"># Remove direct meeting policy (fall back to group/global)</span>
+<span class="g">Grant-CsTeamsMeetingPolicy</span> -Identity <span class="p">"user@contoso.com"</span> -PolicyName $null
+
+<span class="c"># Check group-based assignments</span>
+<span class="g">Get-CsGroupPolicyAssignment</span> -PolicyType TeamsMeetingPolicy</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Teams Files Tab Blank — SharePoint Permission Broken by Admin</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Teams channels are backed by SharePoint document libraries. If a SharePoint admin directly modifies permissions on the backing site — breaking inheritance or removing the Office 365 Group — Teams members lose file access. This is extremely common when SharePoint and Teams admins work in silos.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Navigate to the SharePoint site: Teams → Files tab → Open in SharePoint.</li><li>Check site permissions: Settings → Site Permissions → Verify the Office 365 Group (same name as the Team) is listed with correct permissions (Members = Edit, Owners = Full Control).</li><li>If inheritance was broken: Site Settings → Site Permissions → check document library → restore inheritance or re-add the O365 group.</li><li>Rule: Never directly remove the O365 group from a Teams-connected SharePoint site. Manage membership through Teams or the M365 Group.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Teams Desktop App — Blank White Screen / Won't Load</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Teams opens but shows only a white/blank screen</li><li>Splash screen appears then freezes permanently</li><li>Affects multiple users after Windows Update or Teams update</li><li>Teams.microsoft.com in browser works fine</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Teams app cache corruption — very common after Windows updates or abrupt shutdowns. The Electron-based Teams app (classic) or WebView2-based new Teams stores cache that becomes inconsistent. For new Teams (2023+): missing or outdated Edge WebView2 Runtime causes launch failure.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Clear classic Teams cache: Close Teams → Navigate to %appdata%\Microsoft\Teams → Delete all subfolders EXCEPT: downloads and meeting-addin → Restart Teams.</li><li>For new Teams cache: %localappdata%\Packages\MSTeams_8wekyb3d8bbwe\LocalCache — clear contents.</li><li>Install/update Edge WebView2 Runtime (required for new Teams) — download from Microsoft.</li><li>Repair Teams: Settings → Apps → Microsoft Teams → Advanced Options → Repair. If that fails, use Reset.</li><li>Re-sign in: File → Sign Out → Clear credentials from Windows Credential Manager → Sign back in.</li><li>If GPO related: Check AppLocker/Software Restriction Policies — Teams executables may be blocked after Windows Update changed paths.</li></ol></div>
+        <div class="nb2">💡 <strong>Classic vs New Teams:</strong> Cache paths are completely different. Always confirm which version the user has before clearing cache. "New Teams" uses a fundamentally different rendering engine.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">Teams Meeting Recording Not Appearing or Saved to Wrong Location</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Teams recordings now save to OneDrive (personal/ad-hoc meetings) or SharePoint (channel meetings). If the user's OneDrive is full, or a retention/deletion policy auto-expires recordings, they disappear. The recording policy itself may block recording for certain users. Meeting recording expiry (60 days default) is controlled by a Teams meeting policy setting.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check recording policy: Get-CsTeamsMeetingPolicy -Identity Global | Select AllowCloudRecording, NewMeetingRecordingExpirationDays</li><li>Verify OneDrive storage: User's OneDrive must have free space. Check Admin Center → Users → select user → OneDrive.</li><li>For auto-expiry: Teams Admin Center → Meetings → Meeting Policies → Set "Meeting recording expiration" to desired days or No expiration.</li><li>Check retention policy: Purview → Data lifecycle → Retention policies — ensure a delete policy isn't hitting recordings stored in OneDrive/SharePoint.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">Teams Presence Status Stuck — Always Shows "Away" or "Offline"</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Presence is propagated via Teams' notification service. Multiple active sessions (desktop + mobile + web) show the worst-case status. Screen lock triggers "Away" after 5 minutes by default. Exchange calendar "In a meeting" status that doesn't clear properly overrides presence. Network proxy blocking NOTIFY packets causes presence to stop updating for all users.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Reset presence: Teams → Profile picture → Set Status → Reset Status.</li><li>Single session: Have user sign out from all devices and stay signed in on just one — presence shows worst-case across all sessions.</li><li>Adjust inactivity: Settings → Privacy → "When away" — set to longer period or Off.</li><li>Clear Teams cache (see Issue 07) — stale cached presence data can cause this.</li><li>Calendar override: Check if an Exchange calendar appointment with "Busy" or "OOF" status is incorrectly persisting past its end time.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">Teams Batch Policy Assignment Failing for Large User Groups</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Use New-CsBatchPolicyAssignmentOperation for large deployments — more reliable than the UI for 5,000+ users.</li><li>Split batches: Maximum ~5,000 users per batch operation for reliability.</li><li>Monitor status: Get-CsBatchPolicyAssignmentOperation — check OperationStatus and ErrorCount.</li><li>Pre-requisite: Remove all direct policy assignments from users before applying group-based policy — direct assignments override group assignments and cause confusion.</li><li>Best practice: Use security groups for ongoing group-based policy assignment rather than one-time batch operations.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Batch assign policy via PowerShell</span>
+$users = @(<span class="p">"user1@contoso.com"</span>, <span class="p">"user2@contoso.com"</span>)
+<span class="g">New-CsBatchPolicyAssignmentOperation</span> -PolicyType TeamsMeetingPolicy -PolicyName <span class="p">"RestrictedMeeting"</span> -Identity $users -OperationName <span class="p">"Q1 Policy Rollout"</span>
+
+<span class="c"># Monitor operation</span>
+<span class="g">Get-CsBatchPolicyAssignmentOperation</span> | Select OperationName, OperationStatus, ErrorCount | Sort CreatedTime -Desc</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SHAREPOINT -->
+<div id="pg-spo" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › SharePoint Online</div>
+    <div class="strow"><div class="sic" style="background:rgba(5,150,105,.12)">📁</div><div><div class="st">SharePoint Online</div><div class="ss">Top 10 Real-World Issues — Permissions · Migration · Search · Quotas · Governance</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">Access Denied After Permission Changes — Broken Inheritance</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>"Access Denied — You need permission to access this site" for a previously accessible site</li><li>Specific document libraries inaccessible but site home page works</li><li>Issue started after someone "secured" a sensitive folder</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">SharePoint uses permission inheritance — all child objects inherit from parent by default. When inheritance is "broken" at any level (site, library, folder, item) and permissions are set uniquely, this creates isolated permission islands that are hard to manage. A well-intentioned admin breaking inheritance on a sensitive folder removes access for everyone who had it via inheritance.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Use "Check Permissions": Site Settings → People and Groups → Check Permissions for the affected user — shows exactly what they can access and why (or why not).</li><li>Find broken inheritance: Library Settings → Permissions for this document library → look for "This list has unique permissions" banner.</li><li>Restore inheritance: If appropriate, click "Delete unique permissions" to restore inheritance from parent site.</li><li>Add user to correct group: Site Settings → Site Permissions → Add the user to the Members group for Edit access, Visitors for Read.</li><li>At scale: Use PnP PowerShell to audit all lists with unique permissions across all sites.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell (PnP)</div><div class="cb"><span class="c"># Connect and check unique permissions</span>
+<span class="g">Connect-PnPOnline</span> -Url https://contoso.sharepoint.com/sites/MySite -Interactive
+<span class="g">Get-PnPList</span> | Where {$_.HasUniqueRoleAssignments -eq $true} | Select Title, DefaultViewUrl</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">SPMT Migration Failures — Invalid Characters, Path Length, Metadata Loss</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>SPMT migration job shows 20–40% failure rate</li><li>"Invalid file name" errors for specific files</li><li>Files migrated but created/modified dates reset to migration date</li><li>Custom metadata (columns) not carried over</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">SPO has strict file naming restrictions — characters like # % & * { } \ : &lt; &gt; ? / + | cause failures. Total path length (site URL + folder path + filename) must be under 400 characters. SharePoint has a 5,000-item list view threshold that prevents large libraries from functioning. Custom metadata requires pre-created columns in the destination before migration.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Run SharePoint Migration Assessment Tool (SMAT) BEFORE migration — identifies all problematic files, paths, and metadata so you can fix them first. This step alone prevents 80% of migration failures.</li><li>Rename files with invalid characters using a script. Shorten file paths by flattening deep folder hierarchies.</li><li>Enable "Preserve file timestamps" in SPMT Advanced settings.</li><li>For metadata: Pre-create columns in destination library that match source columns, then configure column mapping in SPMT.</li><li>Always do a test migration of 100–500 files first. Review the error report (Excel). Fix issues in batch, then scale.</li></ol></div>
+        <div class="nb2">💡 <strong>Migration Pro Tip:</strong> Never migrate everything at once on the first attempt. Test batch → analyze errors → fix patterns → scale. Time invested in SMAT before migration saves days of re-work.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">SharePoint Search Not Finding Recent / Migrated Content</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">SharePoint Online uses a distributed crawl pipeline. Freshly uploaded content indexes in 15 minutes to a few hours normally. Post-migration content can take 24–72 hours for full index. If a site has "Do not index this site" enabled, content never appears in search. Users only find content they have at least Read permission on.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check search visibility: Site Settings → Search and Offline Availability → Indexing Site Content = Yes.</li><li>Request expedited re-index: Site Settings → Search and Offline Availability → "Reindex site" button.</li><li>Per library: Library Settings → Advanced Settings → Allow items to appear in search results = Yes.</li><li>Post-migration: Wait up to 72 hours for full indexing. Search is eventually consistent — there's no way to force immediate indexing.</li><li>Verify user permissions — search only returns content the user has access to. Test with an admin account to distinguish permission issues from indexing delays.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Site Storage Quota Exceeded — Cannot Upload Files</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>"This site has reached its storage limit" error on upload</li><li>Teams channel file uploads silently fail</li><li>Site was within quota last week — how did it fill up so fast?</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Version history is the hidden storage killer — "unlimited versions" on a 1,000-file library where files are edited daily can consume 100x the apparent file size. Recycle bin items (first AND second stage) count against quota. Large videos or backups uploaded to SharePoint instead of appropriate storage.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check storage breakdown: SharePoint Admin Center → Active Sites → Site name → Storage Metrics — see which library/folder consumes most space.</li><li>Increase quota: SharePoint Admin Center → Active Sites → Select site → Storage → Edit limit.</li><li>Set version limits: Library Settings → Versioning Settings → Limit major versions to 50 (or reasonable number). This prevents unbounded version storage growth.</li><li>Empty Recycle Bin: Site Settings → Recycle Bin → Empty Recycle Bin (both Stage 1 and Stage 2).</li><li>Enable auto-version trimming (new Microsoft feature): Automatically reduces old versions while preserving recent history.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Increase site storage quota (in MB)</span>
+<span class="g">Set-SPOSite</span> -Identity https://contoso.sharepoint.com/sites/MySite -StorageQuota 102400
+
+<span class="c"># Get top sites by storage usage</span>
+<span class="g">Get-SPOSite</span> -Limit All | Select Url, StorageUsageCurrent, StorageQuota | Sort StorageUsageCurrent -Desc | Select -First 20</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">External Sharing Blocked — "This Sharing Link Doesn't Work"</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">SPO external sharing has TWO levels: Tenant-level (ceiling) and Site-level (can be more restrictive, never more permissive). If tenant is set to "Existing guests only," no site can enable "Anyone" links regardless of site settings. Also: Domain allow/block lists may block the specific guest's email domain.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check tenant sharing: SPO Admin Center → Policies → Sharing → verify tenant-level setting.</li><li>Check site sharing: SPO Admin Center → Active Sites → Select site → Sharing tab — must be same or more restrictive than tenant.</li><li>For "Anyone" (anonymous) links: Both tenant AND site must be set to "Anyone."</li><li>Check domain restrictions: SPO Admin Center → Sharing → "Limit external sharing by domain" — verify the guest's domain is not blocked.</li><li>Entra B2B: External Identities → External collaboration settings — ensure invitations are not blocked.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Check tenant sharing capability</span>
+<span class="g">Get-SPOTenant</span> | Select SharingCapability
+
+<span class="c"># Enable anyone links at tenant level</span>
+<span class="g">Set-SPOTenant</span> -SharingCapability ExternalUserAndGuestSharing
+
+<span class="c"># Set site sharing level</span>
+<span class="g">Set-SPOSite</span> -Identity https://contoso.sharepoint.com/sites/MySite -SharingCapability ExternalUserSharingOnly</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">5,000 Item List View Threshold Error — Library Unusable</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">SharePoint Online enforces a hard 5,000-item query threshold per view. Views without indexed column filters force a full table scan — this fails when the library exceeds 5,000 items. Unlike SharePoint Server, this limit CANNOT be disabled in SPO. After migrating a large file share, libraries with 100K+ items become unusable unless indexes are set up.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Create indexes: Library Settings → Indexed Columns → Add index on frequently filtered columns (Modified, Created, Content Type, Author). This enables efficient filtered views.</li><li>Restructure views: All views must filter on indexed columns first to stay under 5,000 items per query result.</li><li>Use folders: Files within a folder don't count against parent threshold. Organize by year/month folders for time-based content.</li><li>Modern UI: Modern views handle large libraries significantly better than Classic views — switch to modern experience.</li><li>For very large (100K+): Split content across multiple libraries, or consider SharePoint Syntex/Microsoft Syntex for intelligent classification.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Classic SharePoint Workflows Broken — SPD 2010/2013 Workflows Stopped Running</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Microsoft retired SharePoint 2010 workflows in November 2020. SharePoint 2013 workflows are deprecated and being retired. These relied on the SharePoint Workflow Service which is being removed from the platform. Email sending from classic workflows also stopped when Basic Auth was disabled tenant-wide.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Audit all workflows: Use SMAT or PnP PowerShell to list all running classic workflows across all sites.</li><li>SPD 2010 workflows: Must migrate to Power Automate immediately — no workaround exists.</li><li>SPD 2013 workflows: Still functional but plan migration to Power Automate before final retirement deadline.</li><li>Rebuilding in Power Automate: Use SharePoint trigger (When an item is created/modified) + Approval action to replicate approval workflows. Map all conditions/actions from the SPD workflow diagram.</li><li>Test the new Power Automate flow in parallel before decommissioning the SPD workflow.</li></ol></div>
+        <div class="wb">⚠️ <strong>Consultant Alert:</strong> Classic workflow migration to Power Automate is one of the most common SharePoint modernization projects right now. Mastering this migration path is highly valuable for any M365 consultant role.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">SharePoint Site Accidentally Deleted — Recovery Process</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Deleted site collections go to the SharePoint Admin Recycle Bin and are retained for 93 days. After 93 days they are permanently deleted. For Teams-connected sites, deleting the M365 group deletes the Teams AND the SharePoint site together. M365 groups have only 30-day soft-delete retention.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Immediate action: SPO Admin Center → Deleted Sites → Find the site → Restore. Takes a few minutes.</li><li>If connected Teams was deleted: M365 Admin Center → Active Groups → check Deleted groups tab → Restore the M365 Group (within 30 days) → Site auto-restores.</li><li>After 93 days for SPO: Open a P1/Sev A Microsoft Support ticket immediately with the exact site URL and deletion time. Microsoft may be able to recover from backup within an additional 2-week window (not guaranteed).</li><li>Prevention: Enable site-level recycle bin alerts, and require admin approval before deleting Teams/groups in your governance policy.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Restore deleted site collection</span>
+<span class="g">Restore-SPODeletedSite</span> -Identity https://contoso.sharepoint.com/sites/DeletedSite
+
+<span class="c"># List all deleted sites with days remaining</span>
+<span class="g">Get-SPODeletedSite</span> | Select Url, Title, DaysRemaining | Sort DaysRemaining</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">SharePoint Hub Site Association Breaking Existing Navigation</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">When a site joins a Hub, it inherits the Hub's navigation and theme by design. Site owners who had custom navigation are surprised when it gets replaced — Microsoft doesn't prominently warn about this. Hub site navigation sync is automatic but can be controlled.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Before associating: Export existing navigation with PnP PowerShell as a backup: Get-PnPNavigationNode -Location TopNavigationBar</li><li>After accidental override: Temporarily disassociate the site from Hub → restore custom navigation → re-associate.</li><li>Control hub nav sync: The Hub administrator can configure whether associated sites inherit its navigation in Hub site settings.</li><li>For themes: Site-level custom themes can override hub themes — apply after association.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">Stale File Checkout Locking Others Out of Editing</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Site owner override: Navigate to the file → Library → select file → Check In → Discard checkout (this clears the lock without saving changes).</li><li>Library Settings → Manage Files Which Have No Checked In Version → Take ownership and check in.</li><li>Best practice: Disable "Require Check Out" on libraries unless there's a specific regulatory reason. Modern co-authoring is far superior and doesn't require checkout.</li><li>Library Settings → Versioning Settings → Require documents to be checked out = No.</li></ol></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONEDRIVE -->
+<div id="pg-odfb" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › OneDrive for Business</div>
+    <div class="strow"><div class="sic" style="background:rgba(37,99,235,.12)">☁️</div><div><div class="st">OneDrive for Business</div><div class="ss">Top 10 Real-World Issues — Sync · KFM · Sharing · Storage · Governance</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">Known Folder Move (KFM) Silently Failing — Desktop/Documents Not Syncing</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>GPO/Intune KFM policy deployed but Desktop and Documents still not syncing to OneDrive</li><li>KFM shows "Enabled" in policy but user's folders still point to local C: drive</li><li>KFM worked for most users but silently failed for a subset</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">KFM fails when: (1) A folder is already being redirected via GPO Folder Redirection (conflict — you must remove GPO folder redirection before enabling KFM). (2) The user's Desktop or Documents folder contains items that are too large or have invalid characters. (3) OneDrive isn't signed in yet at the time the KFM policy applies. (4) User has files with paths over 260 characters.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check for GPO Folder Redirection conflict: If Folder Redirection GPO is active, KFM will silently fail. Remove the GPO FolderRedirection setting first, then re-apply KFM.</li><li>Check OneDrive sync client status: System tray → OneDrive icon → View sync problems — specific files blocking KFM will be listed.</li><li>Check KFM status in registry: HKCU\Software\Microsoft\OneDrive\Accounts\Business1 — look for KFMState value.</li><li>For long file paths: Enable LongPathsEnabled in Windows registry (HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled = 1).</li><li>Force KFM silently: Intune/GPO: Set KFMSilentOptIn registry key with your SharePoint tenant ID.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">OneDrive Sync Error 0x8004de40 / Stuck Syncing / "Processing Changes"</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Error 0x8004de40 = Sign-in problem / token expired. "Processing Changes" stuck = large file batch being processed, or a single problematic file preventing the entire sync queue. OneDrive sync client has a 300,000 file limit per sync relationship — exceeding this causes performance issues.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Reset OneDrive: Open Run → %localappdata%\Microsoft\OneDrive\onedrive.exe /reset → Wait 2 min → Manually open OneDrive.</li><li>Check specific errors: OneDrive system tray → View sync problems → Note specific files/folders causing issues.</li><li>For 0x8004de40: Sign out of OneDrive completely → Sign back in with correct M365 account credentials.</li><li>Fix file issues: Rename files with invalid characters or paths over 400 chars. Remove files that are too large (250GB+ limit).</li><li>For "Processing Changes" stuck: Pause sync for 2 minutes, then resume — often unsticks a stalled queue.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">OneDrive Storage Quota Exceeded — User Cannot Save Files</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check user's OneDrive storage: Admin Center → Users → Select user → OneDrive → Manage storage OR SPO Admin Center → Active Sites → Find user's OneDrive URL → Storage column.</li><li>Increase quota: SPO Admin Center → Active Sites → Select user's OneDrive → Storage → Change quota (default 1TB per user, up to 5TB with eligible plan).</li><li>Help user clean up: Largest files report at onedrive.com → Storage → Show me what's taking up space.</li><li>Set tenant default quota: SPO Admin Center → Settings → OneDrive storage limit → change default.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Departing Employee OneDrive Access — Data Recovery and Transfer</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Employee left and manager needs access to their OneDrive files</li><li>Account was deleted before files were transferred — now inaccessible</li><li>OneDrive data needs to be preserved for legal/compliance reasons</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">When a user account is deleted, their OneDrive goes into a 30-day preservation state (then gets soft-deleted, then permanently deleted after 93 days total). During this window, an admin can access and transfer the data. If not acted on, the data is permanently lost.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Before deletion: Admin Center → Users → Select departing user → OneDrive → Create link to files → Share with manager.</li><li>After deletion (within 30 days): SPO Admin Center → Active Sites → User's OneDrive URL may still exist → Grant site admin access to a different user.</li><li>After account deleted: SPO Admin Center → Active Sites → Find the deleted user's personal site → Grant yourself site collection admin → Access and copy files.</li><li>For compliance: Put the user on Litigation Hold before deletion to preserve all content indefinitely. Remove Litigation Hold only after legal sign-off.</li><li>Automate: Use the "Set access delegation" feature in Admin Center offboarding flow — automatically shares OneDrive with the user's manager.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">OneDrive "Anyone" Links Disabled — Sharing Policy Conflict</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>The "Anyone with the link" option requires both tenant AND user's OneDrive to be set to "Anyone" (most permissive).</li><li>Check: SPO Admin Center → Policies → Sharing → OneDrive section must allow "Anyone" links.</li><li>If users are in a restricted group: Admin Center → Settings → OneDrive → Limit external sharing to specific security group — add the user's group or remove the restriction.</li><li>Conditional Access may override: A CA policy requiring authentication will block anonymous links regardless of SPO settings.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">OneDrive Files On-Demand Not Working — Files Not Available Offline</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify Files On-Demand is enabled: OneDrive settings → Account tab → "Save space and download files as you use them" = enabled.</li><li>GPO/Intune can enforce or disable Files On-Demand: Check HKLM\SOFTWARE\Policies\Microsoft\OneDrive\FilesOnDemandEnabled.</li><li>For "file not available offline": Right-click the file → "Always keep on this device" to force download.</li><li>If Files On-Demand is completely unavailable: Requires Windows 10 1709+ or macOS 10.14+. Older OS doesn't support it.</li><li>StorageSense on Windows can automatically free space by making always-available files "online-only" — users may need to re-download files they assumed were local.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">OneDrive Version History — Ransomware Recovery Using Restore</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Files encrypted by ransomware — all content shows as garbage/locked</li><li>Hundreds or thousands of files were overwritten simultaneously</li><li>Need to recover to a point in time before the attack</li></ul></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Use OneDrive Files Restore: OneDrive → Settings → Restore your OneDrive → Select a point in time before the attack. This restores all files in your OneDrive to that point using version history (up to 30 days).</li><li>For individual files: Right-click → Version history → Restore a specific version.</li><li>Admin-initiated restore: SPO Admin Center or via PowerShell for a user's OneDrive if they need help.</li><li>After restore: Investigate how ransomware got in — check Azure AD sign-in logs for compromised account, review device compliance, enable Defender for Endpoint.</li><li>Prevention: Enable M365 Defender Ransomware detection — it alerts and helps guide recovery automatically.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">OneDrive Sync Client Blocked by Intune Policy or Conditional Access</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>SPO Admin Center → Settings → OneDrive → "Sync" → Check "Allow syncing only on PCs joined to specific domains" — ensure the PC's domain is listed.</li><li>If "Block sync on unmanaged devices": CA policy requiring compliant/hybrid-joined device applies to OneDrive sync. Ensure device is enrolled in Intune and compliant.</li><li>OneDrive Admin GPO: Check HKLM\Software\Policies\Microsoft\OneDrive\AllowTenantList — ensures only your tenant is synced.</li><li>B2B sync: Users syncing another organization's SharePoint need "Allow users to sync SharePoint and Teams content from other organizations" enabled.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">OneDrive for Business Migration from File Share Using SPMT/FastTrack</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Pre-migration: Run SMAT to find file name issues, path lengths, and unsupported file types (OneNote sections, lnk files, tmp files — exclude these).</li><li>Map users: Create a CSV mapping source paths (\\server\share\username) to destination OneDrive URLs (https://contoso-my.sharepoint.com/personal/username_contoso_com).</li><li>SPMT: Use the "File share" source and "OneDrive" destination. Enable "Preserve file timestamps." Run a test migration first.</li><li>Post-migration: Verify file count matches. Check permissions (OneDrive is personal — permissions don't migrate from file share). Train users on Files On-Demand.</li><li>Pilot users first: Migrate a small group, train them, get feedback, then mass migrate with confidence.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">OneDrive Multi-Tenant Sync — B2B Guest Sync Not Working</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>SharePoint Admin Center → Settings → OneDrive → "Allow users to sync SharePoint and Teams content from other organizations" = Enabled.</li><li>Guest user must be properly invited as a B2B guest in the host tenant (not just shared a link).</li><li>Guest syncs from the host tenant's OneDrive URL — they add the library via "Sync" button in SharePoint/Teams, authenticated with their home tenant credentials.</li><li>Conditional Access in the host tenant may block external accounts from syncing — check if a CA policy requires device compliance that the guest's device can't meet.</li></ol></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ENTRA ID -->
+<div id="pg-entra" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Entra ID / Azure AD</div>
+    <div class="strow"><div class="sic" style="background:rgba(124,58,237,.12)">🔐</div><div><div class="st">Entra ID / Azure Active Directory</div><div class="ss">Top 10 Real-World Issues — MFA · Conditional Access · Sync · SSO · Identity Security</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">MFA Lockout — User Lost Access to Authentication Method</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bs">Support</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>User cannot sign in — MFA code goes to old/lost phone</li><li>Authenticator app lost after phone replacement or wipe</li><li>Mass lockout after CA policy enforcing MFA was switched from Report-Only to Enabled</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">MFA methods are tied to the user's account in Entra ID. When a user changes phones without migrating the Authenticator app, or loses access to their registered phone number, they can't complete MFA. Without a backup method (backup phone number, OATH token), they're completely locked out with no self-service recovery path.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Admin clears MFA methods: Entra Portal → Users → Select user → Authentication Methods → Delete the locked method(s) to force re-registration.</li><li>Create a Temporary Access Pass (TAP): A time-limited PIN that bypasses MFA for one-time use — allows user to re-register securely.</li><li>User re-registers MFA at aka.ms/mfasetup using the TAP.</li><li>Prevention: Require users to register at least 2 MFA methods during initial setup. Enable "Number Matching" in Authenticator to prevent MFA fatigue push attacks.</li><li>Break Glass account: Always maintain 2 cloud-only global admin accounts with no MFA requirement (use very strong password + monitor sign-ins) for emergency access.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell (Microsoft Graph)</div><div class="cb"><span class="c"># Create Temporary Access Pass for locked-out user</span>
+<span class="g">New-MgUserAuthenticationTemporaryAccessPassMethod</span> -UserId <span class="p">"user@contoso.com"</span> -IsUsableOnce $true -LifetimeInMinutes 60
+
+<span class="c"># List all auth methods for a user</span>
+<span class="g">Get-MgUserAuthenticationMethod</span> -UserId <span class="p">"user@contoso.com"</span></div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">AAD Connect Sync Errors — "AttributeValueMustBeUnique" / Objects Not Syncing</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bp">Project</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Changes made in on-prem AD not appearing in Entra ID/M365 after sync</li><li>Sync error: "AttributeValueMustBeUnique" — duplicate UPN or ProxyAddress</li><li>User exists in on-prem AD but not in Entra ID (quarantined object)</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Duplicate attribute conflicts are the #1 sync error. Two on-premises users sharing the same UPN, email address, or proxyAddress cause AAD Connect to "quarantine" one object and only sync the other. This is invisible to end users — the affected user simply doesn't exist in the cloud or has stale attributes.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check sync errors: Entra Admin Center → Identity → Hybrid Management → AAD Connect → Sync Errors — lists all quarantined objects with details.</li><li>Run IDFix tool on on-premises AD before sync setup — scans for all attribute conflicts proactively.</li><li>Fix duplicates: Change the conflicting UPN/ProxyAddress on the affected on-prem AD account to be unique.</li><li>Force delta sync: Start-ADSyncSyncCycle -PolicyType Delta (run on the AAD Connect server).</li><li>For cloud-only accounts needing merge with on-prem: Use Soft Match (UPN or SMTP match) or set ImmutableId to match the on-prem anchor.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell (AAD Connect server)</div><div class="cb"><span class="c"># Force delta sync immediately</span>
+<span class="g">Start-ADSyncSyncCycle</span> -PolicyType Delta
+
+<span class="c"># Check sync scheduler status</span>
+<span class="g">Get-ADSyncScheduler</span>
+
+<span class="c"># View sync errors in connector space</span>
+<span class="g">Get-ADSyncCSObject</span> -ConnectorName <span class="p">"contoso.com"</span> -DistinguishedName <span class="p">"CN=User,OU=Users,DC=contoso,DC=com"</span></div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Conditional Access Policy Blocking Legitimate Users — Production Outage</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Users suddenly blocked from all M365 services after a new CA policy went live</li><li>"Your organization has blocked access from this device"</li><li>Service accounts used by applications stopped working</li><li>Block only happens from specific locations/devices — pointing to a CA condition</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">A CA policy was deployed without proper testing in Report-Only mode first. Over-broad policies like "Require compliant device for All apps" block users on BYOD or personal phones. "Block Legacy Authentication" breaks service accounts using Basic Auth. Misconfigured Named Locations (wrong IP ranges) cause office users to be seen as "external."</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Immediately switch the blocking policy to "Report Only" to stop the outage while investigating.</li><li>Diagnose: Entra → Users → Sign-in logs → Filter by affected user → Look at CA policies applied and failure reason.</li><li>Use CA "What If" tool: Entra → Security → CA → What If → simulate specific user+app+location to see which policies trigger.</li><li>Add exclusions: Add affected users/groups or fix Named Location IP ranges before re-enabling.</li><li>Best practice for future: Report-Only for 2 weeks → Review sign-in logs for false positives → Add exclusions → Enable. ALWAYS exclude Break Glass accounts from all CA policies.</li></ol></div>
+        <div class="nb2">💡 <strong>Critical Principle:</strong> Never enable a new Conditional Access policy directly in production. Always use Report-Only mode first. This is the most important CA lesson for any M365 engineer.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Compromised Account Response — Suspicious Sign-In / Token Theft</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>"Impossible travel" alert — user signed in from two countries within 1 hour</li><li>User receiving unexpected MFA approval prompts (MFA fatigue attack)</li><li>Inbox forwarding rules to external address found</li><li>User's Secure Score risk shows "High" or "Compromised"</li></ul></div>
+        <div class="sec"><div class="slbl fx">Incident Response Steps</div><ol class="stpl"><li>Revoke all sessions immediately: Entra → Users → Select user → Revoke sessions. This invalidates all existing tokens forcing re-authentication.</li><li>Reset password: Require immediate password change, force MFA re-registration.</li><li>Check inbox rules: OWA → Settings → Rules → Remove any forwarding rules to external addresses.</li><li>Check mail forwarding: Get-Mailbox user | Select ForwardingSmtpAddress, DeliverToMailboxAndForward → Remove unauthorized forwarding.</li><li>Check OAuth app consent: Entra → Enterprise Apps → filter by user → revoke any apps the user consented to that look suspicious.</li><li>Review sign-in logs: Identify source IPs, user agents, and affected apps. Determine what data was accessed.</li><li>Confirm compromise in ID Protection: Entra → Protection → Risky Users → Confirm user compromise (feeds Microsoft's threat intelligence).</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Revoke all refresh tokens immediately</span>
+<span class="g">Revoke-MgUserSignInSession</span> -UserId <span class="p">"compromised@contoso.com"</span>
+
+<span class="c"># Remove unauthorized mail forwarding</span>
+<span class="g">Set-Mailbox</span> <span class="p">"user@contoso.com"</span> -ForwardingSmtpAddress $null -DeliverToMailboxAndForward $false</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">SSO Failure — AADSTS Error Codes When Accessing SaaS App</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>AADSTS50011: Reply URL mismatch — redirect URI sent doesn't match registered URIs</li><li>AADSTS700016: Application not found in tenant</li><li>AADSTS50105: User not assigned to the application</li><li>SSO worked for months then broke after SAML certificate expired</li></ul></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Look up the exact error code at aka.ms/aadsts — each code has a specific meaning and resolution path.</li><li>For reply URL mismatch (50011): Entra → Enterprise Apps → App → Single Sign-On → Verify Reply URL/Redirect URI exactly matches what the app sends.</li><li>For user not assigned (50105): Enterprise Apps → App → Users and Groups → Assign the user or their group to the app.</li><li>For expired SAML certificate: Enterprise Apps → App → SAML Certificates → Download new cert → Upload to the SaaS application's SSO settings.</li><li>Use "Test single sign-on" button: Enterprise Apps → App → Single Sign-On → Test — simulates the full SAML/OIDC flow and shows exactly where it fails.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Hybrid Azure AD Join Failure — Devices Show as "Pending" Indefinitely</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Hybrid join requires: (1) Service Connection Point (SCP) in on-prem AD pointing to correct Entra tenant, (2) AAD Connect with device registration enabled, (3) The device must reach Microsoft login endpoints during the HAADJ process. "Pending" = device registered its initial object but the final hybrid join completion token hasn't been issued — usually the device needs to be on the domain network (not VPN) to complete.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Run dsregcmd /status on the device — check AzureAdJoined, DomainJoined, and AzureAdPrt fields.</li><li>Verify SCP exists in on-prem AD at: CN=62a0ff2e-97b9-4513-943f-0d221bd30080,CN=Device Registration Configuration,CN=Services,CN=Configuration</li><li>AAD Connect: Ensure "Device writeback" or "Device-based SSO" feature is enabled in the AAD Connect wizard.</li><li>For Pending: Device must complete a Task Scheduler task (Automatic-Device-Join) while connected to the on-premises domain network (not VPN). Schedule a reboot when the device is in-office.</li><li>Force join attempt on device: dsregcmd /join (run as SYSTEM or via scheduled task)</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell / CMD</div><div class="cb"><span class="c"># Check device join status (run on the device)</span>
+<span class="g">dsregcmd /status</span>
+
+<span class="c"># Force workplace join attempt</span>
+<span class="g">dsregcmd /join</span>
+
+<span class="c"># Check device in Entra</span>
+<span class="g">Get-MgDevice</span> -Filter <span class="p">"displayName eq 'MACHINENAME'"</span> | Select DisplayName, TrustType, ProfileType, ApproximateLastSignInDateTime</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Named Location / Trusted IP Not Working — Users Still Prompted for MFA in Office</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Named Locations use the outbound/egress PUBLIC IP — not the internal IP address. Organizations using ZScaler, Netskope, or corporate proxies have cloud egress IPs that change and may not match what's configured. IPv6 egress addresses are often forgotten when only IPv4 was added. After an ISP change, the egress IP range changes and Named Locations become incorrect.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Find actual egress IP: Check sign-in logs → IP address column for recent office sign-ins. This is the IP Entra sees.</li><li>Update Named Location: Entra → Security → CA → Named Locations → Update IP ranges to include current egress IPs.</li><li>Add BOTH IPv4 and IPv6 ranges — modern corporate networks and ISPs use dual-stack.</li><li>Mark as trusted: Ensure "Mark as trusted location" is checked — this is what CA policies check for "trusted location" conditions.</li><li>For organizations using cloud proxies (ZScaler): Get their current egress IP list from the vendor, OR switch to device compliance as the trust signal instead of IP location.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">SSPR Not Working — Password Reset Fails for On-Premises Synced Users</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Enable SSPR: Entra Portal → Users → Password reset → Properties → All (or selected group).</li><li>Enable Password Writeback in AAD Connect: Run AAD Connect wizard → Optional Features → Password writeback = Enabled. Restart the AAD Connect sync service after enabling.</li><li>Grant AD permissions: The AAD Connect service account needs "Reset Password" and "Change Password" permissions on user OUs in on-prem AD.</li><li>Require registration: Authentication methods policy → SSPR → Registration required at next sign-in. Users must register before they can self-reset.</li><li>Troubleshoot writeback: Check AAD Connect event log (Application) on the sync server for "PasswordResetService" errors. Common error: AD service account lacks permissions.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">App Registration — "Admin Consent Required" Blocking Users</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Grant admin consent: Entra → Enterprise Apps → Find app → Permissions → "Grant admin consent for [Tenant]" button.</li><li>Configure consent policy: Entra → Enterprise Apps → User settings → User consent settings → Allow user consent for verified publisher apps (balanced approach).</li><li>Set up Admin Consent Workflow: Allows users to request consent for apps they can't consent to themselves. Entra → Enterprise Apps → User settings → Admin consent requests → Enable. Reduces IT tickets while maintaining control.</li><li>Review high-privilege permissions (Application type, not Delegated) carefully before granting — these operate without user context and have broad access.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">PIM (Privileged Identity Management) — User Cannot Activate Admin Role</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify eligibility: Entra → PIM → My Roles → Eligible assignments — role must be listed and not expired.</li><li>Check activation requirements: PIM role settings may require MFA, justification, and/or approval from a specific approver group. Verify user can fulfill all requirements.</li><li>Check pending approvals: PIM → Approve Requests → Pending approvals. If an approver hasn't responded, the activation waits.</li><li>After activation, wait 2–5 minutes for the Azure AD token to update. User may need to sign out and sign back in for the new role to be reflected in the admin portals.</li><li>For "not eligible" error: A PIM administrator must add the eligible role assignment: PIM → Azure AD Roles → Select role → Add assignments → Eligible.</li></ol></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTUNE -->
+<div id="pg-intune" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Intune / Endpoint Manager</div>
+    <div class="strow"><div class="sic" style="background:rgba(217,119,6,.12)">📱</div><div><div class="st">Microsoft Intune / Endpoint Manager</div><div class="ss">Top 10 Real-World Issues — Enrollment · Compliance · App Deployment · MDM · MAM</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">Windows Autopilot Enrollment Failure — Device Not Recognized / "Something Went Wrong"</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>"Something went wrong" error during OOBE setup</li><li>"This device is not registered for Autopilot" at the sign-in screen</li><li>Device goes through OOBE but lands on personal setup instead of corporate enrollment</li><li>Enrollment Status Page (ESP) stuck at "Installing device management"</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Device hardware hash not imported into the Intune Autopilot device database. The hardware hash is a unique fingerprint — if it's missing, the device doesn't know it should use Autopilot. ESP stuck = a required app assigned in the ESP configuration is failing to install, blocking the entire enrollment flow.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify registration: Intune → Devices → Enroll → Windows enrollment → Windows Autopilot Deployment Program → Devices — search for the device serial number.</li><li>Collect and import hardware hash: Boot device to OOBE or Windows, run Get-WindowsAutoPilotInfo -OutputFile C:\hash.csv → Import the CSV in Intune.</li><li>Check profile assignment: Autopilot Deployment Profile must be assigned to a group containing the device (or "All Devices" for pilot).</li><li>For ESP stuck: Check which app is blocking. Review Event Viewer → Apps and Services → Microsoft → Windows → ModernDeployment-Diagnostics-Provider → identify the failing application.</li><li>Check Intune Enrollment logs: C:\Windows\CCM\Logs or MDM diagnostic report (Settings → Accounts → Access work or school → Info → Create report).</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Collect hardware hash (run as admin on target device)</span>
+<span class="g">Install-Script</span> -Name Get-WindowsAutoPilotInfo -Force
+<span class="g">Get-WindowsAutoPilotInfo</span> -OutputFile C:\AutopilotHWID.csv</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">Device Compliance Marked Non-Compliant — CA Blocking Users on Their Own Machines</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Compliance state is based on last Intune check-in. If the device hasn't checked in for 8+ hours, Intune uses cached state. BitLocker shows non-compliant if the recovery key hasn't been escrowed to Entra ID yet. Compliance policies checking OS version fail if Windows Update hasn't run recently. The "grace period" being 0 means devices become instantly non-compliant after enrollment.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Force device sync: Company Portal → Devices → Sync, or Intune Admin → Devices → Select device → Sync.</li><li>Check exact failing setting: Intune → Devices → Select device → Device compliance → click the non-compliant policy → see which specific setting is red.</li><li>For BitLocker: Force recovery key backup to Entra: BackupToAAD-BitLockerKeyProtector cmdlet (see PowerShell below).</li><li>Set grace period: Intune → Compliance policies → Edit policy → Actions for noncompliance → Add a "Mark device noncompliant" action with a 1–3 day grace period for new devices.</li><li>If CA is blocking: Temporarily exclude the affected group from the "Require compliant device" CA policy while you fix compliance settings.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell (run on device as admin)</div><div class="cb"><span class="c"># Force BitLocker key backup to Entra ID</span>
+$kp = (Get-BitLockerVolume -MountPoint "C:").KeyProtector | Where {$_.KeyProtectorType -eq "RecoveryPassword"}
+<span class="g">BackupToAAD-BitLockerKeyProtector</span> -MountPoint "C:" -KeyProtectorId $kp.KeyProtectorId</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Win32 App Deployment Failing — Error 0x87D1041C (Detection Rule Failed)</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Error 0x87D1041C means the app INSTALLED but the detection rule didn't find evidence of successful installation. The installer ran, but Intune's detection rule (file path check, registry key check, or MSI GUID check) returned false because: wrong path, wrong registry value, detection runs before reboot applies the install, or the app was installed in user context but detection checks system context.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check IME (Intune Management Extension) logs: C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\IntuneManagementExtension.log — search for the app name to see exact error.</li><li>Test the detection rule manually on the device: If it's a registry key check, open regedit and navigate to the exact path/name/value. If it's a file check, confirm the exact path exists post-install.</li><li>Fix detection rule: Update the app in Intune with the corrected detection rule path/value.</li><li>Check install context: "Install behavior" — if app installs to user profile, set to "User." For system-wide installs, use "System." Detection context must match.</li><li>Reboot requirement: If app needs a reboot before detection succeeds, add a "Reboot" action in the app's Win32 configuration.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">iOS/Android Enrollment Blocked — "Your Organization Does Not Allow This Device Type"</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check enrollment restrictions: Intune → Devices → Enrollment → Enrollment restrictions → Platform restrictions — verify iOS/Android is allowed for the user's group.</li><li>Check device limit: Default limit is 5 devices per user. Increase: Enrollment restrictions → Device limit restriction → Edit → Set higher limit or create exception for specific groups.</li><li>BYOD/Personal devices: Ensure "Personally Owned" is allowed in the Platform restriction policy if users have personal (non-corporate) devices.</li><li>Apple-specific: APNs (Apple Push Notification) certificate must be valid and renewed annually: Intune → iOS enrollment → Apple MDM Push Certificate. Expired APNs = all iOS enrollment and management stops.</li><li>Android Enterprise: Ensure Android Enterprise is connected (Intune → Android enrollment → Managed Google Play) — required for Android corporate profiles.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">Configuration Profile Not Applying — "Succeeded" in Intune But No Effect on Device</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Profile shows "Succeeded" = Intune delivered the profile to the device. But "Succeeded" doesn't guarantee the setting applied — some CSP (Configuration Service Provider) settings aren't supported on specific Windows versions, or conflict with another profile. Also: Profile scoped to "Device" context vs. "User" context — settings deploying to the wrong context appear to apply but don't work.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check configuration report: Intune → Devices → Select device → Device configuration — see per-setting status. Conflicting settings show in orange/red.</li><li>Resolve conflicts: When two profiles assign conflicting values for the same setting, Intune flags it. Remove the conflicting setting from one profile or consolidate into a single profile.</li><li>Check CSP support: Use the Intune settings catalog — it shows which Windows versions support each setting. Settings that show "Not applicable" on older Windows fail silently.</li><li>For user-context settings: Profile must be assigned to USER groups, not device groups, and must deploy in user sign-in context.</li><li>Check device event logs: Event Viewer → Applications and Services Logs → Microsoft → Windows → DeviceManagement-Enterprise-Diagnostics-Provider → Admin.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Windows Update Rings — Devices Not Receiving Updates / Update Loops</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify update ring assignment: Intune → Devices → Update rings for Windows → Confirm assignment includes the device/group.</li><li>Feature vs. Quality Updates: Update rings control quality updates. Feature updates (major Windows versions) require a SEPARATE "Feature Update Policy" in Intune. Create one if missing.</li><li>Safeguard holds: Microsoft may block a feature update on specific hardware. Check Windows Update for Business reports in Intune to see if a safeguard hold is active.</li><li>For update loops: If deadline passed while update was deferred, Windows forces restart loops. Set reasonable deferral periods and ensure deadlines align with business needs.</li><li>Get update logs on device: Get-WindowsUpdateLog — creates a readable log from ETL files. Review for specific failure causes.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Mobile App Management (MAM) — Corporate Data Not Protected on Personal Device</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">MAM App Protection Policies (APP) protect corporate data within managed apps (Outlook, Teams, Edge, Office). The policy is identity-based — it applies to the user's WORK account within the app. If the user signs in with a personal account to Outlook, APP doesn't apply. The policy also must be assigned to the user's group AND target the specific app.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify APP assignment: Intune → Apps → App protection policies → Verify policy targets both the user group AND the specific app (e.g., Outlook for iOS).</li><li>APP targets users, not devices — ensure the user is in the targeted group.</li><li>User must sign in with their work account to the app — APP binds to the work identity, not the device.</li><li>Only Microsoft-managed apps support APP without device enrollment (MAM-WE) — third-party apps need Intune SDK integration.</li><li>Check protection status: Intune → Apps → Monitor → App protection status → Select user → see which apps are protected.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">Intune Connector for AD — Autopilot Hybrid Join Failing</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Install Intune Connector on a domain-joined server with line-of-sight to AD domain controllers. The connector creates computer objects in AD during hybrid Autopilot enrollment.</li><li>Service account: The connector's service account needs "Create Computer Objects" delegation in the target OU.</li><li>Check connector health: Intune → Devices → Enroll → Windows enrollment → Intune Connector for Active Directory → must show "Active" status.</li><li>Network requirements: The connector server must reach both Intune endpoints (*.manage.microsoft.com) AND on-premises DCs simultaneously.</li><li>If "Inactive": Uninstall the connector → Re-install → Sign in with a Global Admin account during setup (or Intune Admin with elevated permissions).</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">Remote Wipe Fails — "Pending" State That Never Completes</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Wipe requires the device to be online and reach Intune. If device is off, offline, or destroyed — wipe executes when the device next connects to the internet.</li><li>Distinguish actions: Wipe = factory reset. Retire = remove corporate data only (for BYOD). Fresh Start = reset keeping Azure AD join. Choose the right action for the scenario.</li><li>For indefinitely stuck "Pending": Delete the device from Intune — removes MDM enrollment record. If device comes online later, it won't check in because the enrollment is removed.</li><li>Block at Entra level too: Entra → Devices → Select device → Disable — prevents Hybrid Join CA requirement from being satisfied even if device reconnects.</li><li>For BYOD: Use "Retire" (not "Wipe") to remove only corporate apps and data without wiping the user's personal content.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">Defender for Endpoint — Device Not Onboarding / Unhealthy Status</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Use Intune-MDE integration (preferred for Intune-managed devices): Intune → Endpoint Security → Microsoft Defender for Endpoint → Enable the connector. This auto-onboards all Intune-managed Windows devices.</li><li>Check SENSE service on device: Run sc query sense — must be Running. If stopped: sc start sense.</li><li>Verify onboarding package: The blob used for onboarding contains the tenant's org ID. Wrong onboarding package = device appears in wrong tenant's MDE portal.</li><li>Connectivity: Device must reach specific MDE endpoints. Run the MDE Connectivity Analyzer tool to verify.</li><li>After onboarding: Wait 5–20 minutes for device to appear in Defender portal. Check device inventory at security.microsoft.com → Devices.</li></ol></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M365 APPS -->
+<div id="pg-apps" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › M365 Apps / Office</div>
+    <div class="strow"><div class="sic" style="background:rgba(220,38,38,.12)">🖥️</div><div><div class="st">Microsoft 365 Apps / Office</div><div class="ss">Top 10 Real-World Issues — Activation · Sign-In Loops · C2R · VDI · Co-authoring</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">Office "Unlicensed Product" — Apps Running in Reduced Functionality Mode</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Red banner: "UNLICENSED PRODUCT" in all Office apps</li><li>Can open and read files but cannot edit (read-only mode)</li><li>Affects all users in a department simultaneously after license reassignment</li><li>Was working fine yesterday — sudden break</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">License removed, expired, or moved to a different SKU that doesn't include desktop apps (e.g., M365 F3 doesn't include installable Office). Office validates licensing online every 30 days — if validation fails 3 consecutive times, it enters reduced functionality mode. Also: Over-installation (user installed on 6th device when license only allows 5).</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify license: M365 Admin Center → Users → Active Users → Select user → Licenses → Ensure M365 Apps for Enterprise/Business is assigned and active.</li><li>Sign out and back in: Open any Office app → File → Account → Sign Out → Sign In with correct M365 account.</li><li>Run SaRA (Support and Recovery Assistant): Microsoft's official Office diagnostic/repair tool — download from aka.ms/SaRA.</li><li>Reset activation: Open elevated CMD → cd to Office installation folder → run: cscript ospp.vbs /act to force immediate license check.</li><li>For device limit: User must sign out of Office on old/unused devices: account.microsoft.com/devices → Remove unused Office activations.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell / CMD (run as admin)</div><div class="cb"><span class="c"># Navigate to Office folder and check activation status</span>
+<span class="g">cd</span> "C:\Program Files\Microsoft Office\root\Office16"
+<span class="g">cscript ospp.vbs /dstatus</span>    <span class="c"># Show current activation</span>
+<span class="g">cscript ospp.vbs /act</span>         <span class="c"># Force activation attempt</span></div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">Office Sign-In Loop — "We're Having Trouble Signing You In" Repeated Prompts</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Corrupted OAuth tokens in Windows Credential Manager. Office Identity cache corruption in %localappdata%. On domain-joined PCs, conflicting Windows Integrated Authentication tokens. A Conditional Access policy may be rejecting Office's token refresh request silently, causing the perpetual re-authentication loop.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Clear Credential Manager: Control Panel → Credential Manager → Windows Credentials → Remove ALL entries containing "MicrosoftOffice", "Office16", or "microsoft.com".</li><li>Sign out of Office: File → Account → Sign Out → Close ALL Office apps (including background processes) → Reopen → Sign in fresh.</li><li>Clear Office identity cache: Close all Office → Delete contents of %localappdata%\Microsoft\Office\16.0\Licensing</li><li>Registry cleanup (back up first): Delete HKCU\Software\Microsoft\Office\16.0\Common\Identity key entirely.</li><li>Online Repair if still failing: Settings → Apps → Microsoft 365 Apps → Modify → Online Repair (full reinstall of Office components).</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Click-to-Run Update Failure — Office Stuck on Old Build</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check Click-to-Run service: Get-Service ClickToRunSvc — must be Running and set to Automatic start.</li><li>Force update manually as admin: Run "C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeC2RClient.exe" /update user</li><li>Check update channel: HKLM\SOFTWARE\Microsoft\Office\ClickToRun\Configuration → UpdateChannel value. Ensure it matches your desired channel (Current, MonthlyEnterprise, or SemiAnnualEnterprise).</li><li>Antivirus exclusion: AV scanning C2R temp files during update causes failures. Add Office update temp path to exclusion: C:\Windows\Temp\OfficeClickToRun* and C:\Program Files\Common Files\microsoft shared\ClickToRun\</li><li>If all else fails: Use ODT (Office Deployment Tool) to perform a full uninstall and clean reinstall.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Force Office update</span>
+<span class="g">Start-Process</span> "C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeC2RClient.exe" -ArgumentList "/update user"
+
+<span class="c"># Check current Office version and channel</span>
+<span class="g">Get-ItemProperty</span> "HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\Configuration" | Select VersionToReport, UpdateChannel</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Office Activation on VDI/RDS — Shared Computer Activation Not Working</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Standard M365 Apps licensing is per-device (up to 5 devices). VDI/RDS environments have multiple users sharing the SAME machine, which violates per-device licensing. The solution is Shared Computer Activation (SCA) mode — tokens are issued per-user-session, not per-machine. SCA requires a specific registry key set during installation AND valid M365 Apps license for each user.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Enable SCA during installation via ODT config XML: Add SharedComputerLicensing="1" to the Configuration element.</li><li>Enable SCA on an existing installation: Set registry value HKLM\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\SharedComputerLicensing = 1</li><li>Verify SCA is active: File → Account → Look for "Shared Computer Activation" label under Product Information.</li><li>Each user must have M365 Apps for Enterprise or Business license — SCA tokens are user-based and auto-renew every 12 hours while the user is signed in online.</li><li>Token storage: Per-user tokens stored in %localappdata%\Microsoft\Office\16.0\Licensing — clearing this forces re-activation at next sign-in.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">Co-Authoring Not Working — "File is Locked for Editing by Another User"</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Co-authoring requires: (1) AutoSave enabled on the file, (2) File stored in OneDrive or SharePoint (not local or network share), (3) Office version that supports co-authoring (M365 Apps, not Office 2013 or earlier). If any user opened with AutoSave OFF, they take exclusive lock. Stale locks remain if the app crashed during the session.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Remove stale lock: Go to SharePoint/OneDrive → right-click file → Check In, or wait up to 10 minutes for the lock timeout.</li><li>Enable AutoSave: Toggle AutoSave ON in the top-left corner of Office for all OneDrive/SharePoint files.</li><li>Disable "Require Check Out" in SharePoint library: Library Settings → Versioning Settings → Require Check Out = No. This is incompatible with co-authoring.</li><li>Ensure all users are on current M365 Apps builds — co-authoring requires current channel builds.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Outlook Profile Corruption After Exchange Hybrid Migration</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Delete the old Outlook profile: Control Panel → Mail → Profiles → Remove → Add new profile and let Autodiscover build it fresh from EXO.</li><li>Delete stale OST file: Navigate to %localappdata%\Microsoft\Outlook → Delete or rename the .ost file. Outlook will recreate it from EXO on next launch.</li><li>Run scanpst.exe (Inbox Repair Tool) on corrupted .ost/.pst files: Located in the Office installation directory.</li><li>Test Autodiscover for the migrated mailbox: CTRL + right-click Outlook tray icon → Test Email AutoConfiguration → HTTPS Autodiscover must return EXO endpoint, not on-premises.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Teams Meeting Add-In Missing from Outlook Ribbon</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Teams must be running in the background — the Outlook add-in only registers when Teams is active. Launch Teams and check if add-in appears.</li><li>Check add-in status: Outlook → File → Options → Add-ins → COM Add-ins → "Microsoft Teams Meeting Add-in for Microsoft Office" — must be checked (not in Disabled Items).</li><li>Move from Disabled Items: File → Options → Add-ins → Manage: Disabled Items → Go → Select Teams add-in → Enable.</li><li>Reinstall Teams: Uninstall Teams completely → Download fresh from teams.microsoft.com → Reinstall. The Outlook add-in registers during Teams installation.</li><li>GPO resiliency: Check Office ADMX group policy — "Don't automatically disable add-ins" policy may need to be configured to prevent Office from disabling slow-loading add-ins.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">Office Deployment via Intune/SCCM — Installation Fails with Error 30016-4</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Error 30016-4 = a conflicting Office installation is detected. Old MSI-based Office (2010, 2013, 2016) or a Click-to-Run retail version blocks the enterprise CTR installation. The ODT must be configured to remove conflicting installations before installing.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Add RemoveMSI tag to ODT configuration.xml: &lt;RemoveMSI /&gt; — automatically removes legacy MSI-based Office during installation.</li><li>For stubborn installs: Use Microsoft's Office Scrubber tool (OffScrub) to fully remove all Office traces before deploying.</li><li>For mixed C2R retail + volume: Use the /uninstall switch with ODT to remove retail before installing volume.</li><li>Review setup logs: %temp%\SetupExe{GUID}.log — contains detailed error information about what conflicting component was found.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">OneDrive Sync Tab in Office — "We Can't Sync This Folder Right Now"</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Reset OneDrive client: Run → %localappdata%\Microsoft\OneDrive\onedrive.exe /reset → Wait 2 minutes → Reopen OneDrive manually.</li><li>Check for specific sync errors: Right-click OneDrive tray icon → View sync problems. Files with invalid characters or paths over 400 chars prevent the entire library from syncing.</li><li>Reconnect: OneDrive Settings → Account → Add account or stop syncing → re-sync the library.</li><li>Storage quota: If OneDrive storage is full, sync stops for new files. Resolve quota issue first.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">Outlook Add-In Causing Crashes — "This Add-in Has Been Disabled"</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Re-enable from Disabled Items: Outlook → File → Options → Add-ins → Manage: Disabled Items → Find and Enable the add-in.</li><li>Office resiliency GPO: Office ADMX has a "Resiliency" policy that auto-disables add-ins that take over 1 second to load. Configure "List of managed add-ins" GPO to protect critical add-ins from auto-disabling.</li><li>Admin-deploy critical add-ins centrally: Admin Center → Settings → Integrated Apps → Deploy via centralized deployment (web add-ins/COM add-ins) — prevents per-machine installation issues.</li><li>If add-in is crashing Outlook: Get crash dumps from %appdata%\Microsoft\Office\ULS logs, identify which add-in DLL is in the call stack, contact the add-in vendor for a fix or update.</li></ol></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- SECURITY & PURVIEW -->
+<div id="pg-purview" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Security & Purview</div>
+    <div class="strow"><div class="sic" style="background:rgba(13,148,136,.12)">🛡️</div><div><div class="st">Security & Microsoft Purview</div><div class="ss">Top 10 Real-World Issues — DLP · eDiscovery · Defender · Audit · Compliance</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">DLP Policy Blocking Legitimate Business Emails — False Positives at Scale</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Finance team cannot email internal invoice numbers (matched as credit card numbers)</li><li>Employee IDs matching US SSN patterns get blocked</li><li>"Policy tip" appearing on every email causing user complaints</li><li>Started immediately when DLP was switched from Test to Enforce mode</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">DLP sensitive information types use regex patterns. Company-specific formats (9-digit employee IDs, 16-digit account numbers) can match SSN or credit card patterns. Policies set to "Block on 1 match" are too aggressive — real credit card data typically appears with cardholder name, expiry, and CVV together. Single number matches have very high false positive rates.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Review DLP alerts: Purview Compliance Portal → Alerts → DLP → Examine what content triggered the policy and why.</li><li>Tune instance count: Change from 1 occurrence to 2+ occurrences AND require supporting evidence (e.g., credit card number + cardholder name) — reduces false positives dramatically.</li><li>Add exceptions: Exclude specific user groups (finance team), recipient domains (internal), or content types.</li><li>Create custom sensitive information type: If internal IDs are matching incorrectly, create a custom SIT with a negative lookahead regex that excludes your specific formats.</li><li>Use "Notify user" (policy tip) instead of Block during the tuning phase — get feedback from users on what's being flagged before enforcing.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">eDiscovery Search Returning Zero Results for Known Emails</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Compliance search for specific emails known to exist returns 0 results</li><li>Search finds Exchange items but misses SharePoint/Teams content</li><li>Content exported is missing items that appear in the mailbox UI</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">eDiscovery searches only return content from explicitly added locations. Teams messages are stored in TWO places: Exchange hidden mailboxes (chat messages) AND SharePoint channel document libraries (channel messages). Missing either location = incomplete results. Also: Encrypted items (S/MIME, sensitivity labels with encryption) may not be searched without appropriate license (E5 or Advanced eDiscovery).</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify roles: Purview → Permissions → eDiscovery Manager — searcher needs eDiscovery Manager or at minimum eDiscovery Reader role.</li><li>Add all content locations: In the eDiscovery case search, add user's mailbox AND OneDrive AND any Teams channel SharePoint sites.</li><li>For Teams messages: Add the user's Exchange mailbox (for chat) AND the Teams channel SharePoint site URL (for channel posts).</li><li>Check for partially indexed items: Run the search, view statistics → "Items with errors" or "Partially indexed" items may contain what you're looking for. Retry indexing problematic items.</li><li>For sensitive labels: Assign RMS Decrypt role in Purview to the eDiscovery manager to search encrypted content.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Search audit log for specific user activity</span>
+<span class="g">Search-UnifiedAuditLog</span> -StartDate "2025-01-01" -EndDate "2025-02-01" -UserIds <span class="p">"user@contoso.com"</span> -RecordType ExchangeItem -ResultSize 5000
+
+<span class="c"># Force re-index a mailbox for eDiscovery</span>
+<span class="g">Start-ComplianceSearch</span> -Identity <span class="p">"SearchName"</span> -Force</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Safe Links Breaking URLs — Internal SharePoint Links Fail After Wrapping</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Add trusted URLs to "Do not rewrite" list: Defender Portal → Email policies → Safe Links → Edit policy → Add internal URLs (*.sharepoint.com, *.contoso.com) to the exception list.</li><li>For internal SharePoint links: *.sharepoint.com and *.contoso.com should typically be excluded from rewriting as they're corporate domains.</li><li>Communicate to users: The safelinks.protection.outlook.com redirect is intentional security — it checks URLs at time-of-click for malicious content that wasn't flagged at delivery.</li><li>Enable "Do not track user clicks" for privacy compliance if required by your data residency policy.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Audit Log Empty — Events Missing or Retention Too Short</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Default audit log retention is 90 days (E1/E3). With Audit (Premium) / E5, retention extends to 180 days. Events older than the retention period are permanently gone — there is no recovery. If unified audit logging was never enabled (legacy tenants), no events were captured at all.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Verify audit is enabled: Purview → Audit → Search page — if it shows "Start recording user and admin activity," audit was never enabled. Enable it immediately.</li><li>Extend retention proactively: Purview → Audit → Retention policies → Create policies for 1-year or 10-year retention for critical workloads (requires E5 or Audit Premium).</li><li>For older events beyond retention: Contact Microsoft Support immediately — they may have backend infrastructure logs for a short additional window.</li><li>For ongoing compliance: Export audit logs regularly to Azure Storage, SIEM (Sentinel), or Log Analytics for long-term retention beyond the Purview limits.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Search audit log with PowerShell (more powerful than UI)</span>
+<span class="g">Search-UnifiedAuditLog</span> -StartDate "2025-01-01" -EndDate "2025-01-31" -RecordType SharePointFileOperation -Operations FileDeleted -ResultSize 5000
+
+<span class="c"># Verify audit logging is enabled</span>
+<span class="g">Get-AdminAuditLogConfig</span> | Select UnifiedAuditLogIngestionEnabled</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">Sensitivity Labels Not Appearing in Office / Encryption Not Applied</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check label policy: Purview → Information protection → Label policies → Verify policy is published and assigned to user's group. Changes take up to 24 hours to propagate.</li><li>Verify Office version: Built-in sensitivity labeling in M365 Apps requires Current Channel or Monthly Enterprise Channel — Semi-Annual may lag behind. Check current Office build.</li><li>For encryption not applying: Edit the label in Purview → check Encryption settings are configured and "Assign permissions now" is selected with the correct Rights Management template.</li><li>Auto-labeling: Must be configured in a separate Auto-labeling policy (not the label itself). Start in Simulation mode → review results → switch to Run mode.</li><li>AIP add-in conflict: If the older Azure Information Protection add-in is installed alongside built-in labeling, disable it. Microsoft recommends using built-in labeling only.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Phishing Email Bypassed Defender for Office 365 — Post-Compromise Investigation</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Submit the phishing email to Microsoft: Defender Portal → Submissions → Email → Submit for analysis. This feeds Microsoft's threat intelligence models.</li><li>Block the sender domain/IP immediately: Defender Portal → Threat Policies → Tenant Allow/Block List → Add domain/IP/URL to Block list.</li><li>Investigate delivery: Review email headers — Authentication-Results (SPF/DKIM/DMARC) and X-Microsoft-Antispam headers show why it wasn't caught.</li><li>Check anti-phishing policy: Ensure spoof intelligence, impersonation protection, and mailbox intelligence are all enabled at maximum protection.</li><li>Tune SCL threshold: Consider changing phishing action from "Move to Junk" (SCL=5) to "Quarantine" (SCL=9) for high-confidence phish detections.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Retention Policy Conflict — Content Being Deleted When It Should Be Preserved</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Multiple retention policies can apply to the same content. Microsoft's preservation principle: RETAIN always wins over DELETE. But if two delete-only policies conflict, the longer retention period wins. If a "delete after 90 days" policy was accidentally applied to a SharePoint library without a corresponding "retain for 7 years" policy, content deletes after 90 days permanently.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Audit all retention policies: Purview → Data lifecycle → Retention policies → check ALL policies and their locations.</li><li>Identify conflicts: Check if the affected content location appears in both a retain policy AND a delete-only policy.</li><li>Disable offending policy: Immediately remove the incorrect location from the delete policy scope.</li><li>Recover deleted content: Items deleted by a retention policy go to the SharePoint Preservation Hold Library — accessible via eDiscovery during any active retention hold. Act quickly.</li><li>Test before enforcing: Use retention policy simulation to see what would be retained/deleted before activating any new retention policy.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">Microsoft Secure Score — Improving from Low Score to Industry Benchmark</div><div class="ibgs"><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Quick Win Actions (High impact, low effort)</div><ol class="stpl"><li>Enable MFA for all users — single highest-impact action. Block legacy authentication protocols. These two alone typically add 15–25 points.</li><li>Enable Defender for Office 365: Safe Links, Safe Attachments, anti-phishing policies with all protections enabled.</li><li>Deploy Intune compliance policies with BitLocker requirement for all Windows devices.</li><li>Enable Entra ID Protection — set User risk policy and Sign-in risk policy to require MFA or block on High risk.</li><li>Mark actions as "Risk Accepted" in Secure Score for settings that can't be changed due to business requirements — this removes them from your score calculation without penalizing.</li><li>Review monthly: Secure Score → Comparison → Benchmark against industry peers to target meaningful improvements.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">Information Barriers Blocking Legitimate Communication Between Teams</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Information Barriers (IB) are used in financial/regulated organizations to prevent communication between conflicting groups (e.g., Investment Banking vs. Retail Banking).</li><li>Check which IB policy is blocking: Purview → Information barriers → Policies → identify segments assigned to affected users.</li><li>Test communication: Use IB compliance check to verify: Get-InformationBarrierPoliciesApplicationStatus</li><li>Fix over-blocking: Modify IB segments to correctly scope only the truly conflicting groups. Adding an "Allowed" policy for specific pairs can permit necessary communication.</li><li>IB changes take up to 24 hours to apply across Teams, SharePoint, and Exchange. Plan maintenance windows for IB policy changes.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">Insider Risk Management — Configuring Without Creating Alert Fatigue</div><div class="ibgs"><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Best Practices for Deployment</div><ol class="stpl"><li>Start with "Data leaks" policy template — easiest to justify and tune for initial deployment.</li><li>Enable HR connector or define "priority users" (executives, admins, users with access to sensitive data) to focus risk scoring on highest-value targets.</li><li>Set appropriate thresholds: Don't alert on every file download — set volume thresholds (e.g., alert after 50+ downloads in 1 day, or mass deletion events).</li><li>Assign dedicated reviewers: Insider Risk Management role must be assigned to reviewers separately from global admins — maintains segregation of duties.</li><li>Review and dismiss false positives weekly: Regular triage prevents queue overflow and keeps the program credible with leadership.</li></ol></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POWER PLATFORM -->
+<div id="pg-pp" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Power Platform</div>
+    <div class="strow"><div class="sic" style="background:rgba(234,179,8,.12)">⚡</div><div><div class="st">Power Platform</div><div class="ss">Top 10 Real-World Issues — Power Automate · Power Apps · Governance · Connectors</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">Power Automate Flow Failing — "Connection Is Not Valid" After Employee Left</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Critical flow worked for months then suddenly fails with "Connection is not valid"</li><li>Failure timestamp correlates with the connection owner's account being deleted</li><li>Re-authenticating the connection works but breaks again after password reset</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Power Automate connections run under the credentials of the connection owner. When the owner's account is deleted, their OAuth tokens are revoked and ALL flows using that connection fail simultaneously. This is the #1 reason for "mysterious" flow failures after employee departures.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Re-authenticate: Power Automate → Data → Connections → Find connection with warning icon → Fix Connection → Sign in with new owner's credentials.</li><li>Transfer ownership BEFORE user leaves: Power Automate → My Flows → ... → Share → Add co-owner (manager or admin). New owner updates all connections to their credentials.</li><li>Service account approach (best practice): Create a dedicated M365 service account (e.g., flows@contoso.com) for all automation connections — not tied to any individual employee. Assign it appropriate licenses.</li><li>For critical flows: Check all flows that use the connection: Power Automate → Data → Connections → Select connection → "Flows using this connection" — audit them all.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">Power Platform DLP Policy Blocking Connector Combinations</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Power Platform DLP groups connectors into Business, Non-Business, and Blocked tiers. Connectors from DIFFERENT groups cannot be used in the same flow/app — this prevents data exfiltration (e.g., SharePoint data flowing to Twitter). When DLP policies change, existing flows that violate the new rules are automatically suspended with no warning to owners.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Review DLP policy: Power Platform Admin Center → Policies → Select policy → Connectors tab — see which connectors are in which group.</li><li>Move connectors to same group: If a connector combination is legitimate business use (e.g., SharePoint + Salesforce), move both to the "Business" group.</li><li>Environment-specific DLP: Create a separate environment with a more permissive DLP for development/testing or specific business units.</li><li>Re-enable suspended flows: After fixing DLP, suspended flows must be manually re-enabled — they don't auto-resume.</li><li>Notify flow owners: DLP changes should be communicated to citizen developers in advance, with a grace period to update their flows.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Flow Triggering Multiple Times — Infinite Loop or Duplicate Runs</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">A flow triggered by "When a SharePoint item is modified" that also MODIFIES the same SharePoint item will trigger itself infinitely. Having both "When created" AND "When modified" triggers on the same list causes new items to trigger both. Apply to each with high concurrency settings can also cause race conditions.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Self-triggering prevention: Add a "FlowStatus" Yes/No column to the list. At flow start: check if FlowStatus = Yes → terminate. At end: set FlowStatus = Yes. This breaks the loop.</li><li>Use trigger conditions: In the trigger settings (advanced), add a condition like @not(equals(triggerOutputs()?['body/FlowStatus'], true)) to prevent re-firing.</li><li>Consolidate triggers: Use a single "When created or modified" trigger instead of separate created/modified triggers.</li><li>Concurrency control: Flow settings → Concurrency control → Limit to 1 concurrent run to prevent parallel race conditions.</li><li>Check run history: Power Automate → My Flows → Flow → Run history — see exactly how many times per hour the flow is firing to confirm a loop.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Power Apps — "You Don't Have Permission to Use This App"</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Share the app with users: Power Apps → Select app → ... → Share → Add users/groups with "User" role.</li><li>Share the data source: Simply sharing the app is not enough. Users also need access to the underlying data (SharePoint list, Dataverse table, SQL table).</li><li>For Dataverse apps: Security roles must be assigned in the Power Platform environment: Environment settings → Security roles → Assign "Basic User" + any app-specific custom role.</li><li>License check: Apps using premium connectors (SQL, Dataverse, HTTP, custom connectors) require Power Apps per-user or per-app license. Verify in Admin Center.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">Power Automate Approval Emails Not Arriving to Approvers</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Approval emails come from approval@approvals.ms — add this domain to the organization's Safe Senders list if it's being caught by anti-spam.</li><li>Check approver's Junk/Spam folder — approval@approvals.ms can be miscategorized by aggressive anti-spam policies.</li><li>Enable Teams Approvals: Approvers can respond directly from the Teams Approvals app without needing email. Much more reliable than email-based approvals.</li><li>Check flow run history: Flow → Run history → Click the run → Expand "Start and wait for an approval" action — if it shows "Waiting," the request was sent. If "Failed," check connector status.</li><li>Approval expiry: Default approval expiry is 30 days. Configure a timeout action to handle expired approvals gracefully.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Power Platform Environment Sprawl — Governance and Control</div><div class="ibgs"><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl sy">Symptoms</div><ul class="syml"><li>Hundreds of personal trial environments created by users</li><li>Production business processes running in default environment with no governance</li><li>No visibility into what apps and flows exist or what data they access</li></ul></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Restrict environment creation: Power Platform Admin Center → Settings → Tenant settings → Set "Who can create production environments" and "Who can create trial environments" to admins only.</li><li>Environment strategy: Establish DEV/TEST/PROD environments with appropriate DLP policies for each tier. Only admins can promote solutions between tiers.</li><li>Deploy CoE Starter Kit: Microsoft's free Power Platform governance toolkit — provides dashboards showing all environments, apps, flows, connectors, and makers in your tenant. Essential for any organization with active Power Platform usage.</li><li>Implement environment request workflow: Build a Power Apps canvas app where users request new environments — gives IT visibility and enforces naming/governance standards.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">Power Automate Throttling — "429 Too Many Requests" Errors</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Power Automate connectors have API call limits. SharePoint connector: 600 calls/minute per tenant for some operations. A flow processing 1,000 SharePoint items simultaneously can exhaust this limit in seconds, causing 429 errors and flow failures. Power Automate also has per-user daily action limits based on license tier (non-premium: 2,000 actions/day).</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Add delay actions: Insert "Delay" (1-5 seconds) within loops to pace API calls and avoid hitting rate limits.</li><li>Reduce "Apply to each" concurrency: Flow settings in "Apply to each" → Concurrency Control → Set degree of parallelism to 1 or low number (instead of default 20).</li><li>Batch processing: Instead of processing each item individually, use SharePoint's Get Items with filter/batch, then process in groups.</li><li>Use premium license: Power Automate Premium greatly increases the daily action limits and removes many throttling thresholds.</li><li>Check run history for 429 patterns: Look for flows that succeed on first try but fail on subsequent runs — classic throttling signature.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">Power Apps Performance — App Loading Extremely Slowly</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Use Monitor tool: Power Apps Studio → Tools → Monitor → Record a session → See which data calls take longest and which formulas have performance issues.</li><li>Fix OnStart bottlenecks: Move data loading from OnStart to Concurrent() function to run all data calls in parallel. OnStart blocks the app from loading until all operations complete.</li><li>Delegation issues: Filter() and Search() against SharePoint lists without delegation download ALL records to the client then filter. Use server-side delegable functions (Filter with indexed columns, LookUp, etc.).</li><li>Lazy loading: Use Concurrent() and show a loading screen while data loads. Only load data for visible screens.</li><li>Migrate to Dataverse for large datasets: Dataverse has far superior query performance vs SharePoint lists for apps with complex filtering needs.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">Power BI Embedded in Teams — "Sign In to View This Content" Loop</div><div class="ibgs"><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>License check: User needs Power BI license (Free for shared workspaces in Premium capacity, or Pro for standard workspaces).</li><li>Report sharing: The report owner must share the report with the viewer or publish it to a shared workspace where the viewer is a member.</li><li>Conditional Access check: CA policies can block Power BI app (App ID: 00000009-0000-0000-c000-000000000000) for certain users. Check sign-in logs for CA failures.</li><li>Teams cache: Clear Teams cache (see Teams Issue 07) — persistent auth loop in Power BI tab is often a Teams rendering cache issue.</li><li>For Premium capacity reports: Viewers with Free license can view reports, but the workspace must be in Premium (P or EM SKU) capacity.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">SPD Workflow Migration to Power Automate — Systematic Approach</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Migration Strategy</div><ol class="stpl"><li>Discovery: Use SMAT or PnP script to list all SPD workflows across all sites — include name, list, trigger type, and last run date. Prioritize active, high-use workflows.</li><li>Categorize: Simple notifications → Power Automate (1 day). Approval workflows → Power Automate Approval action (2–3 days). Complex multi-stage workflows → may need multiple flows or Dataverse-based solution (1–2 weeks).</li><li>Build in Power Automate: Document the workflow logic from SPD, recreate with equivalent triggers (For a selected item = When item is created/modified + condition), use Approvals connector for human tasks.</li><li>Test in parallel: Run old SPD workflow and new Power Automate flow side-by-side on test data to verify identical outcomes.</li><li>Decommission: Disable SPD workflow, monitor Power Automate flow for 1 week, then delete the old workflow.</li></ol></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN & LICENSING -->
+<div id="pg-admin" class="pg">
+  <div class="svc-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Admin & Licensing</div>
+    <div class="strow"><div class="sic" style="background:rgba(100,116,139,.12)">⚙️</div><div><div class="st">Admin & Licensing</div><div class="ss">Top 10 Real-World Issues — Licensing · Roles · Service Health · T2T Migration · Governance</div></div></div>
+  </div>
+  <div class="ic-wrap">
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">01</div><div class="im"><div class="it">Licenses Exhausted — "No More Licenses Available" Blocking New Hires</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bu">Sudden</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check license count: Admin Center → Billing → Licenses — view assigned vs. available per SKU.</li><li>Reclaim from inactive users: Admin Center → Users → Active Users → Sort by "Last sign-in" → Disable or delete accounts inactive for 90+ days and reclaim their licenses.</li><li>Use group-based licensing: Assign licenses to security groups instead of individual users. When users are removed from a group, their license is automatically reclaimed.</li><li>Purchase additional licenses: Billing → Purchase Services → Add seats to existing subscription. Consider M365 Business vs. Enterprise tiers for cost optimization.</li><li>License reporting: Use Microsoft 365 Usage Reports to identify users with assigned licenses who never use specific services — right-size your license mix.</li></ol></div>
+        <div class="sec"><div class="slbl cm">PowerShell</div><div class="cb"><span class="c"># Find users with M365 Apps license who haven't signed in for 90+ days</span>
+$cutoff = (Get-Date).AddDays(-90)
+<span class="g">Get-MgUser</span> -All -Filter "assignedLicenses/any()" | Where {$_.SignInActivity.LastSignInDateTime -lt $cutoff} | Select DisplayName, UserPrincipalName, SignInActivity</div></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">02</div><div class="im"><div class="it">Group-Based Licensing Errors — "License Conflict" or "Processing Error"</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bs">Support</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">Group-based licensing errors occur when: a user has a conflicting direct license assignment (e.g., manually assigned E1 conflicts with group-assigned E3 which includes Exchange Plan 2 vs. Plan 1). Or the user is in multiple groups that assign mutually exclusive service plans. Direct assignments take priority and can block group assignments from applying correctly.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check license errors: Entra → Groups → Select group → Licenses → View users with errors → See specific error message.</li><li>Remove conflicting direct assignments: For users in error state, remove all manually assigned licenses — let group-based licensing take full control.</li><li>For conflicting groups: A user cannot have Exchange Online Plan 1 AND Plan 2 simultaneously. Remove from the E1 group before adding to the E3 group.</li><li>Verify no duplicate SKUs: Ensure users aren't in two groups that both assign the same SKU (e.g., two groups both assigning M365 E3).</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">03</div><div class="im"><div class="it">Tenant-Wide Service Outage — Effective Incident Response</div><div class="ibgs"><span class="badge bu">Sudden</span><span class="badge bh">High Severity</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Incident Response Protocol</div><ol class="stpl"><li>ALWAYS check Service Health FIRST: Admin Center → Health → Service Health → Before troubleshooting, confirm whether Microsoft has declared an incident. This saves hours of pointless debugging during Microsoft-side outages.</li><li>Subscribe to notifications: Service Health → Preferences → Email me when service health is affected for my subscribed services.</li><li>During outage: Check @MSFT365Status on Twitter/X for real-time updates. Set user expectations: "Microsoft is aware and investigating, ETA for resolution is X."</li><li>Post-resolution: Read the Post Incident Review (PIR) — Admin Center → Health → History → Select resolved incident → View report. Understand root cause and Microsoft's remediation.</li><li>Message Center: Review regularly for upcoming changes, feature rollouts, and deprecations. Set up weekly digest email to stay proactively informed.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">04</div><div class="im"><div class="it">Tenant-to-Tenant Migration Planning (Merger/Acquisition)</div><div class="ibgs"><span class="badge bm">Migration</span><span class="badge bp">Project</span><span class="badge bh">High Severity</span></div></div><div class="ei">▼</div></div>
+      <div class="ib">
+        <div class="sec"><div class="slbl sy">Scenario</div><ul class="syml"><li>Company acquisition requires merging two separate M365 tenants</li><li>Users need mailboxes, OneDrive, Teams, and SharePoint migrated</li><li>UPN changes required (old domain → new domain)</li><li>Management expects "seamless" migration with no data loss</li></ul></div>
+        <div class="sec"><div class="slbl ca">Root Cause / Why This Is Complex</div><div class="rb">Microsoft provides NO native T2T migration tool. Everything must be done with third-party tools (BitTitan MigrationWiz, Quest, AvePoint) or Microsoft FastTrack. User identity must exist in target tenant before data migration. Domains can only be in ONE tenant — moving a domain requires deleting all related objects first. Teams history migration is severely limited by Microsoft APIs. SharePoint URLs change completely in the target tenant, breaking all embedded links.</div></div>
+        <div class="sec"><div class="slbl fx">Migration Phases</div><ol class="stpl"><li>Phase 1 — Discovery: Inventory source tenant (mailboxes, SharePoint sites, Teams, OneDrive, licenses, apps, custom domains). Map users from source to target. Identify blockers early.</li><li>Phase 2 — Preparation: Create user accounts in target tenant. Configure Cross-Tenant Access Policy (Entra ID) for trust between tenants. Set up co-existence mail routing.</li><li>Phase 3 — Data Migration: Batch migrate mailboxes. Migrate OneDrive content. Migrate SharePoint site content (URLs will change). Re-create Teams (structure migrates, chat history is limited to 30-day export).</li><li>Phase 4 — Domain Cutover: Remove custom domain from source tenant → Add to target tenant → Update DNS (MX, SPF, DKIM, DMARC). This is a brief email disruption window.</li><li>Phase 5 — Cleanup: Verify all data. Update SSO/app registrations in target. Decommission source tenant after 90-day stabilization period.</li></ol></div>
+        <div class="wb">⚠️ T2T migration is a 3–6 month project. Teams chat history, SharePoint URL changes, and embedded links are the three biggest pain points. Set realistic expectations with stakeholders from day one.</div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">05</div><div class="im"><div class="it">Custom Domain Verification Failing — "Domain Already in Use"</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Check DNS propagation: After adding the TXT verification record, use MXToolbox to verify it's publicly visible before retrying verification. DNS can take 15 min–48 hours.</li><li>Domain already in another tenant: A domain can only be in ONE M365 tenant. Must remove it from the old tenant first (Admin Center → Settings → Domains → Remove). This requires removing all users and groups with that domain from the old tenant first.</li><li>Subdomain issues: If verifying sub.contoso.com while contoso.com is in another tenant, you need the parent domain owner's cooperation.</li><li>After removal from old tenant: There's a propagation delay (up to 24 hours) before the domain can be added to a new tenant.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">06</div><div class="im"><div class="it">Admin Role Over-Provisioning — Security Risk from Excessive Permissions</div><div class="ibgs"><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Best Practice Approach</div><ol class="stpl"><li>Apply least-privilege: Assign the most specific admin role for each task. Exchange Admin for mailbox management. SharePoint Admin for sites. Teams Admin for teams. Avoid Global Admin unless absolutely required.</li><li>Regular audit: Entra → Roles and Admins → sort by member count → review all roles with assigned members quarterly. Remove stale admin assignments.</li><li>PIM for all admin roles: Move ALL admin role assignments to PIM-eligible (just-in-time) instead of permanent assignments. Admins request elevation for specific tasks with defined duration.</li><li>Break Glass accounts: Maintain 2 cloud-only Global Admin accounts (not synced from on-prem, not subject to any CA policy) with very strong passwords. Monitor these accounts — any sign-in is an emergency alert.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">07</div><div class="im"><div class="it">M365 Subscription Cancellation — Impact and Data Retention Risks</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bu">Sudden</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl ca">Root Cause</div><div class="rb">When M365 subscription expires or is cancelled: Disabled state (30 days) → Expired state (90 days) → Data deleted permanently. During disabled period: read-only access. After 90 days: all data (Exchange, SharePoint, OneDrive) is permanently deleted. Organizations often don't realize they have only 90 days to export data after cancellation.</div></div>
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Immediate: Renew or reactivate the subscription — data is preserved during the 30-day disabled state.</li><li>If downgrading: Export all data before reducing to F-series (no desktop apps) or lower plan.</li><li>Data export options: eDiscovery content search → Export. SharePoint data: SPMT to local/new destination. Mailboxes: Export to PST via Compliance Center.</li><li>Set up billing alerts: Admin Center → Billing → Billing accounts → Set up alerts for upcoming renewal dates and credit card expiry.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">08</div><div class="im"><div class="it">Escalating Microsoft Support Case — Getting to the Right Engineer Faster</div><div class="ibgs"><span class="badge bs">Support</span><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Best Practices</div><ol class="stpl"><li>Always include in ticket: Tenant ID (Admin Center → Settings → Org Settings → Org Profile), affected user UPN, exact error message, timestamp of first occurrence, and what you've already tried.</li><li>Severity levels: Sev A (production completely down) = 2-hour initial response + 24/7 engineering. Sev B (degraded) = 4 hours. Sev C (questions) = 8 hours. Use Sev A appropriately — it escalates faster.</li><li>Collect diagnostics first: Run SaRA for Office/Outlook. Run Teams Network Assessment for Teams audio/video. Capture Fiddler/HTTPDebugger trace for web/API issues. Having these ready speeds up diagnosis.</li><li>Escalation path: If support isn't moving fast enough → ask to speak with the "Duty Manager" or "Escalation Manager" for your case. Reference your case number + Sev level.</li><li>Use Admin Center's AI assistant: Type the issue in the "?" search — it often resolves common issues instantly without opening a ticket.</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">09</div><div class="im"><div class="it">Multi-Geo Tenant — Data Not Stored in Required Geographic Region</div><div class="ibgs"><span class="badge bp">Project</span><span class="badge bm">Migration</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Resolution Steps</div><ol class="stpl"><li>Multi-Geo requires a specific licensing add-on. Verify tenant has Multi-Geo enabled: SPO Admin Center → Geo locations should show multiple regions.</li><li>Set user Preferred Data Location (PDL) in Entra ID BEFORE provisioning OneDrive or Exchange — the PDL determines where data is created. Changing PDL after provisioning requires a geo-move.</li><li>Initiate geo-moves if needed: OneDrive and Exchange mailbox geo-moves can be initiated via PowerShell. Large mailboxes take hours to days. Teams data follows Exchange mailbox geo.</li><li>Verify data location: Get-Mailbox user | Select MailboxRegion. OneDrive: check SPO Admin Center → Active Sites → find user's OneDrive → URL prefix shows geo (e.g., contoso-EUR.sharepoint.com).</li></ol></div>
+      </div>
+    </div>
+
+    <div class="ic" onclick="tog(this)">
+      <div class="ih"><div class="inum">10</div><div class="im"><div class="it">Microsoft 365 Network Connectivity — Optimizing for Office 365 Performance</div><div class="ibgs"><span class="badge bp">Project</span></div></div><div class="ib">
+        <div class="sec"><div class="slbl fx">Best Practices</div><ol class="stpl"><li>Follow Microsoft's three networking principles: (1) Egress locally — don't backhaul M365 traffic to a central datacenter. (2) Bypass proxies for Optimize category IPs. (3) Use SD-WAN or direct internet breakout at branch offices.</li><li>Categorize M365 traffic: Microsoft publishes IP/URL list with three categories (Optimize, Allow, Default) at aka.ms/o365ips. Optimize = must bypass proxy. Allow = should bypass. Default = can go through proxy.</li><li>Check connectivity score: Admin Center → Health → Network connectivity → Review per-location scores and specific recommendations.</li><li>DNS resolution: Users should resolve M365 FQDNs to their nearest Microsoft PoP — verify DNS is resolving to local Microsoft addresses, not to a central DNS that routes all users to the same PoP.</li><li>Run Microsoft 365 Network Connectivity Test: connectivity.office.com — quick per-location assessment of M365 connectivity quality.</li></ol></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+const pages = document.querySelectorAll('.pg');
+const navItems = document.querySelectorAll('.ni');
+
+function go(id){
+  pages.forEach(p=>{p.classList.remove('act')});
+  const target = document.getElementById('pg-'+id);
+  if(target) target.classList.add('act');
+  navItems.forEach(n=>{n.classList.remove('act')});
+  navItems.forEach(n=>{
+    if(n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+id+"'")){
+      n.classList.add('act');
+    }
+  });
+  document.getElementById('main').scrollTop=0;
+  document.getElementById('srch').value='';
+  clearSearch();
+}
+
+function tog(card){
+  card.classList.toggle('open');
+}
+
+function doSearch(q){
+  q=q.toLowerCase().trim();
+  if(!q){clearSearch();return;}
+  pages.forEach(p=>p.classList.remove('act'));
+  const all = document.querySelectorAll('.pg');
+  all.forEach(p=>{
+    if(p.id==='pg-home') return;
+    const cards = p.querySelectorAll('.ic');
+    let hasMatch=false;
+    cards.forEach(c=>{
+      const txt=c.textContent.toLowerCase();
+      if(txt.includes(q)){c.style.display='';hasMatch=true;}
+      else{c.style.display='none';}
+    });
+    if(hasMatch){p.classList.add('act');}
+  });
+}
+
+function clearSearch(){
+  document.querySelectorAll('.ic').forEach(c=>c.style.display='');
+}
+
+function filterTag(tag){
+  document.getElementById('srch').value=tag;
+  doSearch(tag);
+}
+</script>
+</main>
+</body>
+</html>
