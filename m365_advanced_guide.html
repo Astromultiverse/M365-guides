@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>M365 Advanced Engineer Guide — L1/L2 Deep Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#06080e;--s1:#0a0f18;--s2:#0e1520;--s3:#141e2e;--bd:#1a2840;--ac:#3b82f6;--ac2:#8b5cf6;--ac3:#06b6d4;--ok:#10b981;--warn:#f59e0b;--err:#ef4444;--pur:#a855f7;--pink:#ec4899;--or:#f97316;--txt:#e2e8f0;--txt2:#94a3b8;--txt3:#475569;--mono:'JetBrains Mono',monospace;--head:'Syne',sans-serif;--body:'DM Sans',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--body);display:flex;height:100vh;overflow:hidden;font-size:14px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+/* SIDEBAR */
+#sb{width:272px;min-width:272px;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow-y:auto}
+.sb-hdr{padding:14px 12px 10px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--s1);z-index:5}
+.logo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#f97316,#ef4444);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.logo-txt{font-family:var(--head);font-size:12.5px;font-weight:800;line-height:1.2}
+.logo-sub{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:.07em}
+.srch{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:6px 9px;font-family:var(--body);font-size:12px;color:var(--txt);outline:none}
+.srch:focus{border-color:var(--ac)}.srch::placeholder{color:var(--txt3)}
+.ns{padding:7px 8px 2px}.nl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);padding:0 5px;margin-bottom:3px}
+.ni{display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:5px;cursor:pointer;transition:all .15s;font-size:11.5px;color:var(--txt2);position:relative;user-select:none;line-height:1.3}
+.ni:hover{background:var(--s2);color:var(--txt)}.ni.act{background:var(--s3);color:var(--ac);font-weight:500}
+.ni.act::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:2px;border-radius:0 2px 2px 0;background:var(--ac)}
+.nd{width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+/* MAIN */
+#main{flex:1;overflow-y:auto;background:var(--bg)}
+.pg{display:none;animation:fi .2s ease}.pg.act{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* HERO */
+.hero{padding:36px 40px 28px;border-bottom:1px solid var(--bd);background:linear-gradient(135deg,var(--s1),var(--bg));position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(249,115,22,.05),transparent 70%);pointer-events:none}
+.htag{display:inline-flex;align-items:center;gap:5px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);color:var(--or);border-radius:20px;font-size:10px;font-weight:600;padding:3px 10px;margin-bottom:12px}
+.htitle{font-family:var(--head);font-size:28px;font-weight:800;line-height:1.15;margin-bottom:10px}
+.htitle span{background:linear-gradient(90deg,var(--or),var(--err));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdesc{color:var(--txt2);font-size:13px;line-height:1.75;max-width:700px;margin-bottom:18px}
+.stats{display:flex;gap:12px;flex-wrap:wrap}
+.stat{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:11px 16px}
+.sn{font-family:var(--head);font-size:22px;font-weight:800;line-height:1}
+.sl{font-size:9px;color:var(--txt3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+/* TOPIC CARDS */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;padding:24px 40px}
+.tc{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.tc:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 6px 24px rgba(59,130,246,.07)}
+.tc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cc,var(--ac));opacity:.6}
+.tc-ic{font-size:20px;margin-bottom:7px}.tc-t{font-family:var(--head);font-size:12.5px;font-weight:700;margin-bottom:5px}
+.tc-d{font-size:11px;color:var(--txt2);line-height:1.55}
+/* PAGE HEADER */
+.pg-hdr{padding:24px 40px 18px;border-bottom:1px solid var(--bd);background:var(--s1)}
+.bc{font-size:10px;color:var(--txt3);margin-bottom:6px}.bc span{cursor:pointer}.bc span:hover{color:var(--ac)}
+.pg-row{display:flex;align-items:center;gap:12px}
+.pg-ic{width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.pg-t{font-family:var(--head);font-size:20px;font-weight:800}
+.pg-s{font-size:11.5px;color:var(--txt2);margin-top:2px}
+.content{padding:24px 40px;max-width:960px}
+/* SECTIONS */
+.sec{margin-bottom:28px}
+.sec-title{font-family:var(--head);font-size:15px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:var(--txt);padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.sec-num{width:24px;height:24px;background:linear-gradient(135deg,var(--or),var(--err));border-radius:5px;font-size:10px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* PROSE */
+.prose{font-size:13px;line-height:1.85;color:var(--txt2);margin-bottom:14px}
+.prose strong{color:var(--txt);font-weight:600}
+.prose em{color:var(--ac3);font-style:normal;font-weight:500}
+/* BOXES */
+.abox{background:linear-gradient(135deg,rgba(59,130,246,.07),rgba(139,92,246,.07));border:1px solid rgba(59,130,246,.18);border-radius:9px;padding:14px 16px;margin:12px 0}
+.abox-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);margin-bottom:5px}
+.abox-txt{font-size:13px;color:var(--txt2);line-height:1.7}.abox-txt strong{color:var(--txt)}
+.ebox{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);border-left:3px solid var(--ok);border-radius:0 7px 7px 0;padding:12px 14px;margin:10px 0}
+.ebox-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);margin-bottom:5px}
+.ebox-txt{font-size:12.5px;color:var(--txt2);line-height:1.7}.ebox-txt strong{color:var(--txt)}
+.wbox{background:rgba(245,158,11,.06);border-left:3px solid var(--warn);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--txt2);line-height:1.65;margin:10px 0}
+.rbox{background:rgba(239,68,68,.06);border-left:3px solid var(--err);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--txt2);line-height:1.65;margin:10px 0}
+.nbox{background:rgba(6,182,212,.06);border-left:3px solid var(--ac3);border-radius:0 7px 7px 0;padding:10px 13px;font-size:12.5px;color:var(--txt2);line-height:1.65;margin:10px 0}
+/* FLOW */
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:12px 0;background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:14px;overflow-x:auto}
+.fb{background:var(--s3);border:1px solid var(--bd);border-radius:6px;padding:7px 10px;font-size:10.5px;text-align:center;white-space:nowrap;min-width:72px}
+.fb .fi{font-size:16px;display:block;margin-bottom:2px}.fb .fl{color:var(--txt2);font-size:9.5px;line-height:1.3}
+.fa{color:var(--txt3);font-size:14px;padding:0 5px;flex-shrink:0}
+.fa.ok{color:var(--ok)}.fa.ac{color:var(--ac)}.fa.or{color:var(--or)}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:11.5px;margin:12px 0}
+.tbl th{background:var(--s2);color:var(--txt3);font-weight:600;text-align:left;padding:7px 10px;font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--bd)}
+.tbl td{padding:7px 10px;border-bottom:1px solid var(--s3);color:var(--txt2);vertical-align:top;line-height:1.5}
+.tbl tr:hover td{background:var(--s2)}.tbl td strong{color:var(--txt)}
+/* TERMS */
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin:12px 0}
+.term{background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:10px 12px}
+.term-w{font-family:var(--mono);font-size:10.5px;color:var(--ac3);font-weight:600;margin-bottom:3px}
+.term-d{font-size:11px;color:var(--txt2);line-height:1.5}
+/* CODE */
+.cb{background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:10px 12px;font-family:var(--mono);font-size:10.5px;color:#a5f3fc;margin:8px 0;overflow-x:auto;line-height:1.9;white-space:pre}
+.cb .g{color:#86efac}.cb .c{color:var(--txt3);font-style:italic}.cb .y{color:#fcd34d}.cb .p{color:#f9a8d4}.cb .o{color:#fdba74}
+/* BADGES */
+.badge{font-size:9px;padding:2px 6px;border-radius:6px;font-weight:600;font-family:var(--mono);white-space:nowrap}
+.bl1{background:rgba(16,185,129,.15);color:var(--ok);border:1px solid rgba(16,185,129,.25)}
+.bl2{background:rgba(59,130,246,.15);color:var(--ac);border:1px solid rgba(59,130,246,.25)}
+.bw{background:rgba(245,158,11,.15);color:var(--warn);border:1px solid rgba(245,158,11,.25)}
+.br{background:rgba(239,68,68,.15);color:var(--err);border:1px solid rgba(239,68,68,.25)}
+.bp{background:rgba(168,85,247,.15);color:var(--pur);border:1px solid rgba(168,85,247,.25)}
+/* SCENARIO BLOCK */
+.scenario{background:var(--s1);border:1px solid var(--bd);border-radius:9px;margin-bottom:12px;overflow:hidden}
+.sc-hdr{padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--txt)}
+.sc-body{padding:12px 14px;font-size:12.5px;color:var(--txt2);line-height:1.7}
+.sc-body strong{color:var(--txt)}
+</style>
+</head>
+<body>
+<nav id="sb">
+  <div class="sb-hdr">
+    <div class="logo"><div class="logo-icon">⚡</div><div><div class="logo-txt">M365 Advanced Guide</div><div class="logo-sub">L1/L2 Deep Reference</div></div></div>
+    <input class="srch" id="srch" type="text" placeholder="Search topics..." oninput="doSearch(this.value)"/>
+  </div>
+  <div class="ns"><div class="nl">Start</div>
+    <div class="ni act" onclick="go('home')"><div class="nd" style="background:rgba(249,115,22,.12)">🏠</div>Overview</div>
+  </div>
+  <div class="ns"><div class="nl">Exchange Online</div>
+    <div class="ni" onclick="go('eop')"><div class="nd" style="background:rgba(6,182,212,.12)">🛡️</div>EOP + Proofpoint/Mimecast</div>
+    <div class="ni" onclick="go('mailflow')"><div class="nd" style="background:rgba(6,182,212,.12)">📨</div>Mail Flow — 4 Scenarios + DLP</div>
+    <div class="ni" onclick="go('exohybrid')"><div class="nd" style="background:rgba(6,182,212,.12)">🔗</div>Hybrid — Delegation, Archive</div>
+    <div class="ni" onclick="go('ndr')"><div class="nd" style="background:rgba(239,68,68,.12)">❌</div>NDRs, SCL/BCL, Header Tools</div>
+    <div class="ni" onclick="go('exolicense')"><div class="nd" style="background:rgba(6,182,212,.12)">💳</div>EXO Plan 1 vs 2, Quotas</div>
+  </div>
+  <div class="ns"><div class="nl">SharePoint Online</div>
+    <div class="ni" onclick="go('spolimits')"><div class="nd" style="background:rgba(16,185,129,.12)">📏</div>Limits, Quotas &amp; Restrictions</div>
+    <div class="ni" onclick="go('spoperms')"><div class="nd" style="background:rgba(16,185,129,.12)">🔑</div>Permissions, Sync, Recycle Bin</div>
+    <div class="ni" onclick="go('spolicense')"><div class="nd" style="background:rgba(16,185,129,.12)">💳</div>SPO Plan 1 vs 2</div>
+  </div>
+  <div class="ns"><div class="nl">Compliance &amp; Governance</div>
+    <div class="ni" onclick="go('retention')"><div class="nd" style="background:rgba(168,85,247,.12)">📦</div>Retention Policies &amp; Labels</div>
+    <div class="ni" onclick="go('holds')"><div class="nd" style="background:rgba(168,85,247,.12)">🔒</div>Holds, Audit, eDiscovery</div>
+  </div>
+  <div class="ns"><div class="nl">Admin &amp; Licensing</div>
+    <div class="ni" onclick="go('adminroles')"><div class="nd" style="background:rgba(245,158,11,.12)">👤</div>All Admin Roles</div>
+    <div class="ni" onclick="go('licensing')"><div class="nd" style="background:rgba(245,158,11,.12)">💳</div>All License Types (E,F,A,G)</div>
+  </div>
+  <div class="ns"><div class="nl">Infrastructure</div>
+    <div class="ni" onclick="go('migrations')"><div class="nd" style="background:rgba(249,115,22,.12)">🔄</div>Migrations — All Workloads</div>
+    <div class="ni" onclick="go('infra')"><div class="nd" style="background:rgba(249,115,22,.12)">🏗️</div>HCW, AAD Connect, Exch Server</div>
+    <div class="ni" onclick="go('dnsauth')"><div class="nd" style="background:rgba(59,130,246,.12)">🌐</div>DNS Records &amp; Auth Methods</div>
+  </div>
+  <div class="ns"><div class="nl">Daily Operations</div>
+    <div class="ni" onclick="go('monitoring')"><div class="nd" style="background:rgba(16,185,129,.12)">📊</div>Health Monitoring — L1/L2 Daily</div>
+    <div class="ni" onclick="go('tools')"><div class="nd" style="background:rgba(59,130,246,.12)">🔧</div>Troubleshooting Tools</div>
+    <div class="ni" onclick="go('powershell')"><div class="nd" style="background:rgba(139,92,246,.12)">💻</div>PowerShell — All Modules</div>
+  </div>
+</nav>
+<main id="main">
+
+<!-- HOME -->
+<div id="pg-home" class="pg act">
+  <div class="hero">
+    <div class="htag">⚡ L1 / L2 Deep Reference — All M365 Workloads</div>
+    <h1 class="htitle">M365 Advanced<br><span>Engineer Reference</span></h1>
+    <p class="hdesc">A complete deep-reference guide for L1/L2 M365 support engineers covering Exchange Online mail flow, EOP/Mimecast/Proofpoint, NDRs, SharePoint limits, retention/holds/audit, all admin roles, every license type, migrations, AAD Connect, daily health monitoring, troubleshooting tools, and PowerShell modules — all in one place.</p>
+    <div class="stats">
+      <div class="stat"><div class="sn" style="color:var(--or)">15</div><div class="sl">Deep Topics</div></div>
+      <div class="stat"><div class="sn" style="color:var(--ac)">50+</div><div class="sl">Tables</div></div>
+      <div class="stat"><div class="sn" style="color:var(--ok)">4</div><div class="sl">Mail Flow Scenarios</div></div>
+      <div class="stat"><div class="sn" style="color:var(--pur)">L1/L2</div><div class="sl">Focused</div></div>
+    </div>
+  </div>
+  <div class="tgrid">
+    <div class="tc" style="--cc:#06b6d4" onclick="go('eop')"><div class="tc-ic">🛡️</div><div class="tc-t">EOP + Proofpoint / Mimecast</div><div class="tc-d">How third-party security gateways integrate with Exchange Online Protection — inbound and outbound</div></div>
+    <div class="tc" style="--cc:#06b6d4" onclick="go('mailflow')"><div class="tc-ic">📨</div><div class="tc-t">Mail Flow — 4 Scenarios + DLP</div><div class="tc-d">Internal↔External, External→Internal, DLP in exchange, connectors, spam filtering deep dive</div></div>
+    <div class="tc" style="--cc:#06b6d4" onclick="go('exohybrid')"><div class="tc-ic">🔗</div><div class="tc-t">Hybrid Exchange Deep Dive</div><div class="tc-d">Cloud mailboxes, on-prem management, delegation, archiving, deletion stages, purge</div></div>
+    <div class="tc" style="--cc:#ef4444" onclick="go('ndr')"><div class="tc-ic">❌</div><div class="tc-t">NDRs, SCL/BCL, Header Analyzer</div><div class="tc-d">All common NDR codes, what SCL/BCL values mean, how to use message header analyzer</div></div>
+    <div class="tc" style="--cc:#06b6d4" onclick="go('exolicense')"><div class="tc-ic">💳</div><div class="tc-t">EXO Plan 1 vs 2 — Quotas</div><div class="tc-d">Feature differences, mailbox limits, archive quotas, which plan includes what</div></div>
+    <div class="tc" style="--cc:#10b981" onclick="go('spolimits')"><div class="tc-ic">📏</div><div class="tc-t">SharePoint Limits &amp; Restrictions</div><div class="tc-d">File size, path length, item thresholds, sync limits — official Microsoft documentation deep dive</div></div>
+    <div class="tc" style="--cc:#10b981" onclick="go('spoperms')"><div class="tc-ic">🔑</div><div class="tc-t">SharePoint Perms, Sync, Recycle Bin</div><div class="tc-d">Permission inheritance, sync troubleshooting, point-in-time restore, deletion stages and durations</div></div>
+    <div class="tc" style="--cc:#a855f7" onclick="go('retention')"><div class="tc-ic">📦</div><div class="tc-t">Retention Policies &amp; Labels</div><div class="tc-d">All workloads — Exchange, Teams, SharePoint, OneDrive, Yammer. Duration and behavior explained.</div></div>
+    <div class="tc" style="--cc:#a855f7" onclick="go('holds')"><div class="tc-ic">🔒</div><div class="tc-t">Holds, Audit Logs, eDiscovery</div><div class="tc-d">Litigation Hold, In-Place Hold, Preservation Hold, content search, unified audit log</div></div>
+    <div class="tc" style="--cc:#f59e0b" onclick="go('adminroles')"><div class="tc-ic">👤</div><div class="tc-t">All Admin Roles Explained</div><div class="tc-d">Global Admin, Exchange Admin, Security Operator, Compliance Manager — every role and what it can do</div></div>
+    <div class="tc" style="--cc:#f59e0b" onclick="go('licensing')"><div class="tc-ic">💳</div><div class="tc-t">All License Types — E, F, A, G</div><div class="tc-d">Every M365 license series explained — Enterprise, Frontline, Academic, Government, add-ons</div></div>
+    <div class="tc" style="--cc:#f97316" onclick="go('migrations')"><div class="tc-ic">🔄</div><div class="tc-t">Migrations — All Workloads</div><div class="tc-d">Exchange, SharePoint, Teams, OneDrive — tools, methods, limitations, cutover vs staged vs IMAP</div></div>
+    <div class="tc" style="--cc:#f97316" onclick="go('infra')"><div class="tc-ic">🏗️</div><div class="tc-t">HCW, AAD Connect, Exch Servers</div><div class="tc-d">Exchange Server roles 2016-2025, AAD Connect, vulnerability, patching basics</div></div>
+    <div class="tc" style="--cc:#10b981" onclick="go('monitoring')"><div class="tc-ic">📊</div><div class="tc-t">Daily Health Monitoring</div><div class="tc-d">What L1/L2 checks every morning — service health, sync status, reports, ITSM activities</div></div>
+    <div class="tc" style="--cc:#3b82f6" onclick="go('tools')"><div class="tc-ic">🔧</div><div class="tc-t">Troubleshooting Tools</div><div class="tc-d">MXToolbox, header analyzer, message trace, SaRA, SharePoint/Teams diagnostic tools — complete list</div></div>
+    <div class="tc" style="--cc:#8b5cf6" onclick="go('powershell')"><div class="tc-ic">💻</div><div class="tc-t">PowerShell — All Modules</div><div class="tc-d">Modules for each workload, required permissions, common L1/L2 scripts for online and hybrid</div></div>
+  </div>
+</div>
+<!-- EOP + PROOFPOINT/MIMECAST -->
+<div id="pg-eop" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › EOP + Third-Party Security Gateways</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(6,182,212,.12)">🛡️</div><div><div class="pg-t">EOP + Proofpoint &amp; Mimecast Integration</div><div class="pg-s">How third-party email security gateways work with Exchange Online Protection — inbound and outbound</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>What is EOP?</div>
+      <p class="prose"><strong>Exchange Online Protection (EOP)</strong> is Microsoft's built-in cloud-based email filtering service that is automatically included with every Exchange Online mailbox. It performs spam filtering, malware scanning, and anti-phishing analysis on <em>all</em> inbound and outbound mail. When you subscribe to Defender for Office 365, EOP remains the first layer — Defender adds advanced threat protection on top of EOP.</p>
+      <div class="abox"><div class="abox-lbl">🏗️ EOP vs Defender for Office 365</div><div class="abox-txt"><strong>EOP (Included in all M365 plans):</strong> Anti-spam, anti-malware, connection filtering, spoof intelligence, outbound spam limits<br><strong>Defender for Office 365 Plan 1 (E3 add-on):</strong> Safe Attachments (sandbox detonation), Safe Links (real-time URL check), anti-phishing with mailbox intelligence<br><strong>Defender for Office 365 Plan 2 (E5 included):</strong> All P1 + Attack Simulator, Threat Explorer, AIR (Automated Investigation &amp; Response), advanced hunting</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Why Organizations Use Proofpoint or Mimecast WITH EOP</div>
+      <p class="prose">Many enterprises had Proofpoint or Mimecast before they moved to M365. Instead of replacing them, these tools are configured as a <strong>front-end security gateway</strong> that processes all email before it reaches EXO/EOP. Common reasons: legacy compliance archiving in Mimecast, superior phishing detection in Proofpoint, continuity service during outages, and email DLP features not yet migrated to Purview.</p>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Inbound Mail Flow — With Proofpoint/Mimecast</div>
+      <div class="flow">
+        <div class="fb"><span class="fi">📧</span><span class="fl">Sender's<br>Mail Server</span></div>
+        <div class="fa or">→</div>
+        <div class="fb" style="border-color:var(--or)"><span class="fi">🛡️</span><span class="fl">Proofpoint/<br>Mimecast Cloud</span></div>
+        <div class="fa or">→</div>
+        <div class="fb"><span class="fi">☁️</span><span class="fl">EXO Inbound<br>Connector</span></div>
+        <div class="fa or">→</div>
+        <div class="fb"><span class="fi">🔍</span><span class="fl">EOP<br>Filtering</span></div>
+        <div class="fa ok">→</div>
+        <div class="fb"><span class="fi">📥</span><span class="fl">User<br>Mailbox</span></div>
+      </div>
+      <p class="prose"><strong>MX Record Setup:</strong> The domain's MX record points to Proofpoint/Mimecast, NOT to EXO. The world's mail servers deliver to the third-party gateway first. After filtering, Proofpoint/Mimecast forwards to EXO via a dedicated <em>inbound connector</em> that only accepts mail from the gateway's IP ranges.</p>
+      <div class="scenario">
+        <div class="sc-hdr"><span class="badge bl2">INBOUND CONFIG</span>&nbsp; Critical: SCL=-1 on inbound connector</div>
+        <div class="sc-body">When Proofpoint/Mimecast delivers to EXO, you must configure the inbound connector to <strong>bypass EOP spam filtering</strong> (set SCL=-1). This prevents EOP from re-filtering mail that the gateway already approved, which would cause double-filtering and false rejections. The connector is locked to the gateway's published IP ranges — any mail NOT from those IPs is rejected, preventing attackers from bypassing the gateway by delivering directly to EXO.</div>
+      </div>
+      <div class="nbox">💡 <strong>How to verify gateway is the only inbound path:</strong> Check the inbound connector "Restrict by IP" setting, and verify no mail is being accepted directly to *.protection.outlook.com without first going through the gateway. Run a message trace to confirm all inbound mail shows the gateway IP in the first "Received" header hop.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>Outbound Mail Flow — With Proofpoint/Mimecast</div>
+      <div class="flow">
+        <div class="fb"><span class="fi">📝</span><span class="fl">User<br>Sends Email</span></div>
+        <div class="fa ac">→</div>
+        <div class="fb"><span class="fi">📤</span><span class="fl">EXO Outbound<br>Connector</span></div>
+        <div class="fa ac">→</div>
+        <div class="fb" style="border-color:var(--or)"><span class="fi">🛡️</span><span class="fl">Proofpoint/<br>Mimecast Cloud</span></div>
+        <div class="fa ac">→</div>
+        <div class="fb"><span class="fi">🔍</span><span class="fl">DLP/Policy<br>Check</span></div>
+        <div class="fa ok">→</div>
+        <div class="fb"><span class="fi">📨</span><span class="fl">Recipient's<br>Mail Server</span></div>
+      </div>
+      <p class="prose">For outbound, an EXO <em>outbound connector</em> is configured to route all outgoing mail through the gateway's SMTP relay servers. This allows Proofpoint/Mimecast to apply outbound DLP, email encryption, disclaimers, and DKIM signing before delivery to external recipients.</p>
+      <div class="wbox">⚠️ <strong>DKIM signing consideration:</strong> If the gateway re-writes or adds headers, it may break EXO-signed DKIM. Either configure DKIM signing on the gateway itself (using the domain's selector), OR configure the gateway to not modify headers that affect the DKIM signature.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">5</div>Mimecast-Specific Configuration Points</div>
+      <table class="tbl">
+        <tr><th>Component</th><th>What it does</th><th>L1/L2 Relevance</th></tr>
+        <tr><td><strong>Mimecast Inbound Gateway</strong></td><td>Receives mail on behalf of the domain (MX points here), scans for spam/malware/phishing, delivers to EXO</td><td>When users can't receive email, check Mimecast queue first, then EXO message trace</td></tr>
+        <tr><td><strong>Mimecast Cloud Archive</strong></td><td>Every email copy archived in Mimecast for compliance/legal hold independent of EXO</td><td>Separate from EXO archive mailbox — searches need to be run in Mimecast portal for archived items</td></tr>
+        <tr><td><strong>Mimecast Continuity</strong></td><td>If EXO is down, Mimecast provides emergency inbox access so users can still read and send email</td><td>During EXO outages, direct users to login.mimecast.com to access emergency inbox</td></tr>
+        <tr><td><strong>Mimecast Personal Portal</strong></td><td>Users can manage their own held/quarantined messages</td><td>First port of call when users say "I'm not getting emails from X" — check Mimecast held messages</td></tr>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">6</div>Proofpoint-Specific Configuration Points</div>
+      <table class="tbl">
+        <tr><th>Component</th><th>What it does</th><th>L1/L2 Relevance</th></tr>
+        <tr><td><strong>Proofpoint Email Protection</strong></td><td>Advanced spam/phishing/malware detection. Superior BEC (Business Email Compromise) detection vs EOP alone</td><td>User quarantine accessible at emaildefense.proofpoint.com — users release held messages</td></tr>
+        <tr><td><strong>Proofpoint TAP (Targeted Attack Protection)</strong></td><td>URL Defense (rewrites URLs) + Attachment Defense (sandbox). Similar to Safe Links/Attachments in Defender</td><td>Broken internal links often caused by URL Defense rewriting — add to exception list</td></tr>
+        <tr><td><strong>Proofpoint Smart Search</strong></td><td>Admin-side search of all processed mail logs (30 days by default)</td><td>Use for: "I sent an email and it wasn't received" — trace exact Proofpoint disposition</td></tr>
+        <tr><td><strong>Proofpoint Email Fraud Defense</strong></td><td>DMARC monitoring and reporting dashboard</td><td>First place to check when DMARC reports show failures</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MAIL FLOW 4 SCENARIOS + DLP -->
+<div id="pg-mailflow" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Mail Flow — 4 Scenarios + DLP</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(6,182,212,.12)">📨</div><div><div class="pg-t">Mail Flow Deep Analysis — All 4 Scenarios</div><div class="pg-s">Internal→External, External→Internal, Internal→Internal, External→External relay + DLP</div></div></div>
+  </div>
+  <div class="content">
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Scenario A — Internal User Sending to External Recipient</div>
+      <div class="flow">
+        <div class="fb"><span class="fi">👤</span><span class="fl">EXO User<br>Sends</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">📤</span><span class="fl">EXO Submit<br>(Port 587)</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">🔍</span><span class="fl">Transport Rules<br>+ DLP Check</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">🔒</span><span class="fl">EOP Outbound<br>Filtering</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">🌐</span><span class="fl">DNS MX<br>Lookup</span></div><div class="fa ok">→</div>
+        <div class="fb"><span class="fi">📥</span><span class="fl">Recipient's<br>Server</span></div>
+      </div>
+      <p class="prose"><strong>Key EOP outbound checks:</strong> Outbound spam score (messages per minute limits), DKIM signing (uses your domain's CNAME-based selector configured in EXO), SPF check (EXO sends from *.protection.outlook.com which is in spf.protection.outlook.com), and Outbound connector routing (smart host or direct send).</p>
+      <div class="ebox"><div class="ebox-lbl">✅ Common Issue in This Scenario</div><div class="ebox-txt">User reports external recipient says their email went to spam. <strong>Root cause 90% of time:</strong> DKIM not enabled in EXO, or DMARC set to p=none with failing SPF. Fix: Enable DKIM in EXO for the domain + Verify SPF includes spf.protection.outlook.com + Gradually move DMARC to p=quarantine.</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Scenario B — External Sender to Internal EXO User</div>
+      <div class="flow">
+        <div class="fb"><span class="fi">🌐</span><span class="fl">External<br>Sender</span></div><div class="fa or">→</div>
+        <div class="fb"><span class="fi">📡</span><span class="fl">DNS: Find<br>MX Record</span></div><div class="fa or">→</div>
+        <div class="fb"><span class="fi">🛡️</span><span class="fl">EOP Inbound<br>(Connection Filter)</span></div><div class="fa or">→</div>
+        <div class="fb"><span class="fi">🔍</span><span class="fl">Anti-spam<br>Anti-malware</span></div><div class="fa or">→</div>
+        <div class="fb"><span class="fi">📋</span><span class="fl">Transport<br>Rules + DLP</span></div><div class="fa ok">→</div>
+        <div class="fb"><span class="fi">📥</span><span class="fl">User<br>Mailbox</span></div>
+      </div>
+      <p class="prose">EOP inbound layers (applied in order): <strong>1) Connection filtering</strong> — checks sender IP against Microsoft's block lists and your custom IP Allow/Block list. <strong>2) Anti-malware</strong> — scans attachment content. <strong>3) Mail flow rules (transport rules)</strong> — any admin-configured rules fire here. <strong>4) Anti-spam</strong> — assigns SCL score. <strong>5) Anti-phishing</strong> — spoof intelligence, impersonation checks. <strong>6) Safe Attachments/Safe Links</strong> (if Defender P1/P2 licensed).</p>
+      <div class="ebox"><div class="ebox-lbl">✅ Common Issue in This Scenario</div><div class="ebox-txt">Legitimate vendor emails going to Junk. <strong>Check order:</strong> Run Message Trace → Look at SCL value and Applied Rules. If SCL=5+, the sender's domain/IP has reputation issues. Fix: Add sender to Safe Senders list in anti-spam policy (not Outlook client — do it at tenant level), or whitelist specific sender IP in Connection Filter "IP Allow List" in EOP.</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Scenario C — Internal to Internal (Same Tenant)</div>
+      <div class="flow">
+        <div class="fb"><span class="fi">👤</span><span class="fl">User A<br>Sends</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">📤</span><span class="fl">EXO Transport<br>Service</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">📋</span><span class="fl">Transport<br>Rules Fire</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">🔍</span><span class="fl">Intra-org<br>Anti-malware</span></div><div class="fa ok">→</div>
+        <div class="fb"><span class="fi">📥</span><span class="fl">User B<br>Mailbox</span></div>
+      </div>
+      <p class="prose">Internal-to-internal mail stays within EXO and does NOT go through the full EOP anti-spam stack (because senders are already authenticated M365 users). However: <strong>transport rules DO fire</strong>, <strong>anti-malware scanning still runs on attachments</strong>, and <strong>DLP policies evaluate the content</strong>. Internal mail is NOT spam-scored by default — though suspicious internal mail flagged by EOP smart features may still be actioned.</p>
+      <div class="wbox">⚠️ <strong>Hybrid consideration:</strong> In hybrid environments, internal-to-internal mail between on-prem users and cloud users routes through the hybrid send connector. This mail DOES pass through EOP if routed via the cloud. Misconfigured hybrid connectors can cause internal mail to be spam-filtered unexpectedly.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>Scenario D — External to External (SMTP Relay via EXO)</div>
+      <div class="flow">
+        <div class="fb"><span class="fi">🖨️</span><span class="fl">Printer/<br>App/Device</span></div><div class="fa or">→</div>
+        <div class="fb"><span class="fi">📤</span><span class="fl">EXO SMTP<br>Relay Endpoint</span></div><div class="fa or">→</div>
+        <div class="fb"><span class="fi">🔍</span><span class="fl">Connector<br>Auth Check</span></div><div class="fa or">→</div>
+        <div class="fb"><span class="fi">📋</span><span class="fl">EOP Outbound<br>Scanning</span></div><div class="fa ok">→</div>
+        <div class="fb"><span class="fi">🌐</span><span class="fl">External<br>Recipient</span></div>
+      </div>
+      <p class="prose">Applications, printers, MFDs, and legacy systems often need to relay email through EXO. There are <strong>3 relay methods</strong>:</p>
+      <table class="tbl">
+        <tr><th>Method</th><th>How It Works</th><th>Requires</th><th>Best For</th></tr>
+        <tr><td><strong>SMTP Client Submission</strong></td><td>Authenticates to smtp.office365.com port 587 with a licensed mailbox account</td><td>Licensed M365 mailbox + SMTP Auth enabled on that mailbox</td><td>Applications that support modern auth or basic auth</td></tr>
+        <tr><td><strong>Direct Send</strong></td><td>Sends directly to EXO MX endpoint (tenant.mail.protection.outlook.com) port 25. No auth. Can only send to internal recipients.</td><td>Static IP. No license needed.</td><td>Internal-only notifications from printers/apps</td></tr>
+        <tr><td><strong>SMTP Relay via EXO Connector</strong></td><td>Inbound connector accepts mail from app's static IP. Can relay to external recipients.</td><td>Static IP. Inbound connector in EXO.</td><td>Printers/MFDs sending to external recipients</td></tr>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">5</div>DLP in Exchange Online — How It Works</div>
+      <p class="prose"><strong>DLP in Exchange</strong> evaluates email messages and attachments in real-time as they flow through the transport pipeline. It runs <em>after</em> anti-spam but <em>before</em> delivery. DLP policies use <strong>Sensitive Information Types (SITs)</strong> — regex patterns or keyword/proximity rules — to identify sensitive data in message body and attachments.</p>
+      <div class="flow">
+        <div class="fb"><span class="fi">📝</span><span class="fl">Email<br>Submitted</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">🔍</span><span class="fl">SIT Matching<br>(Regex/ML)</span></div><div class="fa ac">→</div>
+        <div class="fb"><span class="fi">📋</span><span class="fl">Policy Rule<br>Evaluated</span></div><div class="fa ac">→</div>
+        <div class="fb" style="border-color:var(--ok)"><span class="fi">✅</span><span class="fl">Action: Allow<br>+ Policy Tip</span></div>
+        <div class="fa">or</div>
+        <div class="fb" style="border-color:var(--err)"><span class="fi">🚫</span><span class="fl">Action: Block<br>+ Notify</span></div>
+      </div>
+      <table class="tbl">
+        <tr><th>DLP Action</th><th>What Happens</th><th>User Experience</th></tr>
+        <tr><td><strong>Notify user</strong></td><td>Shows a policy tip banner in Outlook before sending</td><td>User sees warning, can override with justification or still send</td></tr>
+        <tr><td><strong>Block</strong></td><td>Email is rejected and returned to sender with NDR</td><td>Outlook shows NDR — email not delivered</td></tr>
+        <tr><td><strong>Block with override</strong></td><td>Email is held pending user override with business justification</td><td>User must provide a reason to send — creates audit trail</td></tr>
+        <tr><td><strong>Encrypt</strong></td><td>Message Rights Management (RMS) encryption applied automatically</td><td>Recipient needs to authenticate to open — transparent to sender</td></tr>
+        <tr><td><strong>Redirect</strong></td><td>Sends copy to compliance team or manager</td><td>Transparent to sender — compliance team gets a BCC copy</td></tr>
+      </table>
+      <div class="nbox">💡 <strong>L1/L2 Tip:</strong> When users report "my email got blocked" — check Message Trace first. The trace shows "Applied rules" with the exact DLP rule name that fired. Share this with the compliance team to tune the policy. L1 should NOT disable DLP rules — escalate to compliance admin.</div>
+    </div>
+  </div>
+</div>
+<!-- HYBRID EXCHANGE -->
+<div id="pg-exohybrid" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Exchange Hybrid Deep Dive</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(6,182,212,.12)">🔗</div><div><div class="pg-t">Exchange Hybrid — Delegation, Archive, Deletion Stages</div><div class="pg-s">Cloud mailboxes managed from on-premises: licenses via AD, passwords via AD, archiving, purge stages</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Hybrid Architecture — What "Managed from On-Premises" Means</div>
+      <p class="prose">In a classic Exchange Hybrid setup, <strong>user mailboxes live in Exchange Online (cloud)</strong> but key management tasks remain on-premises. This is because the organization's source of truth for user accounts is on-premises Active Directory — synchronized to Entra ID via AAD Connect.</p>
+      <table class="tbl">
+        <tr><th>Management Task</th><th>Where Done</th><th>Why</th></tr>
+        <tr><td>Create/disable user accounts</td><td>On-prem AD</td><td>AD is the source of truth — syncs to Entra ID via AAD Connect</td></tr>
+        <tr><td>Password resets</td><td>On-prem AD (or SSPR with writeback)</td><td>Password hash syncs from on-prem to cloud. Change on cloud gets overwritten next sync.</td></tr>
+        <tr><td>License assignment</td><td>Can be either — but Group-Based Licensing via AD Security Groups is common</td><td>AD groups sync to M365 groups; license assigned to M365 group triggers for all members</td></tr>
+        <tr><td>Email address management</td><td>On-prem Exchange (sets ProxyAddresses in AD)</td><td>ProxyAddresses attribute syncs to EXO. Changes in EXO get overwritten by next AAD Connect sync unless writeback is configured.</td></tr>
+        <tr><td>Distribution groups</td><td>On-prem AD (sync to EXO)</td><td>Groups managed on-prem sync up. Cloud-created groups are separate and don't sync back.</td></tr>
+        <tr><td>Mailbox permissions (Full Access, Send As)</td><td>Can be either — but complex cross-premises permissions need careful management</td><td>AutoMapping works for cloud mailboxes; on-prem managed full access permissions may not auto-map</td></tr>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Delegation in Hybrid — Full Access, Send As, Send on Behalf</div>
+      <table class="tbl">
+        <tr><th>Permission Type</th><th>What It Allows</th><th>How to Configure</th><th>Hybrid Gotcha</th></tr>
+        <tr><td><strong>Full Access</strong></td><td>Open and manage another mailbox as if it were your own</td><td>EXO: Add-MailboxPermission -Identity target -User delegate -AccessRights FullAccess</td><td>AutoMapping adds the mailbox to Outlook automatically. In hybrid, cross-premises Full Access (on-prem user → cloud mailbox) requires on-prem Exchange and AAD Connect sync.</td></tr>
+        <tr><td><strong>Send As</strong></td><td>Send email that appears FROM another address — no indication of delegation</td><td>EXO: Add-RecipientPermission -Identity target -Trustee delegate -AccessRights SendAs</td><td>Send As granted in EXO does NOT sync to on-prem AD. Must grant separately in on-prem Exchange AND EXO if needed from both locations.</td></tr>
+        <tr><td><strong>Send on Behalf</strong></td><td>Send email showing "From: Delegate on behalf of Manager"</td><td>Set-Mailbox -GrantSendOnBehalfTo delegate (set on the owner's mailbox)</td><td>Set in EXO for cloud mailboxes. Recipient sees "Sent by [delegate] on behalf of [manager]".</td></tr>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Online Archiving in Hybrid</div>
+      <p class="prose">Exchange Online Archiving (EOA) provides a cloud-based archive mailbox that can be paired with either an on-prem mailbox OR a cloud mailbox. In hybrid, a common configuration is: <strong>primary mailbox on-premises, archive mailbox in Exchange Online</strong>. This reduces on-prem storage while keeping the primary mailbox locally for performance.</p>
+      <div class="terms">
+        <div class="term"><div class="term-w">In-Place Archive</div><div class="term-d">Secondary mailbox attached to a user's primary mailbox. Accessible in Outlook under "Online Archive — Name." Default 50GB (expandable to 1.5TB with auto-expanding archive on E3/E5).</div></div>
+        <div class="term"><div class="term-w">Retention Policy (MRM)</div><div class="term-d">Messaging Records Management — moves old items to archive automatically. Default policy moves items 2+ years old to Archive folder.</div></div>
+        <div class="term"><div class="term-w">Archive Quota Warning</div><div class="term-d">Warning at 45GB (default), hard limit at 50GB for EOA Plan 1. E3/E5 enables auto-expanding archive — no practical limit.</div></div>
+        <div class="term"><div class="term-w">AutoExpanding Archive</div><div class="term-d">Enabled per-mailbox or tenant-wide. When archive reaches 90GB, Microsoft provisions additional storage automatically. Max ~1.5TB total.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>Mailbox Deletion Stages — The Complete Lifecycle</div>
+      <p class="prose">Understanding exactly what happens when a mailbox is deleted is critical for compliance and data recovery:</p>
+      <div class="flow">
+        <div class="fb" style="border-color:var(--ok)"><span class="fi">✅</span><span class="fl">Active<br>Mailbox</span></div><div class="fa">→</div>
+        <div class="fb" style="border-color:var(--warn)"><span class="fi">⚠️</span><span class="fl">Soft Deleted<br>Mailbox<br>(30 days)</span></div><div class="fa">→</div>
+        <div class="fb" style="border-color:var(--or)"><span class="fi">🗑️</span><span class="fl">Disconnected<br>Mailbox<br>(30 more days)</span></div><div class="fa">→</div>
+        <div class="fb" style="border-color:var(--err)"><span class="fi">💀</span><span class="fl">Purged<br>(Permanent)</span></div>
+      </div>
+      <table class="tbl">
+        <tr><th>Stage</th><th>Duration</th><th>What Happens</th><th>Recovery Action</th></tr>
+        <tr><td><strong>Deleted Items Folder</strong></td><td>14 days default (30 days max)</td><td>User deletes item → goes here. Still in user's mailbox.</td><td>User recovers from Deleted Items. No admin needed.</td></tr>
+        <tr><td><strong>Recoverable Items\Deletions</strong></td><td>14–30 days (set by retention)</td><td>User empties Deleted Items → items move here. Hidden from user.</td><td>Outlook: Recover Deleted Items (Ctrl+Shift+Y). Admin: New-ComplianceSearch or Get-RecoverableItems</td></tr>
+        <tr><td><strong>Recoverable Items\Purges</strong></td><td>Until retention expires</td><td>Items purged from Deletions folder move here. Only visible via compliance tools.</td><td>Admin only: eDiscovery search targeting Purges folder. Time-sensitive.</td></tr>
+        <tr><td><strong>Soft-Deleted Mailbox</strong></td><td>30 days after account deletion</td><td>User account deleted → mailbox soft-deleted. Visible in EXO as disconnected.</td><td>Get-Mailbox -SoftDeletedMailbox → Undo-SoftDeletedMailbox to restore</td></tr>
+        <tr><td><strong>Permanently Purged</strong></td><td>After 30-day soft-delete period</td><td>Gone from all Microsoft systems.</td><td>Only Microsoft Support can potentially recover (within additional 2-week backup window — not guaranteed)</td></tr>
+      </table>
+      <div class="nbox">💡 <strong>If mailbox is on Litigation Hold:</strong> Items are NEVER permanently purged — they move to Recoverable Items\Purges and stay there indefinitely. This is the entire point of Litigation Hold — ensuring nothing is permanently deleted even if the user tries.</div>
+    </div>
+  </div>
+</div>
+
+<!-- NDRs, SCL/BCL, HEADER ANALYZER -->
+<div id="pg-ndr" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › NDRs, SCL/BCL, Message Header Analyzer</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(239,68,68,.12)">❌</div><div><div class="pg-t">NDR Codes, SCL/BCL Values &amp; Header Analyzer</div><div class="pg-s">Decode every bounce code, spam score, and mail header — critical for L1/L2 mail flow troubleshooting</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Common NDR Codes — What They Mean</div>
+      <table class="tbl">
+        <tr><th>NDR Code</th><th>Plain English Meaning</th><th>Usual Fix</th></tr>
+        <tr><td><strong style="color:var(--err)">550 5.1.1</strong></td><td>Recipient email address does not exist</td><td>Verify recipient email is correct. Check if mailbox was deleted or renamed.</td></tr>
+        <tr><td><strong style="color:var(--err)">550 5.7.1</strong></td><td>Not authorized to send. Multiple causes: relay denied, sender spoofing, blocked sender.</td><td>Check if sender is trying to relay, verify SPF, check if sender IP is blocked.</td></tr>
+        <tr><td><strong style="color:var(--err)">550 5.7.64</strong></td><td>Relay access denied — TenantAttribution failure. Sender can't relay through EXO.</td><td>Configure correct SMTP relay method (see mail flow scenario D). Verify connector.</td></tr>
+        <tr><td><strong style="color:var(--err)">550 5.4.1</strong></td><td>Recipient not found. Similar to 5.1.1 but often from routing/transport issues.</td><td>Check accepted domains, verify recipient object exists in EXO.</td></tr>
+        <tr><td><strong style="color:var(--err)">550 5.7.501</strong></td><td>Access denied, spam. Sender IP on Microsoft's block list.</td><td>Check sender IP reputation on MXToolbox. Request delisting from Microsoft if false positive.</td></tr>
+        <tr><td><strong style="color:var(--err)">550 5.7.506</strong></td><td>Access denied, bad HELO. Sending server's HELO/EHLO doesn't match its IP.</td><td>Sender's mail server misconfiguration — notify sender's admin.</td></tr>
+        <tr><td><strong style="color:var(--err)">421 4.7.0</strong></td><td>Temporary rejection. Server too busy or temporary throttling.</td><td>Retry. If persistent, check if your IP is being throttled by Microsoft (too many messages per minute).</td></tr>
+        <tr><td><strong style="color:var(--warn)">452 4.2.2</strong></td><td>Mailbox full — recipient's mailbox has exceeded its storage quota.</td><td>User needs to clean up mailbox or admin needs to increase quota.</td></tr>
+        <tr><td><strong style="color:var(--warn)">554 5.2.2</strong></td><td>Mailbox full (hard bounce version). Recipient cannot receive any more email.</td><td>Same as above — increase quota or user cleans up.</td></tr>
+        <tr><td><strong style="color:var(--err)">550 5.7.357</strong></td><td>Domain doesn't pass authentication checks (SPF/DKIM/DMARC failure).</td><td>Fix SPF/DKIM/DMARC records for the sending domain.</td></tr>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>SCL and BCL Values — Spam and Bulk Confidence Levels</div>
+      <p class="prose"><strong>SCL (Spam Confidence Level)</strong> is a number assigned to each inbound message by EOP's spam filtering engine. It ranges from <em>-1 to 9</em>. Higher = more likely spam. Admins configure <strong>at what SCL threshold</strong> messages are moved to Junk or quarantined.</p>
+      <table class="tbl">
+        <tr><th>SCL Value</th><th>Meaning</th><th>Default Action</th></tr>
+        <tr><td><strong>SCL = -1</strong></td><td>Bypass spam filtering completely. Used for trusted inbound connectors (e.g., Proofpoint delivery).</td><td>Delivered directly to inbox — skip all spam checks</td></tr>
+        <tr><td><strong>SCL = 0–1</strong></td><td>Not spam. Clean message.</td><td>Delivered to inbox</td></tr>
+        <tr><td><strong>SCL = 5–6</strong></td><td>Spam detected (medium confidence)</td><td>Moved to Junk Email folder</td></tr>
+        <tr><td><strong>SCL = 7–8</strong></td><td>High confidence spam</td><td>Moved to Junk Email folder</td></tr>
+        <tr><td><strong>SCL = 9</strong></td><td>Very high confidence spam</td><td>Quarantined (admin must release)</td></tr>
+      </table>
+      <p class="prose"><strong>BCL (Bulk Complaint Level)</strong> measures whether a message is bulk/commercial email (like newsletters). Scale 0–9. Higher = more complaints about this sender. BCL≥7 is typically treated as spam by default EOP policies.</p>
+      <div class="ebox"><div class="ebox-lbl">✅ How to Use SCL for Troubleshooting</div><div class="ebox-txt">User reports legitimate email going to Junk. Pull the message headers. Find <strong>X-MS-Exchange-Organization-SCL: 5</strong> (or higher). This is the SCL assigned. Also find <strong>X-Forefront-Antispam-Report</strong> header — it lists all spam filter checks and their results. Share with anti-spam admin to whitelist the sender or tune the policy.</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Message Header Analyzer — How to Use It</div>
+      <p class="prose">The <strong>Microsoft Message Header Analyzer</strong> is a free web tool at <em>aka.ms/mha</em> (or available in Outlook → File → Properties to get headers). It decodes the raw email headers into human-readable format showing every server hop, delay, and filtering decision.</p>
+      <div class="abox"><div class="abox-lbl">📋 Step-by-Step: Analyzing a Problematic Email</div><div class="abox-txt">
+        <strong>Step 1:</strong> Get the full message headers. In Outlook: Open email → File → Properties → Internet Headers box → Select all → Copy.<br>
+        <strong>Step 2:</strong> Go to <strong>aka.ms/mha</strong> → Paste headers → Click "Analyze headers"<br>
+        <strong>Step 3:</strong> Check <strong>"Received"</strong> section — shows every server the email passed through with timestamps. Look for unusual hops or long delays (indicates server queue issues).<br>
+        <strong>Step 4:</strong> Check <strong>Authentication Results</strong> — shows SPF (pass/fail/softfail), DKIM (pass/fail), and DMARC (pass/fail) results.<br>
+        <strong>Step 5:</strong> Check <strong>X-Forefront-Antispam-Report</strong> — contains: SCL value, BCL value, SFV (spam filter verdict), IPV (IP verdict), and which specific rule fired.<br>
+        <strong>Step 6:</strong> Check <strong>X-MS-Exchange-Organization-SCL</strong> — the final SCL assigned before delivery.
+      </div></div>
+      <table class="tbl">
+        <tr><th>Header Field</th><th>What to Look For</th><th>What It Tells You</th></tr>
+        <tr><td>Authentication-Results</td><td>spf=pass/fail, dkim=pass/fail, dmarc=pass/fail</td><td>Whether sender's domain authentication is set up correctly</td></tr>
+        <tr><td>X-Forefront-Antispam-Report: SFV</td><td>SFV:SKN=whitelisted, SFV:SPM=spam, SFV:NSPM=not spam, SFV:BLK=blocked</td><td>Exact EOP spam filter verdict and why</td></tr>
+        <tr><td>X-MS-Exchange-Organization-SCL</td><td>Number -1 to 9</td><td>Final spam score. -1 = bypassed, 5+ = junk, 9 = quarantined</td></tr>
+        <tr><td>Received: from</td><td>IP addresses in reverse order (first Received = last hop)</td><td>Mail route. First entry = recipient's server. Last entry = original sender. Check for unexpected relay hops.</td></tr>
+        <tr><td>X-MS-Exchange-Transport-Rules</td><td>Rule name if a transport rule fired</td><td>Which admin rule modified or acted on the message</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- EXO LICENSE PLAN 1 vs 2 -->
+<div id="pg-exolicense" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › EXO Plan 1 vs 2</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(6,182,212,.12)">💳</div><div><div class="pg-t">Exchange Online Plan 1 vs Plan 2 — Quotas &amp; Features</div><div class="pg-s">Exactly what each plan includes, limits, and which M365 bundles include each</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Plan Comparison Table</div>
+      <table class="tbl">
+        <tr><th>Feature</th><th>Exchange Online Plan 1</th><th>Exchange Online Plan 2</th></tr>
+        <tr><td>Primary Mailbox Size</td><td><strong>50 GB</strong></td><td><strong>100 GB</strong></td></tr>
+        <tr><td>Archive Mailbox</td><td>50 GB (no auto-expand)</td><td>Unlimited (auto-expanding archive enabled)</td></tr>
+        <tr><td>Auto-Expanding Archive</td><td>❌ Not included</td><td>✅ Included — expands beyond 100GB automatically</td></tr>
+        <tr><td>In-Place Hold / Litigation Hold</td><td>❌ Not included — cannot put mailbox on hold</td><td>✅ Included — required for compliance scenarios</td></tr>
+        <tr><td>In-Place eDiscovery</td><td>Limited</td><td>Full In-Place eDiscovery and Hold</td></tr>
+        <tr><td>Journaling</td><td>✅ Premium journaling</td><td>✅ Premium journaling</td></tr>
+        <tr><td>Voice mail (Unified Messaging)</td><td>❌ Deprecated</td><td>❌ Deprecated (use Teams voicemail)</td></tr>
+        <tr><td>Message Retention Policies (MRM)</td><td>✅ Basic MRM</td><td>✅ Full MRM + custom tags</td></tr>
+        <tr><td>Anti-spam/malware (EOP)</td><td>✅ Included</td><td>✅ Included</td></tr>
+        <tr><td>Included in M365 Plans</td><td>M365 Business Basic, Business Standard, E1, F1</td><td>M365 E3, E5, Business Premium</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Mailbox Quotas Reference Table</div>
+      <table class="tbl">
+        <tr><th>Quota Type</th><th>Plan 1</th><th>Plan 2 / E3 / E5</th><th>What Happens at Limit</th></tr>
+        <tr><td>Issue Warning</td><td>49 GB</td><td>98 GB</td><td>User receives warning email from System</td></tr>
+        <tr><td>Prohibit Send</td><td>49.5 GB</td><td>99 GB</td><td>User can receive but cannot send any new email</td></tr>
+        <tr><td>Prohibit Send/Receive</td><td>50 GB</td><td>100 GB</td><td>User cannot send OR receive. Senders get NDR 452 4.2.2</td></tr>
+        <tr><td>Deleted Items Retention</td><td>14 days</td><td>14 days (configurable to 30)</td><td>Items permanently purged after retention period</td></tr>
+        <tr><td>Recoverable Items (normal)</td><td>30 GB</td><td>30 GB</td><td>User cannot delete more items if Recoverable Items is full</td></tr>
+        <tr><td>Recoverable Items (on hold)</td><td>100 GB</td><td>100 GB</td><td>Increases automatically when mailbox is placed on hold</td></tr>
+        <tr><td>Max message size (inbound)</td><td>150 MB</td><td>150 MB</td><td>Sender receives NDR if message exceeds limit</td></tr>
+        <tr><td>Max message size (outbound)</td><td>150 MB</td><td>150 MB</td><td>Outlook rejects message before sending</td></tr>
+        <tr><td>Recipients per message</td><td>500</td><td>500</td><td>NDR if over limit</td></tr>
+        <tr><td>Messages sent per day</td><td>10,000</td><td>10,000</td><td>Account throttled for remainder of day</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SPO LIMITS -->
+<div id="pg-spolimits" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › SharePoint Limits &amp; Restrictions</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(16,185,129,.12)">📏</div><div><div class="pg-t">SharePoint Online — Limits &amp; Restrictions</div><div class="pg-s">Official limits: file size, path length, items, sync limits, URL restrictions</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Storage Limits</div>
+      <table class="tbl">
+        <tr><th>Limit Type</th><th>Value</th><th>Notes</th></tr>
+        <tr><td>Tenant total storage (default)</td><td>1 TB + 10 GB per licensed user</td><td>500 users = 1 TB + 5 TB = 6 TB total pooled storage</td></tr>
+        <tr><td>Per site collection (default)</td><td>25 TB</td><td>Admin can set custom quota per site. Max is 25 TB.</td></tr>
+        <tr><td>OneDrive per user (default)</td><td>1 TB</td><td>Can be increased to 5 TB by tenant admin; up to 25 TB by Microsoft request for E3/E5</td></tr>
+        <tr><td>Maximum file upload size</td><td><strong>250 GB</strong></td><td>Per file. Files over this cannot be uploaded to SharePoint/OneDrive.</td></tr>
+        <tr><td>Recycle Bin storage</td><td>Counted against site quota</td><td>Recycle bin items count toward the site's storage quota until permanently deleted</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>File and Path Limits</div>
+      <table class="tbl">
+        <tr><th>Limit</th><th>Value</th><th>Why It Matters</th></tr>
+        <tr><td>Max file name length</td><td>400 characters (file + path combined)</td><td>Files with long names migrated from file shares often fail</td></tr>
+        <tr><td>Invalid file/folder name characters</td><td>" * : &lt; &gt; ? / \ | # % { } ~ &amp;</td><td>Files with these characters fail to upload or sync</td></tr>
+        <tr><td>Invalid file names (reserved)</td><td>.lock, CON, PRN, AUX, NUL, COM0-9, LPT0-9, desktop.ini, _vti_</td><td>Files with these names cannot be synced</td></tr>
+        <tr><td>File path length for sync</td><td>400 characters total (site URL + file path)</td><td>OneDrive sync client cannot sync files with paths exceeding this</td></tr>
+        <tr><td>Files beginning with ~ or .</td><td>Cannot sync</td><td>Temp files from Office (like ~$document.docx) are excluded from sync intentionally</td></tr>
+        <tr><td>Folder nesting depth</td><td>No hard limit BUT sync issues occur beyond ~20 levels deep</td><td>Deep nesting causes long path issues and sync failures</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>List and Library Limits</div>
+      <table class="tbl">
+        <tr><th>Limit</th><th>Value</th><th>Impact &amp; Workaround</th></tr>
+        <tr><td><strong>List View Threshold</strong></td><td><strong>5,000 items</strong></td><td>Views without indexed column filters FAIL when library &gt;5,000 items. CANNOT be disabled in SPO. Fix: Create indexed columns, use folders, filter views.</td></tr>
+        <tr><td>Max items in a list</td><td>30 million items</td><td>Technical max — but performance degrades well before this</td></tr>
+        <tr><td>Max columns per list</td><td>~300 columns (varies by type)</td><td>Complex lists with too many columns have performance issues</td></tr>
+        <tr><td>Max list size (storage)</td><td>No hard limit — counted against site quota</td><td>Lists with attachments can consume site storage rapidly</td></tr>
+        <tr><td>Max items returned by search</td><td>500 per query (REST API)</td><td>Apps using SharePoint search API must paginate results</td></tr>
+        <tr><td>Indexed columns per list</td><td>20 indexes</td><td>Create indexes on columns used in View filters to bypass 5K threshold</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>SharePoint Online Plan 1 vs Plan 2</div>
+      <table class="tbl">
+        <tr><th>Feature</th><th>SharePoint Plan 1</th><th>SharePoint Plan 2</th></tr>
+        <tr><td>File storage per user</td><td>1 TB OneDrive</td><td>Unlimited OneDrive (auto-expand)</td></tr>
+        <tr><td>Microsoft Syntex (AI classification)</td><td>❌</td><td>✅</td></tr>
+        <tr><td>eDiscovery</td><td>Basic</td><td>Advanced — In-Place Hold on SharePoint content</td></tr>
+        <tr><td>Compliance/Information Barriers</td><td>❌</td><td>✅</td></tr>
+        <tr><td>Included in M365 Plans</td><td>M365 Business Basic, E1</td><td>M365 E3, E5, Business Premium</td></tr>
+        <tr><td>SharePoint storage per tenant</td><td>1 TB + 10 GB/user</td><td>1 TB + 10 GB/user (same — license doesn't change tenant storage)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- SPO PERMISSIONS, SYNC, RECYCLE BIN -->
+<div id="pg-spoperms" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › SharePoint Permissions, Sync, Recycle Bin</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(16,185,129,.12)">🔑</div><div><div class="pg-t">SharePoint — Permissions, Sync Issues, Recycle Bin &amp; PIT Restore</div><div class="pg-s">Permission deep dive, sync troubleshooting, deletion stages, point-in-time restore</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>SharePoint Permission Levels</div>
+      <table class="tbl">
+        <tr><th>Permission Level</th><th>Can Do</th><th>Cannot Do</th></tr>
+        <tr><td><strong>Full Control</strong></td><td>Everything — manage permissions, delete site, change theme</td><td>Nothing restricted</td></tr>
+        <tr><td><strong>Design</strong></td><td>Create lists, libraries, pages, manage views, approve content</td><td>Cannot manage permissions or site settings</td></tr>
+        <tr><td><strong>Edit</strong></td><td>Add/edit/delete list items, upload files, edit documents</td><td>Cannot change permissions or site design</td></tr>
+        <tr><td><strong>Contribute</strong></td><td>Add items and documents, edit own items</td><td>Cannot delete items created by others</td></tr>
+        <tr><td><strong>Read</strong></td><td>View and download files, view list items</td><td>Cannot add, edit, or delete anything</td></tr>
+        <tr><td><strong>View Only</strong></td><td>View pages in browser only</td><td>Cannot download files — prevents local copies of sensitive docs</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>SharePoint Recycle Bin — Deletion Stages</div>
+      <div class="flow">
+        <div class="fb" style="border-color:var(--ok)"><span class="fi">🗑️</span><span class="fl">User Deletes<br>Item</span></div><div class="fa">→</div>
+        <div class="fb" style="border-color:var(--warn)"><span class="fi">♻️</span><span class="fl">Stage 1 Recycle Bin<br>(User's Bin)<br>93 days</span></div><div class="fa">→</div>
+        <div class="fb" style="border-color:var(--or)"><span class="fi">📦</span><span class="fl">Stage 2 Recycle Bin<br>(Site Collection Bin)<br>Remaining days to 93</span></div><div class="fa">→</div>
+        <div class="fb" style="border-color:var(--err)"><span class="fi">💀</span><span class="fl">Permanently<br>Deleted</span></div>
+      </div>
+      <table class="tbl">
+        <tr><th>Stage</th><th>Duration</th><th>Who Can Restore</th><th>Where to Find It</th></tr>
+        <tr><td><strong>Stage 1 (User Recycle Bin)</strong></td><td>93 days total (shared between both stages)</td><td>The user who deleted it, OR Site Owners</td><td>Site → Recycle Bin (left nav). User sees their own deletions.</td></tr>
+        <tr><td><strong>Stage 2 (Site Collection Recycle Bin)</strong></td><td>Remainder of 93 days after item moves from Stage 1</td><td>Site Collection Admins only</td><td>Site Settings → Recycle Bin → "Second-stage recycle bin" link at bottom</td></tr>
+        <tr><td><strong>After 93 days total</strong></td><td>Permanently deleted</td><td>Microsoft Support (no guarantee)</td><td>Only via MS Support ticket with site URL and deletion timestamp</td></tr>
+      </table>
+      <div class="nbox">💡 <strong>Admin Note:</strong> Items deleted by a Retention Policy are NOT moved to the Recycle Bin — they go directly to the Preservation Hold Library (accessible only via eDiscovery). The 93-day timer applies to user-initiated deletions only.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>SharePoint Point-in-Time Restore</div>
+      <p class="prose">SharePoint Online supports <strong>site-level Point-in-Time Restore</strong> — restore an entire site collection to any point in the past 30 days. This is different from file version history (which restores individual files). PIT restore rolls back the entire site — all files, lists, pages, and settings — to a previous state.</p>
+      <div class="abox"><div class="abox-lbl">🔄 How to Perform PIT Restore</div><div class="abox-txt">
+        <strong>Via Admin Portal:</strong> SPO Admin Center → Active Sites → Select site → Restore (clock icon) → Choose date/time → Confirm<br>
+        <strong>Via PowerShell:</strong> <code>Restore-SPODeletedSite</code> for deleted sites, or use SharePoint's built-in restore from the site settings<br>
+        <strong>Warning:</strong> PIT restore is destructive for content added AFTER the restore point. All changes since the selected restore point are overwritten. Always warn users before restoring.
+      </div></div>
+      <div class="wbox">⚠️ <strong>Limitations:</strong> PIT restore only available within 30 days. Changes made by the restore operation cannot be undone. Teams-connected sites may lose Teams channel content if restored without coordinating the Teams data. Always create an export backup before performing PIT restore in production.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>Common SharePoint Sync Issues — L1/L2 Troubleshooting</div>
+      <table class="tbl">
+        <tr><th>Issue</th><th>Root Cause</th><th>Fix</th></tr>
+        <tr><td>Sync client shows red X / won't sync</td><td>Invalid file name characters, path too long, file too large, OneDrive not signed in</td><td>Check system tray → View sync problems. Fix each flagged file. Reset OneDrive if needed.</td></tr>
+        <tr><td>"This item can't be synced" on specific files</td><td>File name has #, %, &amp; or other invalid chars; file locked by another process</td><td>Rename file removing special characters. Close locking application.</td></tr>
+        <tr><td>Sync working but files show stale content</td><td>Files On-Demand shows cached version, not updated cloud version</td><td>Right-click file → "Free up space" then reopen to pull fresh version from cloud</td></tr>
+        <tr><td>OneDrive shows "Processing changes" for hours</td><td>Large file upload in progress, or a single stuck file blocking queue</td><td>Pause sync → Resume. If stuck: identify blocking file in sync problems, fix it.</td></tr>
+        <tr><td>KFM (Desktop/Documents) not syncing</td><td>GPO Folder Redirection conflict, or old OneDrive client version</td><td>Remove conflicting Folder Redirection GPO. Update OneDrive client. Check HKCU registry for KFMState value.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RETENTION POLICIES & LABELS -->
+<div id="pg-retention" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Retention Policies &amp; Labels</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(168,85,247,.12)">📦</div><div><div class="pg-t">Retention Policies &amp; Retention Labels</div><div class="pg-s">All workloads — Exchange, Teams, SharePoint, OneDrive — durations, behaviors, differences</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Retention Policy vs Retention Label — Key Difference</div>
+      <table class="tbl">
+        <tr><th></th><th>Retention Policy</th><th>Retention Label</th></tr>
+        <tr><td><strong>Applied to</strong></td><td>Entire workload locations (all Exchange mailboxes, all SharePoint sites)</td><td>Individual items (specific email, specific document, specific folder)</td></tr>
+        <tr><td><strong>Applied by</strong></td><td>Admin — users have no control</td><td>Admin (auto-apply) OR Users manually label items</td></tr>
+        <tr><td><strong>Scope</strong></td><td>Broad — applies to everything in selected locations</td><td>Granular — only items with the label are affected</td></tr>
+        <tr><td><strong>Priority when conflicting</strong></td><td>Longer retention wins (Preservation principle)</td><td>Label wins over policy — label is more specific</td></tr>
+        <tr><td><strong>Disposition review</strong></td><td>Not supported</td><td>Supported — items can be reviewed before permanent deletion</td></tr>
+        <tr><td><strong>Records management</strong></td><td>Not supported</td><td>Can declare items as Records (immutable)</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Retention Policies per Workload</div>
+      <table class="tbl">
+        <tr><th>Workload</th><th>What's Retained</th><th>Where Copies Stored</th><th>Max Duration</th></tr>
+        <tr><td><strong>Exchange Online</strong></td><td>Emails, calendar items, tasks, contacts, and drafts</td><td>Recoverable Items\Preservation Holds folder in user's mailbox</td><td>Unlimited (set "Never Delete")</td></tr>
+        <tr><td><strong>Microsoft Teams Chat</strong></td><td>1:1 chats, group chats, channel messages (text only — files retained via SharePoint policy)</td><td>Hidden Teams chat mailbox subfolder (SubstrateHolds)</td><td>Unlimited</td></tr>
+        <tr><td><strong>Teams Channel Messages</strong></td><td>Standard and private channel posts and replies</td><td>Hidden mailbox + SharePoint Preservation Hold Library</td><td>Unlimited</td></tr>
+        <tr><td><strong>SharePoint Online</strong></td><td>Files and documents in document libraries</td><td>Preservation Hold Library (hidden library at site root)</td><td>Unlimited</td></tr>
+        <tr><td><strong>OneDrive for Business</strong></td><td>All files in user's OneDrive</td><td>Preservation Hold Library in user's OneDrive site</td><td>Unlimited</td></tr>
+        <tr><td><strong>Viva Engage / Yammer</strong></td><td>Messages in communities and private messages</td><td>Azure Blob storage (not Exchange)</td><td>Unlimited (with E5 compliance)</td></tr>
+      </table>
+      <div class="nbox">💡 <strong>Important:</strong> Retention copies are INVISIBLE to users and to normal admin searches. They are only accessible via eDiscovery / Compliance Content Search. This is by design — users cannot delete retained content even if they empty their mailbox or delete files.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>The Preservation Principle — Conflict Resolution</div>
+      <p class="prose">When multiple retention policies or labels apply to the same content with conflicting actions, Microsoft uses the <strong>Preservation Principle</strong>:</p>
+      <div class="abox"><div class="abox-lbl">📋 Priority Rules (in order)</div><div class="abox-txt">
+        <strong>1. Retain ALWAYS wins over Delete.</strong> If one policy says retain for 5 years and another says delete after 1 year — the item is retained for 5 years, THEN deleted.<br>
+        <strong>2. Longer retention wins over shorter.</strong> Two retain policies: 5 years vs 7 years → retained for 7 years.<br>
+        <strong>3. Explicit delete later wins over implicit.</strong> If both policies only have delete actions, the longer one wins.<br>
+        <strong>4. Labels win over policies for individual items.</strong> A label applied to a specific document overrides a blanket retention policy for that document.
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOLDS, AUDIT, EDISCOVERY -->
+<div id="pg-holds" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Holds, Audit Logs, eDiscovery</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(168,85,247,.12)">🔒</div><div><div class="pg-t">Holds, Audit Logs &amp; eDiscovery</div><div class="pg-s">Litigation Hold, In-Place Hold, Content Search, Unified Audit Log — when, how, limits</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Types of Holds in Exchange Online</div>
+      <table class="tbl">
+        <tr><th>Hold Type</th><th>Scope</th><th>Set By</th><th>Duration</th><th>When Used</th></tr>
+        <tr><td><strong>Litigation Hold</strong></td><td>Entire mailbox — ALL items preserved</td><td>Exchange Admin / Compliance Admin</td><td>Unlimited (or specified duration)</td><td>Legal proceedings requiring preservation of all email for a specific user</td></tr>
+        <tr><td><strong>In-Place Hold</strong> (Legacy)</td><td>Query-based — only items matching specific criteria</td><td>Exchange Admin</td><td>Time-based or indefinite</td><td>Targeted preservation (e.g., all emails mentioning "Project X"). Deprecated in favor of Purview holds.</td></tr>
+        <tr><td><strong>eDiscovery Hold</strong> (Purview)</td><td>Exchange, SharePoint, OneDrive, Teams locations</td><td>eDiscovery Manager</td><td>Indefinite (until released from case)</td><td>Active legal investigation — holds content in place while search is performed</td></tr>
+        <tr><td><strong>Retention Policy Hold</strong></td><td>All content in specified locations</td><td>Compliance Admin</td><td>Defined retention period</td><td>Compliance/regulatory requirements — business-as-usual preservation, not specific legal case</td></tr>
+        <tr><td><strong>Delay Hold</strong></td><td>Automatically applied when a hold is removed</td><td>System-applied automatically</td><td>30 days</td><td>Prevents immediate purge of retained content when a hold is removed — gives 30-day window to reapply hold if needed</td></tr>
+      </table>
+      <div class="nbox">💡 <strong>Key difference Litigation Hold vs eDiscovery Hold:</strong> Litigation Hold is quick to apply directly on a mailbox via PowerShell. eDiscovery Hold is applied within a Purview eDiscovery case — more controlled, requires a case structure, but can hold Exchange + SharePoint + Teams simultaneously.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Unified Audit Log — What It Captures</div>
+      <table class="tbl">
+        <tr><th>Workload</th><th>What's Logged</th><th>Retention (Standard)</th><th>Retention (Audit Premium)</th></tr>
+        <tr><td>Exchange Online</td><td>Mail send/receive, mailbox access, permission changes, admin activities</td><td>90 days</td><td>Up to 10 years (E5 + Audit Premium)</td></tr>
+        <tr><td>SharePoint Online</td><td>File access, create, modify, delete, sharing, permission changes</td><td>90 days</td><td>Up to 10 years</td></tr>
+        <tr><td>OneDrive</td><td>File access, sync, share, delete, restore events</td><td>90 days</td><td>Up to 10 years</td></tr>
+        <tr><td>Microsoft Teams</td><td>Channel create/delete, member changes, message delete, meeting activity</td><td>90 days</td><td>Up to 10 years</td></tr>
+        <tr><td>Entra ID / Azure AD</td><td>Sign-ins, MFA prompts, user create/delete, group changes, CA policy changes</td><td>30 days (in Entra) / 90 days in Audit</td><td>Up to 10 years</td></tr>
+        <tr><td>Intune</td><td>Device enrollment, compliance state changes, app deployment</td><td>90 days</td><td>Up to 10 years</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Content Search vs eDiscovery — When to Use Which</div>
+      <table class="tbl">
+        <tr><th></th><th>Content Search</th><th>eDiscovery (Standard)</th><th>eDiscovery (Premium)</th></tr>
+        <tr><td><strong>Requires Case</strong></td><td>No — run ad-hoc searches</td><td>Yes — managed within a case</td><td>Yes — advanced case management</td></tr>
+        <tr><td><strong>Can Place Hold</strong></td><td>No</td><td>Yes — eDiscovery Hold</td><td>Yes — with advanced options</td></tr>
+        <tr><td><strong>Custodian Management</strong></td><td>No</td><td>No</td><td>Yes — tracks specific people under investigation</td></tr>
+        <tr><td><strong>Review Sets</strong></td><td>No</td><td>No</td><td>Yes — collect, review, analyze, export</td></tr>
+        <tr><td><strong>License Required</strong></td><td>E3 (compliance role)</td><td>E3 (compliance role)</td><td>E5 or E5 Compliance add-on</td></tr>
+        <tr><td><strong>Use Case</strong></td><td>Quick search: "Find all emails from user X in last 30 days"</td><td>Legal holds + search: formal legal investigation</td><td>Large-scale litigation: thousands of items across many custodians</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN ROLES -->
+<div id="pg-adminroles" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Admin Roles</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(245,158,11,.12)">👤</div><div><div class="pg-t">All Microsoft 365 Admin Roles</div><div class="pg-s">Every role, what it can do, and what it cannot — least privilege reference</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Top-Level Admin Roles</div>
+      <table class="tbl">
+        <tr><th>Role</th><th>Can Do</th><th>Cannot Do (vs Global Admin)</th><th>Assign To</th></tr>
+        <tr><td><strong>Global Administrator</strong></td><td>Everything in M365 — assign any role, manage all services, billing, users</td><td>Nothing — full control. Use sparingly.</td><td>Maximum 4–5 people. Must have MFA. Use PIM.</td></tr>
+        <tr><td><strong>Global Reader</strong></td><td>Read-only version of Global Admin — view all settings without changing anything</td><td>Cannot make any changes</td><td>Auditors, executives who need visibility</td></tr>
+        <tr><td><strong>Billing Administrator</strong></td><td>Manage subscriptions, purchase/cancel licenses, view billing</td><td>Cannot manage users or services</td><td>Finance/procurement team</td></tr>
+        <tr><td><strong>License Administrator</strong></td><td>Assign and remove product licenses from users and groups</td><td>Cannot purchase subscriptions or manage services</td><td>IT helpdesk, onboarding team</td></tr>
+        <tr><td><strong>User Administrator</strong></td><td>Create/delete users, reset passwords, manage user licenses, manage most user properties</td><td>Cannot manage Global Admins. Cannot change own account.</td><td>IT helpdesk L1/L2</td></tr>
+        <tr><td><strong>Helpdesk Administrator</strong></td><td>Reset passwords for non-admin users, manage service requests</td><td>Cannot create users, assign licenses, or manage admin accounts</td><td>L1 support</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Service-Specific Admin Roles</div>
+      <table class="tbl">
+        <tr><th>Role</th><th>Manages</th><th>Key Permissions</th></tr>
+        <tr><td><strong>Exchange Administrator</strong></td><td>Exchange Online</td><td>Manage mailboxes, groups, connectors, transport rules, anti-spam policies, message trace</td></tr>
+        <tr><td><strong>Teams Administrator</strong></td><td>Microsoft Teams</td><td>Manage teams, policies, calling settings, meetings, devices, phone numbers</td></tr>
+        <tr><td><strong>SharePoint Administrator</strong></td><td>SharePoint Online</td><td>Create/delete sites, manage storage, external sharing settings, hub sites, content types</td></tr>
+        <tr><td><strong>Teams Communications Administrator</strong></td><td>Teams Voice</td><td>Manage phone numbers, call routing, Direct Routing, calling policies. Cannot manage Teams features beyond calling.</td></tr>
+        <tr><td><strong>Teams Communications Support Engineer</strong></td><td>Teams Call Quality</td><td>View call analytics (all users), CQD, troubleshoot voice quality. Read-only to call records.</td></tr>
+        <tr><td><strong>Intune Administrator</strong></td><td>Microsoft Intune</td><td>Full control of Intune — devices, policies, compliance, apps, enrollment</td></tr>
+        <tr><td><strong>Power Platform Administrator</strong></td><td>Power Platform</td><td>Manage environments, DLP policies, capacity, connectors. View all flows and apps.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Security &amp; Compliance Roles</div>
+      <table class="tbl">
+        <tr><th>Role</th><th>Can Do</th><th>Key Difference from Similar Role</th></tr>
+        <tr><td><strong>Security Administrator</strong></td><td>Manage Defender policies, Secure Score actions, CA policies, identity protection settings</td><td>Full security config. Can change settings that affect security posture.</td></tr>
+        <tr><td><strong>Security Reader</strong></td><td>View all security reports, alerts, Secure Score, Defender dashboard</td><td>Read-only version of Security Admin. Cannot change policies.</td></tr>
+        <tr><td><strong>Security Operator</strong></td><td>View security alerts + respond to/dismiss/manage incidents in Defender XDR</td><td>Between Reader and Admin. Can take response actions but not change policies.</td></tr>
+        <tr><td><strong>Compliance Administrator</strong></td><td>Full control of Purview — DLP, retention, labels, eDiscovery, audit, information barriers</td><td>No access to Defender security features. Compliance-only scope.</td></tr>
+        <tr><td><strong>Compliance Data Administrator</strong></td><td>Same as Compliance Admin + Azure Information Protection actions</td><td>Extended from Compliance Admin with AIP permissions.</td></tr>
+        <tr><td><strong>eDiscovery Manager</strong></td><td>Create and manage eDiscovery cases they own, run content searches, place holds</td><td>Can only see their own cases. Cannot see other eDiscovery managers' cases.</td></tr>
+        <tr><td><strong>eDiscovery Administrator</strong></td><td>All eDiscovery Manager permissions + can see ALL cases from all managers</td><td>Organization-wide eDiscovery visibility. Typically Legal team lead.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ALL LICENSE TYPES -->
+<div id="pg-licensing" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › All License Types</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(245,158,11,.12)">💳</div><div><div class="pg-t">All M365 License Types — E, F, A, G Series</div><div class="pg-s">Every M365 license family explained — Enterprise, Frontline, Academic, Government, and add-ons</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Enterprise Series (E) — Commercial Organizations</div>
+      <table class="tbl">
+        <tr><th>License</th><th>Target User</th><th>Key Inclusions</th><th>Key Exclusions</th></tr>
+        <tr><td><strong>M365 E1</strong></td><td>Information workers needing cloud services without desktop Office</td><td>EXO Plan 1, Teams, SPO Plan 1, OneDrive 1TB, web Office apps, EOP</td><td>No desktop Office apps, no Intune, no Entra ID P1/P2, no advanced compliance</td></tr>
+        <tr><td><strong>M365 E3</strong></td><td>Information workers needing full productivity + compliance</td><td>All E1 + M365 Apps (desktop), Intune, Entra ID P1, EXO Plan 2, Purview basics, DLP, Sensitivity Labels</td><td>No advanced security (Defender P2, MCAS), no Power BI Pro, no advanced eDiscovery</td></tr>
+        <tr><td><strong>M365 E5</strong></td><td>High-security environments, financial/legal/government orgs</td><td>All E3 + Defender for Endpoint P2, Defender for Identity, Defender for Cloud Apps (MCAS), Power BI Pro, Phone System, Advanced Compliance (eDiscovery Premium, Audit Premium, IRM)</td><td>Nothing significant — this is the top tier</td></tr>
+        <tr><td><strong>M365 E5 Security</strong></td><td>Add-on to E3 for security features only</td><td>Defender for Endpoint P2 + Defender for Identity + Defender for Cloud Apps</td><td>Does not include compliance/audit features of full E5</td></div></tr>
+        <tr><td><strong>M365 E5 Compliance</strong></td><td>Add-on to E3 for compliance features only</td><td>eDiscovery Premium + Audit Premium + Communication Compliance + IRM + Information Barriers</td><td>Does not include security features of E5 Security add-on</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Frontline Worker Series (F) — Shift Workers / Field Workers</div>
+      <table class="tbl">
+        <tr><th>License</th><th>Target User</th><th>Key Inclusions</th><th>Key Limitations</th></tr>
+        <tr><td><strong>M365 F1</strong></td><td>Shift workers — retail, manufacturing, healthcare</td><td>Teams (no calling), SharePoint, Viva Connections, M365 web apps, Yammer</td><td>No email mailbox (no Exchange), no desktop Office apps, no OneDrive</td></tr>
+        <tr><td><strong>M365 F3</strong></td><td>Frontline workers needing email + mobile apps</td><td>EXO (2GB mailbox), Teams, SharePoint, OneDrive 2GB, M365 Apps for mobile (phone/tablet only, not PC)</td><td>No desktop Office for PC, smaller mailbox/storage quotas, no Intune MDM (only MAM)</td></tr>
+        <tr><td><strong>Office 365 F3</strong></td><td>Subset of M365 F3 — productivity only</td><td>EXO, Teams, SharePoint, OWA, mobile apps</td><td>No security features, no compliance features</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Academic Series (A) — Educational Institutions</div>
+      <table class="tbl">
+        <tr><th>License</th><th>For</th><th>Notes</th></tr>
+        <tr><td><strong>M365 A1</strong></td><td>Students and faculty — FREE for eligible institutions</td><td>Web apps only, no desktop Office. Free with verified .edu domain.</td></tr>
+        <tr><td><strong>M365 A3</strong></td><td>Faculty/staff needing desktop apps + compliance</td><td>Equivalent to E3 at discounted academic pricing</td></tr>
+        <tr><td><strong>M365 A5</strong></td><td>Faculty/staff needing advanced security + compliance</td><td>Equivalent to E5 at discounted academic pricing</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>Government Series (G) — US Government Entities</div>
+      <table class="tbl">
+        <tr><th>Cloud</th><th>License Series</th><th>Description</th></tr>
+        <tr><td><strong>GCC</strong> (Government Community Cloud)</td><td>M365 G1/G3/G5</td><td>US government cloud. Data stored in US datacenters. Access restricted to US persons. ITAR/FedRAMP compliance.</td></tr>
+        <tr><td><strong>GCC High</strong></td><td>M365 G3/G5 High</td><td>Higher security. DoD IL4/IL5 compliance. More restrictive than GCC.</td></tr>
+        <tr><td><strong>DoD</strong></td><td>M365 G5 DoD</td><td>Department of Defense. Highest security classification. IL5 compliance. Air-gapped from commercial M365.</td></tr>
+      </table>
+      <div class="nbox">💡 <strong>Note for Support Engineers:</strong> GCC/GCC High/DoD tenants operate on separate infrastructure. PowerShell endpoints are different (e.g., login.microsoftonline.us instead of login.microsoftonline.com). Admin Center URL is different. Features may lag commercial release by weeks or months.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">5</div>Business Series — For Organizations Under 300 Users</div>
+      <table class="tbl">
+        <tr><th>License</th><th>Approx. E Equivalent</th><th>Key Features</th></tr>
+        <tr><td><strong>M365 Business Basic</strong></td><td>Between E1 and lite-E3</td><td>EXO, Teams, SharePoint, OneDrive 1TB, web Office apps. ~$6/user/mo</td></tr>
+        <tr><td><strong>M365 Business Standard</strong></td><td>Between E1 and E3</td><td>All Basic + M365 Apps desktop, Bookings, MileIQ. ~$12.50/user/mo</td></tr>
+        <tr><td><strong>M365 Business Premium</strong></td><td>E3 with some E5 security</td><td>All Standard + Intune, Defender for Business, Entra ID P1, Azure AD Join, Conditional Access. ~$22/user/mo</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- MIGRATIONS -->
+<div id="pg-migrations" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Migrations — All Workloads</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(249,115,22,.12)">🔄</div><div><div class="pg-t">Migrations — All Workloads &amp; Tools</div><div class="pg-s">Exchange, SharePoint, Teams, OneDrive — types, tools, limitations per workload</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Exchange Online Migration Types</div>
+      <table class="tbl">
+        <tr><th>Migration Type</th><th>Source</th><th>How It Works</th><th>Max Mailboxes</th><th>Limitations</th></tr>
+        <tr><td><strong>Cutover Migration</strong></td><td>Exchange on-prem</td><td>All mailboxes migrated at once. DNS cut over in one window.</td><td>Up to ~150 (recommended)</td><td>Single migration event. No coexistence. Downtime during MX cutover. All-or-nothing.</td></tr>
+        <tr><td><strong>Staged Migration</strong></td><td>Exchange 2003/2007</td><td>Batch mailboxes over time. Uses AAD Connect for directory sync.</td><td>Any size</td><td>Requires on-prem Exchange to stay running during migration. No free/busy between cloud and on-prem. Legacy only.</td></tr>
+        <tr><td><strong>Hybrid Migration (HCW)</strong></td><td>Exchange 2010/2013/2016/2019</td><td>Full hybrid: seamless coexistence. Mailboxes moved incrementally with Move-Mailbox cmdlet.</td><td>Any size</td><td>Requires HCW setup, on-prem Exchange server maintained. Free/busy works. Most common enterprise method.</td></tr>
+        <tr><td><strong>IMAP Migration</strong></td><td>Gmail, Lotus Notes, any IMAP server</td><td>Mail synced via IMAP protocol. No calendar/contacts/folder structure.</td><td>Up to 50,000</td><td>Email only — no calendar, contacts, or tasks migrated. Must use separate tools for contacts/calendar.</td></tr>
+        <tr><td><strong>Google Workspace Migration</strong></td><td>Google Workspace</td><td>Microsoft-native tool migrates email + calendar + contacts from Gmail.</td><td>Up to 10,000</td><td>Shared drives, Google Docs, Hangouts chat NOT migrated. Use third-party for full migration.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>SharePoint &amp; OneDrive Migration Tools</div>
+      <table class="tbl">
+        <tr><th>Tool</th><th>Source</th><th>What Migrates</th><th>Limitations</th></tr>
+        <tr><td><strong>SPMT (SharePoint Migration Tool)</strong></td><td>File shares, SharePoint Server, OneDrive</td><td>Files, folders, metadata, versions (configurable), permissions (partial)</td><td>No support for InfoPath forms, classic workflows, some web parts. 250GB max file size.</td></tr>
+        <tr><td><strong>Migration Manager</strong> (SPMT v2)</td><td>File shares (agent-based), Box, Dropbox, Google Drive</td><td>Files, folders, basic metadata</td><td>Agents deployed to source servers. No SharePoint Server source support (use SPMT for that).</td></tr>
+        <tr><td><strong>FastTrack</strong></td><td>Various</td><td>Microsoft-managed migration service. Free with qualifying M365 licenses (500+ seats).</td><td>Must meet seat count. Limited customization. Works best for straightforward file share migrations.</td></tr>
+        <tr><td><strong>ShareGate</strong> (3rd party)</td><td>SharePoint on-prem, SharePoint Online (tenant-to-tenant)</td><td>Full fidelity: files, permissions, workflows (basic), lists, pages, web parts</td><td>Licensed tool. Cost per migration. Best for complex SPO→SPO migrations.</td></tr>
+        <tr><td><strong>AvePoint Fly/Cloud Backup</strong> (3rd party)</td><td>M365 tenant-to-tenant, Google, Box</td><td>Comprehensive: SharePoint, Teams, OneDrive, Exchange all at once</td><td>Enterprise license cost. Best for mergers/acquisitions requiring full tenant migration.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Teams Migration Limitations</div>
+      <table class="tbl">
+        <tr><th>Content Type</th><th>Can Migrate?</th><th>Tool/Method</th><th>Key Limitation</th></tr>
+        <tr><td>Teams channel files</td><td>✅ Yes</td><td>SPMT / ShareGate (migrates the backing SharePoint library)</td><td>Files migrate; channel structure and tabs must be recreated manually</td></tr>
+        <tr><td>Teams chat history (1:1)</td><td>⚠️ Partial</td><td>Third-party only: Veeam, AvePoint, BitTitan</td><td>Max 30-day export. Microsoft's API only exports recent history. Older messages may not be retrievable.</td></tr>
+        <tr><td>Channel post history</td><td>⚠️ Partial</td><td>Third-party tools with Teams Export API</td><td>Messages lose formatting context. Only flat text export available via API. Reactions and threading may be lost.</td></tr>
+        <tr><td>Team settings/policies</td><td>❌ Manual</td><td>PowerShell to recreate channels, tabs, apps</td><td>No native migration tool. Must document and recreate in destination tenant.</td></tr>
+        <tr><td>Meeting recordings</td><td>✅ via OneDrive/SPO</td><td>Migrate OneDrive/SharePoint where recordings are stored</td><td>Meeting link metadata may be broken after migration</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- INFRASTRUCTURE: HCW, AAD Connect, Exchange Server -->
+<div id="pg-infra" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Infrastructure</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(249,115,22,.12)">🏗️</div><div><div class="pg-t">HCW, AAD Connect &amp; Exchange Server Roles</div><div class="pg-s">Hybrid Config Wizard, Azure AD Connect, Exchange Server 2016–2025 roles — quick reference</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Azure AD Connect (Entra Connect) — What It Does</div>
+      <p class="prose"><strong>Azure AD Connect (AAD Connect)</strong> is software installed on an on-premises Windows Server that synchronizes identities from on-premises Active Directory to Entra ID (Azure AD). It runs a sync every 30 minutes by default.</p>
+      <table class="tbl">
+        <tr><th>Feature</th><th>What It Does</th><th>Notes</th></tr>
+        <tr><td><strong>Password Hash Sync (PHS)</strong></td><td>Syncs a hash of the password hash to Entra ID. Users use same password for cloud and on-prem.</td><td>Most common, recommended. Works even if on-prem is down (cloud auth continues).</td></tr>
+        <tr><td><strong>Pass-Through Authentication (PTA)</strong></td><td>Authentication occurs against on-prem AD in real-time. Password hash never leaves on-prem.</td><td>Requires on-prem infrastructure to be running for cloud sign-in to work.</td></tr>
+        <tr><td><strong>Federation (ADFS)</strong></td><td>On-prem ADFS server handles all authentication. Entra ID trusts the ADFS token.</td><td>Most complex, most control. Falling out of favor — PHS with Seamless SSO is now preferred.</td></tr>
+        <tr><td><strong>Device Writeback</strong></td><td>Writes Entra-registered device objects back to on-prem AD (needed for hybrid HAADJ).</td><td>Required for Hybrid Azure AD Join</td></tr>
+        <tr><td><strong>Password Writeback</strong></td><td>Passwords reset in Entra ID (cloud) are written back to on-prem AD.</td><td>Required for SSPR with on-prem accounts</td></tr>
+        <tr><td><strong>Group Writeback</strong></td><td>M365 Groups created in cloud are written back as distribution groups in on-prem AD.</td><td>Needed if on-prem apps need to resolve M365 group membership</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Exchange Server Roles — Quick Reference (2016–2025)</div>
+      <table class="tbl">
+        <tr><th>Version</th><th>Server Roles Available</th><th>Notes</th></tr>
+        <tr><td><strong>Exchange 2010</strong></td><td>Mailbox, Hub Transport, Client Access, Edge Transport, Unified Messaging</td><td>End of support Oct 2020. Legacy environments only. Cannot be used as hybrid co-existence with modern EXO.</td></tr>
+        <tr><td><strong>Exchange 2013</strong></td><td>Mailbox (includes Client Access), Edge Transport</td><td>Consolidated CAS into Mailbox role. End of support April 2023.</td></tr>
+        <tr><td><strong>Exchange 2016</strong></td><td>Mailbox, Edge Transport (standalone)</td><td>Further consolidated. All services on Mailbox role. Still common in hybrid environments. End of support Oct 2025.</td></tr>
+        <tr><td><strong>Exchange 2019</strong></td><td>Mailbox, Edge Transport (standalone)</td><td>Latest on-prem version before Subscription Edition. Windows Server 2019/2022. Supported through Oct 2025.</td></tr>
+        <tr><td><strong>Exchange Server SE (2025)</strong></td><td>Mailbox, Edge Transport</td><td>Subscription-based on-prem Exchange. Perpetual-like licensing renewed annually. Required for hybrid with latest EXO features.</td></tr>
+      </table>
+      <div class="nbox">💡 <strong>Key Role Insight:</strong> In Exchange 2016/2019, all client connectivity (HTTPS, SMTP, IMAP, POP) is handled by the Mailbox server role. The Edge Transport server is optional — deployed in a DMZ to handle inbound/outbound SMTP filtering without exposing the Mailbox server directly to the internet.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Hybrid Configuration Wizard (HCW) — What It Configures</div>
+      <table class="tbl">
+        <tr><th>HCW Configures</th><th>What It Does</th></tr>
+        <tr><td>OAuth authentication</td><td>Creates mutual trust between on-prem Exchange and EXO for free/busy, mailbox moves</td></tr>
+        <tr><td>Inbound hybrid connector</td><td>EXO connector accepting mail from on-prem Exchange (for mail routing in hybrid)</td></tr>
+        <tr><td>Outbound hybrid connector</td><td>On-prem send connector routing mail through EXO (or directly)</td></tr>
+        <tr><td>Organization relationship</td><td>Enables free/busy calendar sharing between on-prem and cloud users</td></tr>
+        <tr><td>Mail flow mode selection</td><td>Classic (all mail routes through on-prem) vs Modern (each hop routes directly)</td></tr>
+        <tr><td>Edge subscription (if applicable)</td><td>Connects on-prem Edge Transport server to hybrid infrastructure</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- DNS RECORDS & AUTH METHODS -->
+<div id="pg-dnsauth" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › DNS Records &amp; Auth Methods</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(59,130,246,.12)">🌐</div><div><div class="pg-t">DNS Record Types &amp; Authentication Methods</div><div class="pg-s">All M365 DNS records, CA policy basics, and authentication method comparison</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>M365 Required DNS Records</div>
+      <table class="tbl">
+        <tr><th>Record Type</th><th>Purpose</th><th>Example Value</th><th>Service</th></tr>
+        <tr><td><strong>MX</strong></td><td>Where to deliver inbound email for your domain</td><td>contoso-com.mail.protection.outlook.com (Priority 0)</td><td>Exchange Online</td></tr>
+        <tr><td><strong>TXT (SPF)</strong></td><td>Lists authorized sending servers for your domain</td><td>v=spf1 include:spf.protection.outlook.com -all</td><td>Exchange Online (anti-spoofing)</td></tr>
+        <tr><td><strong>CNAME (Autodiscover)</strong></td><td>Helps Outlook automatically find Exchange server settings</td><td>autodiscover.contoso.com → autodiscover.outlook.com</td><td>Exchange Online (client config)</td></tr>
+        <tr><td><strong>CNAME (DKIM x2)</strong></td><td>DKIM signing key pointers — EXO signs with keys hosted at Microsoft</td><td>selector1._domainkey → selector1-contoso-com._domainkey.contoso.onmicrosoft.com</td><td>Exchange Online (outbound signing)</td></tr>
+        <tr><td><strong>TXT (DMARC)</strong></td><td>Email authentication reporting and policy</td><td>v=DMARC1; p=quarantine; rua=mailto:dmarc@contoso.com</td><td>Exchange Online (anti-spoofing)</td></tr>
+        <tr><td><strong>CNAME (MS domain verify)</strong></td><td>Proves domain ownership to Microsoft during M365 setup</td><td>MS=ms12345678 (one-time verification)</td><td>M365 tenant setup</td></tr>
+        <tr><td><strong>SRV (Skype/Teams)</strong></td><td>Teams external federation and SIP/XMPP connectivity</td><td>_sip._tls.contoso.com → sipdir.online.lync.com</td><td>Teams / Skype for Business</td></tr>
+        <tr><td><strong>CNAME (MDM enrollment)</strong></td><td>Enables automatic Intune MDM enrollment when users join domain</td><td>enterpriseenrollment.contoso.com → enterpriseenrollment.manage.microsoft.com</td><td>Intune MDM</td></tr>
+        <tr><td><strong>TXT (domain ownership)</strong></td><td>Ownership verification for custom domain added to M365</td><td>MS=ms12345678</td><td>M365 Admin Center</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Authentication Methods in Entra ID</div>
+      <table class="tbl">
+        <tr><th>Method</th><th>How It Works</th><th>Phishing Resistant?</th><th>Best For</th></tr>
+        <tr><td><strong>Password</strong></td><td>Standard username + password</td><td>❌ No</td><td>Legacy baseline only — should always be combined with MFA</td></tr>
+        <tr><td><strong>Microsoft Authenticator (Push)</strong></td><td>Approve push notification on phone</td><td>⚠️ Partial (MFA Fatigue risk)</td><td>Most common MFA method — enable Number Matching to reduce fatigue attacks</td></tr>
+        <tr><td><strong>TOTP/OATH (6-digit code)</strong></td><td>Time-based one-time password from Authenticator app</td><td>⚠️ Partial (can be phished via AiTM)</td><td>Backup MFA when push not available</td></tr>
+        <tr><td><strong>SMS / Phone Call</strong></td><td>Code sent via SMS or voice call</td><td>❌ No (SIM swap risk)</td><td>Fallback only — weakest MFA method. Avoid for privileged accounts.</td></tr>
+        <tr><td><strong>FIDO2 Security Key</strong></td><td>Physical USB/NFC hardware key. Cryptographic challenge.</td><td>✅ Yes — phishing resistant</td><td>High-security roles, admin accounts, shared workstations</td></tr>
+        <tr><td><strong>Windows Hello for Business</strong></td><td>Biometric (face/fingerprint) or PIN on trusted device. Backed by TPM.</td><td>✅ Yes — phishing resistant</td><td>Corporate laptops — replaces password + MFA with a single gesture</td></tr>
+        <tr><td><strong>Certificate-Based Auth (CBA)</strong></td><td>Smart card / PKI certificate as primary credential</td><td>✅ Yes</td><td>Government/regulated industries, privileged access workstations</td></tr>
+        <tr><td><strong>Temporary Access Pass (TAP)</strong></td><td>Time-limited PIN issued by admin for one-time use</td><td>N/A (temporary)</td><td>Onboarding new users, recovering locked-out accounts, bootstrapping FIDO2 keys</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY HEALTH MONITORING -->
+<div id="pg-monitoring" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Daily Health Monitoring</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(16,185,129,.12)">📊</div><div><div class="pg-t">Daily Health Monitoring — L1/L2 Morning to EOD</div><div class="pg-s">What to check, in what order, from M365 Admin Portal — and ITSM actions when issues found</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Morning Checks — First 30 Minutes of Day</div>
+      <table class="tbl">
+        <tr><th>Check</th><th>Where</th><th>What to Look For</th><th>Action if Issue Found</th></tr>
+        <tr><td>1. Service Health Dashboard</td><td>Admin Center → Health → Service Health</td><td>Any Active Advisories or Incidents for EXO, Teams, SPO, ODB, Entra, Intune, Defender</td><td>If incident exists: Create P1/P2 ITSM ticket. Notify affected users proactively. Check PIR when resolved.</td></tr>
+        <tr><td>2. AAD Connect Sync Status</td><td>Entra Admin Center → Identity → Hybrid Management → Microsoft Entra Connect → View sync status</td><td>Last sync time should be &lt;60 min ago. No sync errors or quarantined objects.</td><td>If sync &gt;60 min old: Run Start-ADSyncSyncCycle -PolicyType Delta on sync server. Log as P3.</td></tr>
+        <tr><td>3. Message Center</td><td>Admin Center → Health → Message Center</td><td>New announcements for upcoming feature changes, deprecations, or required admin actions</td><td>Schedule change review with team. Assign owner for required actions. Add to change calendar.</td></tr>
+        <tr><td>4. Defender Alerts</td><td>security.microsoft.com → Incidents &amp; Alerts</td><td>Any High or Medium severity incidents — compromised accounts, malware, mass phishing</td><td>Triage with security team. High = immediate P1/P2. Assign incident to security analyst.</td></tr>
+        <tr><td>5. Intune Device Compliance</td><td>Intune → Devices → Monitor → Device compliance</td><td>Spike in non-compliant devices — may indicate OS update issue or policy problem</td><td>Identify root cause (new compliance policy? OS update causing failures?). Log P3 if systemic.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Ongoing Daily Checks (Throughout Day)</div>
+      <table class="tbl">
+        <tr><th>Frequency</th><th>Check</th><th>Portal Location</th><th>ITSM Action</th></tr>
+        <tr><td>Every 2 hours</td><td>Service Health re-check</td><td>Admin Center → Health</td><td>Update open incidents with Microsoft's latest ETA/updates. Notify users of changes.</td></tr>
+        <tr><td>Hourly</td><td>Exchange mail flow health</td><td>Admin Center → Reports → Mail flow status summary</td><td>If delivery failures spike: open Priority 2 and run message traces to identify pattern.</td></tr>
+        <tr><td>Daily AM</td><td>EXO Mailbox usage</td><td>Admin Center → Reports → Usage → Exchange → Mailbox usage</td><td>Alert users approaching quota (&gt;90%). Create ticket to increase quota or advise cleanup.</td></tr>
+        <tr><td>Daily AM</td><td>Teams Call Quality</td><td>Teams Admin Center → Analytics &amp; Reports → Call Quality Dashboard</td><td>If poor call % spike: check CQD for affected subnet/building. Log P3 for network team.</td></tr>
+        <tr><td>Daily AM</td><td>OneDrive Sync errors</td><td>SPO Admin Center → Reports → OneDrive → Sync status (or Intune device reports)</td><td>Mass sync failures = investigate KFM policy or proxy. Log P2 if business impact confirmed.</td></tr>
+        <tr><td>Weekly Mon</td><td>Secure Score trend</td><td>security.microsoft.com → Secure Score</td><td>Document score trend. Identify quick wins. Plan improvement actions for next sprint.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>How M365 Scales — 100 Users to 500,000 Users</div>
+      <table class="tbl">
+        <tr><th>Organization Size</th><th>Typical Plan</th><th>Management Approach</th><th>Key Considerations</th></tr>
+        <tr><td><strong>100 users</strong></td><td>Business Basic/Standard/Premium</td><td>1 Global Admin, manage everything from Admin Center. PowerShell for bulk ops.</td><td>No dedicated IT. Simple setup. Focus: licensing, user management, basic security.</td></tr>
+        <tr><td><strong>1,000 users</strong></td><td>M365 E3</td><td>Dedicated IT team. Role-based admins. Start using groups for license assignment. Intune for devices.</td><td>Add Conditional Access. Deploy Autopilot. Governance for SharePoint sites. DLP for compliance.</td></tr>
+        <tr><td><strong>10,000 users</strong></td><td>M365 E3/E5 mix</td><td>Separate teams for Identity, EXO, SPO, Security. AAD Connect for hybrid. Automation via PowerShell/Graph API.</td><td>Information Barriers for regulated segments. Multi-Geo for international. Defender for Endpoint. PIM for admin roles.</td></tr>
+        <tr><td><strong>500,000 users</strong></td><td>M365 E5 + government/enterprise agreements</td><td>Dedicated COE (Center of Excellence) per workload. Automated provisioning. SIEM integration (Sentinel). Dedicated Microsoft TAM (Technical Account Manager).</td><td>Custom SLAs with Microsoft. Dedicated FastTrack resources. Multi-Geo mandatory. Phased rollouts for every change. Full ITSM integration (ServiceNow + M365).</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>Multi-Geo Operations — Users in Multiple Countries</div>
+      <p class="prose">For organizations with data residency requirements in multiple countries (GDPR, PIPL, etc.), M365 Multi-Geo allows data to be stored in specific geographic regions per user:</p>
+      <table class="tbl">
+        <tr><th>Concept</th><th>What It Means</th><th>L1/L2 Relevance</th></tr>
+        <tr><td><strong>PDL (Preferred Data Location)</strong></td><td>Setting on a user's Entra ID profile that determines which geo their mailbox and OneDrive is provisioned in</td><td>Must be set BEFORE provisioning. If set after, a geo-move job must run (takes hours).</td></tr>
+        <tr><td><strong>Satellite Geo</strong></td><td>An additional geographic location (e.g., EUR, APC) where data can be stored — in addition to the primary/central location</td><td>Admins access different geo's via URL: contoso-eur.sharepoint.com vs contoso.sharepoint.com</td></tr>
+        <tr><td><strong>Geo-Move</strong></td><td>Moving an existing user's data from one geo to another (e.g., when employee relocates)</td><td>Triggered via PowerShell. Can take 24–48 hours for large mailboxes. User has temporary limited access.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TROUBLESHOOTING TOOLS -->
+<div id="pg-tools" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › Troubleshooting Tools</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(59,130,246,.12)">🔧</div><div><div class="pg-t">Troubleshooting Tools — L1/L2 Complete Reference</div><div class="pg-s">Every tool, what it's used for, where to find it, and what output/logs to collect</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Exchange Online Tools</div>
+      <table class="tbl">
+        <tr><th>Tool</th><th>URL / Location</th><th>Use Case</th><th>Output to Collect</th></tr>
+        <tr><td><strong>Message Trace</strong></td><td>EAC or Admin Center → Exchange → Mail flow → Message trace</td><td>Trace any email: delivered? bounced? which rule fired? connector used? quarantined?</td><td>Export trace as CSV. Include MessageID, RecipientAddress, Status, EventDescription.</td></tr>
+        <tr><td><strong>Message Header Analyzer</strong></td><td>aka.ms/mha</td><td>Decode raw email headers — show SCL, BCL, SPF/DKIM/DMARC results, server hops</td><td>Screenshot of analysis. Note SCL value, authentication results, SFV code.</td></tr>
+        <tr><td><strong>MXToolbox</strong></td><td>mxtoolbox.com</td><td>Check MX records, SPF, DKIM, DMARC, blacklist status, SMTP server connectivity, Autodiscover</td><td>Screenshot of MX lookup, blacklist check results. Note any RBL (Real-time Block List) entries.</td></tr>
+        <tr><td><strong>Remote Connectivity Analyzer (ExRCA)</strong></td><td>testconnectivity.microsoft.com</td><td>Test Autodiscover, Outlook connectivity, ActiveSync, EWS, SMTP from outside. Tests from Microsoft's servers.</td><td>Full test result log — include error at failing step.</td></tr>
+        <tr><td><strong>SaRA (Support and Recovery Assistant)</strong></td><td>aka.ms/SaRA</td><td>Diagnose and fix Outlook, Teams, MFA, activation issues on user's machine</td><td>SaRA generates diagnostic report file (.zip). Attach to ticket.</td></tr>
+        <tr><td><strong>SMTP Diagnostics (Telnet/ncat)</strong></td><td>Command line tool</td><td>Test SMTP connectivity manually to port 25/587. Verify relay, EHLO, AUTH.</td><td>Copy full SMTP conversation output. Shows exact server responses at each step.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Teams Tools</div>
+      <table class="tbl">
+        <tr><th>Tool</th><th>Location</th><th>Use Case</th><th>Output to Collect</th></tr>
+        <tr><td><strong>Teams Call Analytics</strong></td><td>Teams Admin Center → Users → Select user → Call history</td><td>Per-call diagnostics: jitter, packet loss, round-trip time, codec, endpoint info for specific user's call</td><td>Export call details. Note: PacketLoss &gt;1%, Jitter &gt;30ms, RoundTrip &gt;150ms = network issue.</td></tr>
+        <tr><td><strong>Call Quality Dashboard (CQD)</strong></td><td>Teams Admin Center → Analytics → Call quality dashboard</td><td>Organization-wide call quality trends by building, subnet, device type, carrier</td><td>Export building/subnet report. Show % poor streams by location.</td></tr>
+        <tr><td><strong>Network Assessment Tool</strong></td><td>Microsoft download: NetworkTesting.MSTeams.com</td><td>Tests connectivity from user's machine to Teams media relay. Measures packet loss and jitter.</td><td>Results file saved to %appdata%\Microsoft\Teams\Network Assessment. Attach to ticket.</td></tr>
+        <tr><td><strong>Teams Diagnostics (in-app)</strong></td><td>Teams → Ctrl+Alt+Shift+1</td><td>Dumps Teams client diagnostic log. Includes sign-in state, network, version, module status.</td><td>Log file generated at %appdata%\Microsoft\Teams\Logs.txt</td></tr>
+        <tr><td><strong>Self-Help Diagnostics</strong></td><td>Admin Center → "?" → type "Teams" → run diagnostics</td><td>Microsoft's built-in self-service diagnostics for common Teams issues</td><td>Diagnostic result shown on screen with recommended fix.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>SharePoint &amp; OneDrive Tools</div>
+      <table class="tbl">
+        <tr><th>Tool</th><th>Location</th><th>Use Case</th><th>Output to Collect</th></tr>
+        <tr><td><strong>SharePoint Diagnostics (Self-Service)</strong></td><td>Admin Center → "?" search → SharePoint</td><td>Diagnose site access, sync, sharing, permission issues via built-in diagnostic wizards</td><td>Diagnostic result with recommended action steps.</td></tr>
+        <tr><td><strong>SMAT (SharePoint Migration Assessment Tool)</strong></td><td>Microsoft download</td><td>Pre-migration scan of on-prem SharePoint or file shares — finds invalid chars, long paths, large files</td><td>Excel report files: FileReport, SiteReport, ErrorReport. Critical for migration planning.</td></tr>
+        <tr><td><strong>OneDrive Sync Logs</strong></td><td>Right-click OneDrive tray icon → View sync problems OR %localappdata%\Microsoft\OneDrive\logs\</td><td>Find exact sync error for specific files or accounts</td><td>SyncDiagnostics.log file. Submit to MS Support for complex sync issues.</td></tr>
+        <tr><td><strong>SharePoint Check Permissions</strong></td><td>Site → Site Permissions → Check Permissions (enter user)</td><td>Shows exactly what permissions a specific user has on a site, library, or item — and why</td><td>Screenshot of results showing permission source (direct vs group).</td></tr>
+        <tr><td><strong>PnP PowerShell</strong></td><td>PowerShell module</td><td>Audit permissions, export site inventory, check unique permission inheritance</td><td>Export CSV of sites/libraries with unique permissions for analysis.</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>What Logs to Collect — Per Machine Type</div>
+      <table class="tbl">
+        <tr><th>Issue Type</th><th>Machine/Source</th><th>Log Location</th><th>File Type</th></tr>
+        <tr><td>Outlook/Office issues</td><td>User's Windows PC</td><td>%localappdata%\Microsoft\Outlook\RoamCache\ (profile cache), %appdata%\Microsoft\Office\16.0\Licensing\ (activation), Event Viewer → Application log (filter: Outlook source)</td><td>.xml, .log, .txt, Event Log .evtx</td></tr>
+        <tr><td>Teams audio/video issues</td><td>User's PC</td><td>%appdata%\Microsoft\Teams\Logs.txt (app log), %appdata%\Microsoft\Teams\Network Assessment\ (network test results)</td><td>.txt</td></tr>
+        <tr><td>OneDrive sync issues</td><td>User's PC</td><td>%localappdata%\Microsoft\OneDrive\logs\Business1\ — SyncDiagnostics.log, sync_worker.log</td><td>.log</td></tr>
+        <tr><td>AAD Connect sync errors</td><td>AAD Connect server</td><td>Application Event Log on the sync server, AAD Connect Synchronization Service Manager app → Operations tab</td><td>.evtx, in-app GUI</td></tr>
+        <tr><td>Exchange transport issues</td><td>On-prem Exchange server</td><td>C:\Program Files\Microsoft\Exchange Server\V15\TransportRoles\Logs\Hub\ProtocolLog\ (SMTP logs), Message Queue logs</td><td>.log</td></tr>
+        <tr><td>Intune enrollment/compliance</td><td>User's Windows device</td><td>Event Viewer → Apps and Services → Microsoft → Windows → DeviceManagement-Enterprise-Diagnostics-Provider, MDM Diagnostic Report (Settings → Accounts → Work → Info → Export)</td><td>.evtx, .html report</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- POWERSHELL -->
+<div id="pg-powershell" class="pg">
+  <div class="pg-hdr">
+    <div class="bc"><span onclick="go('home')">Home</span> › PowerShell Modules</div>
+    <div class="pg-row"><div class="pg-ic" style="background:rgba(139,92,246,.12)">💻</div><div><div class="pg-t">PowerShell — All Modules for M365 L1/L2</div><div class="pg-s">Required modules, install commands, permissions, and common daily scripts</div></div></div>
+  </div>
+  <div class="content">
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">1</div>Modules Required — Online &amp; Hybrid</div>
+      <table class="tbl">
+        <tr><th>Module</th><th>Workload</th><th>Install Command</th><th>Connect Command</th><th>Minimum Role Required</th></tr>
+        <tr><td><strong>ExchangeOnlineManagement</strong></td><td>Exchange Online</td><td>Install-Module ExchangeOnlineManagement</td><td>Connect-ExchangeOnline -UserPrincipalName admin@contoso.com</td><td>Exchange Admin or Global Reader (read-only)</td></tr>
+        <tr><td><strong>Microsoft.Graph</strong></td><td>Entra ID, Users, Groups, Devices</td><td>Install-Module Microsoft.Graph</td><td>Connect-MgGraph -Scopes "User.Read.All","Directory.ReadWrite.All"</td><td>Varies by scope — User Admin for user mgmt</td></tr>
+        <tr><td><strong>MSOnline</strong> (legacy)</td><td>Entra ID (legacy, still used)</td><td>Install-Module MSOnline</td><td>Connect-MsolService</td><td>Global Admin or delegated roles</td></tr>
+        <tr><td><strong>AzureAD</strong> (legacy)</td><td>Entra ID (legacy, still common)</td><td>Install-Module AzureAD</td><td>Connect-AzureAD</td><td>Global Admin or delegated roles</td></tr>
+        <tr><td><strong>MicrosoftTeams</strong></td><td>Microsoft Teams</td><td>Install-Module MicrosoftTeams</td><td>Connect-MicrosoftTeams</td><td>Teams Admin or Global Admin</td></tr>
+        <tr><td><strong>PnP.PowerShell</strong></td><td>SharePoint Online</td><td>Install-Module PnP.PowerShell</td><td>Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive</td><td>SharePoint Admin</td></tr>
+        <tr><td><strong>Microsoft.Online.SharePoint.PowerShell</strong></td><td>SharePoint Online Admin</td><td>Install-Module Microsoft.Online.SharePoint.PowerShell</td><td>Connect-SPOService -Url https://contoso-admin.sharepoint.com</td><td>SharePoint Admin</td></tr>
+        <tr><td><strong>Microsoft.Graph.Intune</strong> / Graph beta</td><td>Intune</td><td>Install-Module Microsoft.Graph.Intune</td><td>Connect-MgGraph</td><td>Intune Admin</td></tr>
+        <tr><td><strong>ADSync</strong> (on-prem only)</td><td>AAD Connect server</td><td>Pre-installed on AAD Connect server</td><td>Import-Module ADSync</td><td>Local admin on AAD Connect server</td></tr>
+        <tr><td><strong>ActiveDirectory</strong> (on-prem only)</td><td>On-premises AD</td><td>Install-WindowsFeature RSAT-AD-PowerShell</td><td>Import-Module ActiveDirectory</td><td>Domain admin or delegated AD permissions</td></tr>
+      </table>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">2</div>Common L1/L2 PowerShell Scripts — Exchange Online</div>
+      <div class="cb"><span class="c"># CONNECT to Exchange Online</span>
+<span class="g">Connect-ExchangeOnline</span> -UserPrincipalName admin@contoso.com
+
+<span class="c"># Check mailbox size and quota status</span>
+<span class="g">Get-MailboxStatistics</span> <span class="p">"user@contoso.com"</span> | Select DisplayName, TotalItemSize, ItemCount, DatabaseName
+
+<span class="c"># Run message trace (last 48 hours for specific sender)</span>
+<span class="g">Get-MessageTrace</span> -SenderAddress sender@external.com -StartDate (Get-Date).AddDays(-2) -EndDate (Get-Date) | Select Received, SenderAddress, RecipientAddress, Subject, Status
+
+<span class="c"># Check mailbox permissions (Full Access)</span>
+<span class="g">Get-MailboxPermission</span> -Identity <span class="p">"shared@contoso.com"</span> | Where {$_.User -ne "NT AUTHORITY\SELF"}
+
+<span class="c"># Check if Litigation Hold is enabled</span>
+<span class="g">Get-Mailbox</span> <span class="p">"user@contoso.com"</span> | Select LitigationHoldEnabled, LitigationHoldDate, LitigationHoldDuration
+
+<span class="c"># Enable Litigation Hold</span>
+<span class="g">Set-Mailbox</span> <span class="p">"user@contoso.com"</span> -LitigationHoldEnabled $true -LitigationHoldDuration Unlimited
+
+<span class="c"># Check all forwarding configured on a mailbox</span>
+<span class="g">Get-Mailbox</span> <span class="p">"user@contoso.com"</span> | Select ForwardingAddress, ForwardingSmtpAddress, DeliverToMailboxAndForward
+
+<span class="c"># Get all mailboxes approaching quota (over 45GB)</span>
+<span class="g">Get-Mailbox</span> -ResultSize Unlimited | <span class="g">Get-MailboxStatistics</span> | Where {$_.TotalItemSize.Value.ToGB() -gt 45} | Select DisplayName, TotalItemSize</div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">3</div>Common L1/L2 Scripts — Teams, SharePoint, Entra</div>
+      <div class="cb"><span class="c">### TEAMS PowerShell ###</span>
+<span class="g">Connect-MicrosoftTeams</span>
+
+<span class="c"># Check user's Teams upgrade mode</span>
+<span class="g">Get-CsOnlineUser</span> <span class="p">"user@contoso.com"</span> | Select TeamsUpgradeEffectiveMode, OnPremLineURI
+
+<span class="c"># Check Teams policies assigned to user</span>
+<span class="g">Get-CsUserPolicyAssignment</span> -Identity <span class="p">"user@contoso.com"</span>
+
+<span class="c"># Check Direct Routing SBC health</span>
+<span class="g">Get-CsOnlinePSTNGateway</span> | Select Identity, Enabled, SipSignalingPort, FailoverTimeSeconds
+
+
+<span class="c">### SHAREPOINT PowerShell ###</span>
+<span class="g">Connect-SPOService</span> -Url https://contoso-admin.sharepoint.com
+
+<span class="c"># Get all sites with storage usage</span>
+<span class="g">Get-SPOSite</span> -Limit All | Select Url, StorageUsageCurrent, StorageQuota | Sort StorageUsageCurrent -Desc
+
+<span class="c"># Set sharing level on a site</span>
+<span class="g">Set-SPOSite</span> -Identity https://contoso.sharepoint.com/sites/HR -SharingCapability ExternalUserSharingOnly
+
+<span class="c"># Restore a deleted site</span>
+<span class="g">Restore-SPODeletedSite</span> -Identity https://contoso.sharepoint.com/sites/OldProject
+
+
+<span class="c">### ENTRA ID / GRAPH PowerShell ###</span>
+<span class="g">Connect-MgGraph</span> -Scopes <span class="p">"User.Read.All"</span>, <span class="p">"Directory.ReadWrite.All"</span>
+
+<span class="c"># Get user's last sign-in date</span>
+<span class="g">Get-MgUser</span> -UserId <span class="p">"user@contoso.com"</span> -Property SignInActivity | Select -ExpandProperty SignInActivity
+
+<span class="c"># Force delta sync on AAD Connect server</span>
+<span class="g">Start-ADSyncSyncCycle</span> -PolicyType Delta  <span class="c"># Run on the AAD Connect server</span>
+
+<span class="c"># Revoke all user sessions (compromised account)</span>
+<span class="g">Revoke-MgUserSignInSession</span> -UserId <span class="p">"user@contoso.com"</span></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><div class="sec-num">4</div>PowerShell Permissions Required</div>
+      <table class="tbl">
+        <tr><th>Task</th><th>Minimum Role in M365</th><th>Run As Admin?</th></tr>
+        <tr><td>Install PowerShell modules</td><td>Local admin on the workstation running PS</td><td>✅ Yes — Install-Module requires admin rights (or use -Scope CurrentUser)</td></tr>
+        <tr><td>Connect-ExchangeOnline (read)</td><td>Global Reader or Exchange Admin</td><td>Not required — authenticates via browser OAuth</td></tr>
+        <tr><td>Set-Mailbox, Set-TransportRule (write)</td><td>Exchange Admin</td><td>Not required for online module</td></tr>
+        <tr><td>Connect-MicrosoftTeams</td><td>Teams Admin or Global Admin</td><td>Not required for online module</td></tr>
+        <tr><td>Connect-SPOService</td><td>SharePoint Admin</td><td>Not required for online module</td></tr>
+        <tr><td>Start-ADSyncSyncCycle</td><td>Local admin on AAD Connect server + AADSyncOperators group</td><td>✅ Yes — must run on AAD Connect server as local admin</td></tr>
+        <tr><td>Get-ADUser / Set-ADUser</td><td>Domain admin or delegated OU permissions</td><td>✅ Typically yes for write operations</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+const pages=document.querySelectorAll('.pg');
+const navItems=document.querySelectorAll('.ni');
+function go(id){
+  pages.forEach(p=>p.classList.remove('act'));
+  const t=document.getElementById('pg-'+id);
+  if(t)t.classList.add('act');
+  navItems.forEach(n=>n.classList.remove('act'));
+  navItems.forEach(n=>{const o=n.getAttribute('onclick')||'';if(o.includes("'"+id+"'"))n.classList.add('act');});
+  document.getElementById('main').scrollTop=0;
+  document.getElementById('srch').value='';
+}
+function doSearch(q){
+  q=q.toLowerCase().trim();
+  if(!q){pages.forEach(p=>p.classList.remove('act'));document.getElementById('pg-home').classList.add('act');return;}
+  pages.forEach(p=>p.classList.remove('act'));
+  let found=null;
+  document.querySelectorAll('.pg:not(#pg-home)').forEach(p=>{if(!found&&p.textContent.toLowerCase().includes(q))found=p;});
+  if(found)found.classList.add('act');
+}
+</script>
+</main>
+</body>
+</html>
